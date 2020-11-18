@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="534.0" prefWidth="1038.0" style="-fx-border-color: black;" stylesheets="@../src/app/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.adminController">
+   <children>
+      <BorderPane layoutX="3.0" layoutY="2.0" prefHeight="533.0" prefWidth="865.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="1.0">
+         <center>
+            <SplitPane dividerPositions="0.41631504922644164" prefHeight="514.0" prefWidth="746.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="505.0" prefWidth="214.0" style="-fx-background-color: #E34C4F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label alignment="TOP_CENTER" prefHeight="48.0" prefWidth="186.0" text="Videoteka">
+                                 <font>
+                                    <Font size="37.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="TOP_CENTER" prefHeight="42.0" prefWidth="214.0">
+                                 <children>
+                                    <Label fx:id="lbl_user" prefHeight="25.0" prefWidth="52.0" text="User:">
+                                       <font>
+                                          <Font name="System Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_ispisUser" prefHeight="25.0" prefWidth="59.0" text="Label">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <Label fx:id="lbl_naziv" text="Naziv filma">
+                                 <padding>
+                                    <Insets bottom="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txt_naziv" maxWidth="170.0" />
+                              <Label fx:id="lbl_zanr" text="Zanr">
+                                 <padding>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txt_zanr" maxWidth="170.0" />
+                              <Label fx:id="lbl_trajanje" text="Trajanje(minute)">
+                                 <padding>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txt_trajanje" maxWidth="170.0" />
+                              <Label fx:id="lbl_cijena" text="Cijena">
+                                 <padding>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="txt_cijena" maxWidth="170.0" prefWidth="200.0">
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin></TextField>
+                              <HBox alignment="CENTER" prefHeight="32.0" prefWidth="214.0">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="10.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <RadioButton fx:id="rb_filmovi" mnemonicParsing="false" selected="true" text="Filmovi">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="rbGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rb_serije" mnemonicParsing="false" text="Serije" toggleGroup="$rbGroup">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rb_animirani" mnemonicParsing="false" text="Animirani filmovi" toggleGroup="$rbGroup" />
+                                 </children>
+                              </HBox>
+                              <Button mnemonicParsing="false" onAction="#btn_evidencija" prefHeight="36.0" prefWidth="100.0" style="-fx-background-radius: 4;" text="Evidencija">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#btn_izbrisi" prefHeight="36.0" prefWidth="76.0" style="-fx-background-radius: 4;" text="Izbrisi">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#btn_dodaj" prefHeight="36.0" prefWidth="76.0" style="-fx-background-radius: 4;" text="Dodaj">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="512.0" prefWidth="470.0" style="-fx-background-color: #F8BA3C;">
+                     <children>
+                        <TableView fx:id="table" layoutX="12.0" layoutY="21.0" prefHeight="465.0" prefWidth="569.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="21.0">
+                          <columns>
+                            <TableColumn fx:id="id" prefWidth="57.0" text="id" />
+                            <TableColumn fx:id="naziv" prefWidth="178.0" text="Naziv" />
+                              <TableColumn fx:id="zanr" prefWidth="85.0" text="Zanr" />
+                              <TableColumn fx:id="trajanje" prefWidth="77.0" text="Trajanje" />
+                              <TableColumn fx:id="cijena" prefWidth="77.0" text="Cijena" />
+                              <TableColumn fx:id="show" prefWidth="94.0" text="Show" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+         <top>
+            <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="716.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
+               <children>
+                  <FontAwesomeIcon fill="#40b273" glyphName="MINUS" onMouseClicked="#min" size="1.2em" />
+                  <FontAwesomeIcon fill="#00c2f8" glyphName="CIRCLE" onMouseClicked="#max" size="1.2em">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon fill="#ff0202" glyphName="CLOSE" onMouseClicked="#close" size="1.2em">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

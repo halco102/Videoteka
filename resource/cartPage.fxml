@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="394.0" prefWidth="595.0" stylesheets="@../src/app/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.cartClass">
+   <children>
+      <BorderPane prefHeight="394.0" prefWidth="495.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <SplitPane dividerPositions="0.29797979797979796" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="372.0" prefWidth="257.0" style="-fx-background-color: CB5656;">
+                     <children>
+                        <VBox alignment="CENTER" layoutY="-2.0" prefHeight="376.0" prefWidth="149.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-2.0">
+                           <children>
+                              <HBox alignment="TOP_CENTER" prefHeight="41.0" prefWidth="144.0">
+                                 <children>
+                                    <Label fx:id="lbl_cijena" text="Cijena:">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lbl_ispis" text="Label">
+                                       <font>
+                                          <Font size="22.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="40.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="55.0" prefWidth="144.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#btn_potvrdi" prefHeight="45.0" prefWidth="70.0" text="Potvrdi">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#btn_kupi" prefHeight="45.0" prefWidth="70.0" text="Kupi">
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <Button mnemonicParsing="false" onAction="#btn_izbrisi" prefHeight="45.0" prefWidth="70.0" text="Izbrisi">
+                                 <VBox.margin>
+                                    <Insets bottom="30.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#btn_Nazad" prefHeight="45.0" prefWidth="70.0" text="Nazad" />
+                           </children>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: C1C71C;">
+                     <children>
+                        <TableView fx:id="table" layoutX="23.0" layoutY="11.0" prefHeight="351.0" prefWidth="298.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="23.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="11.0">
+                          <columns>
+                              <TableColumn fx:id="id" prefWidth="56.0" text="ID" />
+                            <TableColumn fx:id="naziv" prefWidth="125.0" text="Naziv" />
+                            <TableColumn fx:id="cijena" prefWidth="90.0" text="Cijena" />
+                              <TableColumn fx:id="show" prefWidth="95.0" text="Show" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+         <top>
+            <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="516.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
+               <children>
+                  <FontAwesomeIcon fill="#40b273" glyphName="MINUS" onMouseClicked="#min" size="1.2em">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon fill="#00c2f8" glyphName="CIRCLE" onMouseClicked="#max" size="1.2em">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon fill="#ff0202" glyphName="CLOSE" onMouseClicked="#close" size="1.2em">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>

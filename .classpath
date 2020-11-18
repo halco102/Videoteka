@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="resource"/>
+	<classpathentry kind="lib" path="/home/admir/Downloads/SeminarskiRad/Seminarski_rad/FontAwesome8.2/fontawesomefx-8.2.jar"/>
+	<classpathentry kind="lib" path="/home/admir/Downloads/SeminarskiRad/Seminarski_rad/mysql-connector-java-8.0.19/mysql-connector-java-8.0.19.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX11"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/lib"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/mysql-connector-java-8.0.19"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/fontawesomefx-8.2"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

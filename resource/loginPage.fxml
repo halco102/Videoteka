@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane onMouseDragged="#dragged" onMousePressed="#pressed" prefHeight="504.0" prefWidth="857.0" style="-fx-border-color: #696969;" stylesheets="@../src/app/application.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.loginController">
+   <children>
+      <BorderPane prefHeight="513.0" prefWidth="857.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox alignment="TOP_RIGHT" prefHeight="21.0" prefWidth="854.0" style="-fx-background-color: #dfe4ea;" BorderPane.alignment="CENTER">
+               <children>
+                  <FontAwesomeIcon fill="#40b273" glyphName="MINUS" onMouseClicked="#min" size="1.2em" />
+                  <FontAwesomeIcon fill="#00c2f8" glyphName="CIRCLE" onMouseClicked="#max" size="1.2em">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+                  <FontAwesomeIcon fill="#ff0202" glyphName="CLOSE" onMouseClicked="#close" size="1.2em">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </FontAwesomeIcon>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <SplitPane dividerPositions="0.3788235294117647" prefHeight="489.0" prefWidth="854.0" style="-fx-border-color: #696969;" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="328.0" style="-fx-background-color: #696969;">
+                     <children>
+                        <Button layoutX="97.0" layoutY="390.0" mnemonicParsing="false" onAction="#btn_create" prefHeight="47.0" prefWidth="124.0" style="-fx-border-color: #696969;" text="Create account" />
+                        <Text layoutX="74.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New here?">
+                           <font>
+                              <Font name="Berlin Sans FB Bold" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="31.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create account down below">
+                           <font>
+                              <Font name="Berlin Sans FB" size="20.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="150.0" fitWidth="177.0" layoutX="73.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Slike/cinema.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="373.0" prefWidth="643.0" style="-fx-background-color: #C0C0C0;">
+                     <children>
+                        <TextField fx:id="txt_username" layoutX="194.0" layoutY="155.0" prefHeight="25.0" prefWidth="267.0" />
+                        <PasswordField fx:id="txt_pass" layoutX="194.0" layoutY="241.0" prefHeight="25.0" prefWidth="267.0" />
+                        <Label layoutX="43.0" layoutY="157.0" prefHeight="21.0" prefWidth="80.0" text="Username">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="43.0" layoutY="243.0" prefHeight="21.0" prefWidth="80.0" text="Password">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="239.0" layoutY="383.0" mnemonicParsing="false" onAction="#btn_signin" prefHeight="47.0" prefWidth="116.0" style="-fx-border-style: #696969;" text="Sign in" />
+                        <Label layoutX="215.0" layoutY="56.0" text="Sign In">
+                           <font>
+                              <Font size="54.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+      </BorderPane>
+     
+   </children>
+</AnchorPane>
