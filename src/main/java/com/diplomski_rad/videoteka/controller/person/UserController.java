@@ -61,16 +61,19 @@ public class UserController {
                               Model model,
                               Error error) throws NotFoundException {
 
-        if(userService.login(user.getUsername(), user.getPassword()) != null) {
-            if (getIndex(model) != null) {
-                return "redirect:/api/v1/videoteka/index";
+        try {
+            if(userService.login(user.getUsername(), user.getPassword()) != null) {
+                if (getIndex(model) != null) {
+                    return "redirect:/api/v1/videoteka/index";
+                }
             }
-            model.addAttribute("errorMessage", "Unexpected error with /index");
-            return "errorHandling.html";
+        }catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "videoteka/errorHandling.html";
         }
-        //return "videoteka/login/sign-in.html";
-        model.addAttribute("errorMessage", "Wrong username or password");
-        return "errorHandling.html";
+
+        model.addAttribute("errorMessage", "unknown error ocured");
+        return "videoteka/errorHandling.html";
     }
 
 

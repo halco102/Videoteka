@@ -1,13 +1,14 @@
 package com.diplomski_rad.videoteka.service.persons;
 
+import com.diplomski_rad.videoteka.exception.NotFoundException;
 import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SigninRequest;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
 import com.diplomski_rad.videoteka.payload.response.SigninResponse;
+import com.diplomski_rad.videoteka.payload.response.SignupResponse;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import feign.FeignException;
-import javassist.NotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -105,7 +106,7 @@ public class UserService extends AbstractPersonService<User> {
         var temp = userRepository.checkIfUserExists(username);
 
         if(temp.isEmpty()) {
-            return null;
+           throw new NotFoundException("The user was not found");
         }
 
         signinRequest.setEmail(temp.get().getEMail());

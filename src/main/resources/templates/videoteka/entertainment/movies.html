@@ -3,14 +3,14 @@
 <html>
 <head>
   <title>Movies</title>
-    <link href="/static/css/entertainment.css" rel="stylesheet" type="text/css">
+    <link href="/css/entertainment.css" rel="stylesheet" type="text/css" th:href="@{/css/entertainment.css}" />
 
 </head>
 
 <body>
 <h1 style="text-align:center">Movies</h1>
 
-<h3>User: <span th:text="${userName}"></span></h3>
+<h3>User: <span th:text="${username}"></span></h3>
 
 <div class="nav">
     <ul>
