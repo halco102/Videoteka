@@ -75,7 +75,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/api/v1/videoteka/index").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/api/v1/videoteka/index").permitAll()
                 .antMatchers("/api/v1/videoteka/create-account").permitAll()
-                .antMatchers("/css/**").permitAll()
+                //.antMatchers("/static/css/**").permitAll()
                 //.anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -96,6 +96,6 @@ public class Authentication extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {  //ignore login for h2
         web
                 .ignoring()
-                .antMatchers("/h2-console/**");
+                .antMatchers("/h2-console/**", "/static/**");
     }
 }

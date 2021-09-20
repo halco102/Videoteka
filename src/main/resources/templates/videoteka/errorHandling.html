@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+
+<span th:if="${errorMessage}" th:text="${errorMessage}"><h1 style="text-align:center">Error</h1></span>
+<a href="localhost:8200/api/v1/videoteka"><h1 style="text-align:center">Go back to login page</h1></a>
+</body>
+</html>

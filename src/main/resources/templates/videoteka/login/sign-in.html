@@ -9,7 +9,7 @@
 <h1 style="text-align:center">Login</h1>
 
 <div class="sign_in">
-    <form action="#" th:action="@{/api/v1/videoteka/login/post}" th:object="${users}"  method="post">
+    <form action="#" method="post" th:object="${users}"  th:action="@{/api/v1/videoteka/login/post}" >
 
         <label>Username</label>
         <input type="text" th:field="*{username}">
