@@ -2,6 +2,7 @@ package com.diplomski_rad.videoteka.controller.person;
 
 import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.service.persons.UserService;
+import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -58,15 +59,18 @@ public class UserController {
     public String loginToPage(@ModelAttribute("users")  User user,
                               BindingResult result,
                               Model model,
-                              Error error){
+                              Error error) throws NotFoundException {
 
         if(userService.login(user.getUsername(), user.getPassword()) != null) {
             if (getIndex(model) != null) {
                 return "redirect:/api/v1/videoteka/index";
             }
-            return null;
+            model.addAttribute("errorMessage", "Unexpected error with /index");
+            return "errorHandling.html";
         }
-        return "videoteka/login/sign-in.html";
+        //return "videoteka/login/sign-in.html";
+        model.addAttribute("errorMessage", "Wrong username or password");
+        return "errorHandling.html";
     }
 
 
