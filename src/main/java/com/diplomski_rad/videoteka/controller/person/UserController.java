@@ -36,7 +36,7 @@ public class UserController {
             return "redirect:/api/v1/videoteka/admin-add-delete/movies";
         }
 
-        model.addAttribute("userName", authentication.getPrincipal().toString());
+        model.addAttribute("username", authentication.getPrincipal().toString());
 
         return "videoteka/index.html";
     }
@@ -113,5 +113,14 @@ public class UserController {
         SecurityContextHolder.clearContext();
         return "redirect:/api/v1/videoteka/login";
     }
+
+    @GetMapping("/user/profile")
+    public String getUserProfile(Model model) {
+        model.addAttribute("users", this.userService.getUserProfile());
+        model.addAttribute("username", displayName);
+
+        return "videoteka/profile/profile.html";
+    }
+
 
 }

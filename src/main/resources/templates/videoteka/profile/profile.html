@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/css/entertainment.css" rel="stylesheet" type="text/css" th:href="@{/css/entertainment.css}" />
+</head>
+<body>
+
+<div>
+    <h1>Profile</h1>
+    <h3>User: <span th:text="${username}"></span></h3>
+</div>
+
+
+<form action="#" method="get" th:object="${users}"  th:action="@{/api/v1/videoteka/user/profile}" >
+
+        <table class="table" th:if="${users.ownedItems != null}">
+            <tr>ID</tr>
+            <tr>Title</tr>
+
+            <tr th:each="item: ${users.ownedItems}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+            </tr>
+        </table>
+
+</form>
+
+</body>
+</html>

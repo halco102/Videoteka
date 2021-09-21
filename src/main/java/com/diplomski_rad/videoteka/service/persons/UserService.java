@@ -72,6 +72,7 @@ public class UserService extends AbstractPersonService<User> {
         //dodaj role useru iz fa
         user.setRoles(fusionAuth.getUserRolesFromApp(appId, temp.getId()));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setMoney(200); // always give 200$
 
         return userRepository.save(user);
     }
@@ -169,5 +170,21 @@ public class UserService extends AbstractPersonService<User> {
             return false;
         }
     }
+
+    public User getUserProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if(authentication.getPrincipal().toString().matches("anonymousUser")){
+            return null;
+        }
+
+        var user = findUserByUsername(authentication.getPrincipal().toString());
+
+        if(user.isPresent()) {
+            return user.get();
+        }
+        return null;
+    }
+
 
 }

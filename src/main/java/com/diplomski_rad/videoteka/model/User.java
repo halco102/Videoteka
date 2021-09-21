@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.Field;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -32,6 +29,12 @@ public class User extends Person{
 
     @Field
     private SortedSet<String> roles;
+
+    @Field
+    private List<Content> ownedItems;
+
+    @Field
+    private int money;
 
 /*    @Field
     private Set<Role> roles = new HashSet<>();*/
