@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
-<html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Cartoons</title>
+    <meta charset="UTF-8">
+    <title>Series</title>
     <link href="/css/entertainment.css" rel="stylesheet" type="text/css" th:href="@{/css/entertainment.css}" />
 
 </head>
@@ -16,12 +17,11 @@
 <div class="nav">
     <ul>
         <li>
-            <a href="/api/v1/videoteka/series"> Series</a>
+            <a href="/api/v1/videoteka/movies"> Movies</a>
         </li>
         <li>
-            <a href="/api/v1/videoteka/movies">Movies</a>
+            <a href="/api/v1/videoteka/series">Series</a>
         </li>
-
         <div class="logout">
             <li><a href="/api/v1/videoteka/logout"><b>Log out</b></a></li>
         </div>
@@ -52,29 +52,19 @@
             <th>Year</th>
             <th>Seasons</th>
             <th>Genre</th>
-            <th>Creators</th>
-            <th>Creators origin</th>
             <th>Price</th>
         </tr>
-        <tr th:each="cartoons : ${cartoons}">
-            <td th:text="${cartoons.id}"></td>
-            <td th:text="${cartoons.name}"></td>
-            <td th:text="${cartoons.year}"></td>
-            <td th:text="${cartoons.seasons}"></td>
-            <td><span th:each="genres : ${cartoons.genres}"
+        <tr th:each="cartoon : ${cartoons}">
+            <td th:text="${cartoon.id}"></td>
+            <td th:text="${cartoon.name}"></td>
+            <td th:text="${cartoon.year}"></td>
+            <td th:text="${cartoon.seasons}"></td>
+            <td><span th:each="genres : ${cartoon.genres}"
                       th:text="${genres.name + ' '}">
           </span></td>
-            <td><span th:each="creators : ${cartoons.creators}"
-                      th:text="${creators.firstName + ' ' + creators.lastName + ',' + ' '}">
-          </span></td>
-            <td><span th:each="creators : ${cartoons.creators}"
-                      ><span th:each="country : ${creators.country}"
-                        th:text="${country.countryName}">
-                        </span>
-          </span></td>
-            <td th:text="${cartoons.price}"></td>
+            <td th:text="${cartoon.price}"></td>
             <td th:if="${username != 'anonymousUser'}">
-                <form action="#"  th:action="@{/api/v1/videoteka/user/buy/{id}(id=${cartoons.id})}" method="post">
+                <form action="#"  th:action="@{/api/v1/videoteka/user/buy/cartoon/{id}(id=${cartoon.id})}" method="post">
                     <button>Buy</button>
                 </form>
             </td>
@@ -90,4 +80,7 @@
 </body>
 
 
+</html>
+
+</body>
 </html>

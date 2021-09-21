@@ -96,7 +96,7 @@ public class MovieController {
     //add new movie
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin-add-delete/movies")
-    public  String addEntertainment(Model model,String keyword){
+    public  String addEntertainment(Model model){
         Movie movies = new Movie();
 
         model.addAttribute("movies",movies);

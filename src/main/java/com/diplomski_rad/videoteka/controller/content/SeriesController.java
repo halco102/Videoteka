@@ -9,9 +9,11 @@ import com.diplomski_rad.videoteka.service.content.SeriesService;
 import com.diplomski_rad.videoteka.service.persons.StarsService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -58,13 +60,13 @@ public class SeriesController {
     }
 
     @GetMapping("/admin-add-delete/series")
-    public  String addEntertainment(Model model,String keyword){
+    public  String addEntertainment(Model model){
         Series series= new Series();
         model.addAttribute("series",series);
         List<Genre> genres = new ArrayList<>();
         genreService.findAllGenres().iterator().forEachRemaining(genres::add);
         model.addAttribute("g",genres);
-        model.addAttribute("se",seriesService.findByKeyword(keyword));
+        model.addAttribute("se",seriesService.getAllContent());
 
         return "videoteka/admin/add-series.html";
     }
@@ -83,10 +85,24 @@ public class SeriesController {
         return "videoteka/admin/edit/edit-series.html";
     }
 
-
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin-add-delete/series/update")
-    public String submitForm(@ModelAttribute("updateSeries") Series series,
+    public String edit(Model model,
+                       @ModelAttribute("updateSeries") Series updateSeries,
+                       @RequestParam("ids") List<Genre> genres,
+                       BindingResult result){
+
+        for(int i = 0 ; i < genres.size();i++ ){
+            updateSeries.getGenres().add(genres.get(i));
+        }
+        seriesService.saveContent(updateSeries);
+        return "redirect:/api/v1/videoteka/admin-add-delete/series";
+    }
+
+
+
+    @PostMapping("/admin-add-delete/series")
+    public String submitForm(@ModelAttribute("series") Series series,
                              @RequestParam("ids") List<Genre> genres,
                              Model model){
 
