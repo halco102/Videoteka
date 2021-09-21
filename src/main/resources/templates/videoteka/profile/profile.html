@@ -10,10 +10,19 @@
 <div>
     <h1>Profile</h1>
     <h3>User: <span th:text="${username}"></span></h3>
+
+
+
 </div>
 
 
 <form action="#" method="get" th:object="${users}"  th:action="@{/api/v1/videoteka/user/profile}" >
+
+    <h3>User id :<span th:text="${users.id}"></span></h3>
+    <h3>First name :<span th:text="${users.firstName}"></span></h3>
+    <h3>Last name :<span th:text="${users.firstName}"></span></h3>
+    <h3>Country :<span th:text="${users.country}"></span></h3>
+    <h3>Email :<span th:text="${users.eMail}"></span></h3>
 
         <table class="table" th:if="${users.ownedItems != null}">
             <tr>ID</tr>
