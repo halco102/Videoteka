@@ -73,7 +73,7 @@
                         </span>
           </span></td>
             <td th:text="${cartoons.price}"></td>
-            <td>
+            <td th:if="${username != 'anonymousUser'}">
                 <form action="#"  th:action="@{/api/v1/videoteka/user/buy/{id}(id=${cartoons.id})}" method="post">
                     <button>Buy</button>
                 </form>

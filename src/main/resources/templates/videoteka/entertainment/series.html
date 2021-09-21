@@ -67,7 +67,7 @@
                       th:text="${stars.firstName+ ' ' + stars.lastName +',' + ' '}">
           </span></td>
             <td th:text="${series.price}"></td>
-            <td>
+            <td th:if="${username != 'anonymousUser'}">
                 <form action="#"  th:action="@{/api/v1/videoteka/user/buy/series/{id}(id=${series.id})}" method="post">
                     <button>Buy</button>
                 </form>
