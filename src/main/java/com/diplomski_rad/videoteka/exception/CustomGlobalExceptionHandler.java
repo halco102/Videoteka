@@ -25,6 +25,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public ErrorMessage handleException(DuplicateException ex) {
+        LOGGER.error(ex.getMessage(), ex);
+
+        return new ErrorMessage(409, ex.getMessage());
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public ErrorMessage handleException(UnauthorizedException ex) {

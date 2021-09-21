@@ -11,8 +11,6 @@
     <h1>Profile</h1>
     <h3>User: <span th:text="${username}"></span></h3>
 
-
-
 </div>
 
 
@@ -20,17 +18,19 @@
 
     <h3>User id :<span th:text="${users.id}"></span></h3>
     <h3>First name :<span th:text="${users.firstName}"></span></h3>
-    <h3>Last name :<span th:text="${users.firstName}"></span></h3>
+    <h3>Last name :<span th:text="${users.lastName}"></span></h3>
     <h3>Country :<span th:text="${users.country}"></span></h3>
     <h3>Email :<span th:text="${users.eMail}"></span></h3>
 
-        <table class="table" th:if="${users.ownedItems != null}">
+        <table class="table" th:if="${users.ownedItems != null and !users.ownedItems.empty}">
             <tr>ID</tr>
             <tr>Title</tr>
+            <tr>Content</tr>
 
             <tr th:each="item: ${users.ownedItems}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.name}"></td>
+                <td th:text="${item.t.id}"></td>
+                <td th:text="${item.t.name}"></td>
+                <td th:text="${item.className}"></td>
             </tr>
         </table>
 

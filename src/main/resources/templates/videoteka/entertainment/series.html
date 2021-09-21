@@ -53,6 +53,7 @@
             <th>Seasons</th>
             <th>Genre</th>
             <th>Stars</th>
+            <th>Price</th>
         </tr>
         <tr th:each="series : ${series}">
             <td th:text="${series.id}"></td>
@@ -65,6 +66,12 @@
             <td><span th:each="stars : ${series.stars}"
                       th:text="${stars.firstName+ ' ' + stars.lastName +',' + ' '}">
           </span></td>
+            <td th:text="${series.price}"></td>
+            <td>
+                <form action="#"  th:action="@{/api/v1/videoteka/user/buy/series/{id}(id=${series.id})}" method="post">
+                    <button>Buy</button>
+                </form>
+            </td>
         </tr>
 
     </table>

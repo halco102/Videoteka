@@ -1,6 +1,7 @@
 package com.diplomski_rad.videoteka.model;
 
 
+import com.diplomski_rad.videoteka.payload.response.BoughtContent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import org.springframework.data.couchbase.core.mapping.Field;
 import java.util.*;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Document
 public class User extends Person{
@@ -30,8 +30,10 @@ public class User extends Person{
     @Field
     private SortedSet<String> roles;
 
+/*    @Field
+    private List<Content> ownedItems;*/
     @Field
-    private List<Content> ownedItems;
+    private List<BoughtContent> ownedItems;
 
     @Field
     private int money;
@@ -45,6 +47,11 @@ public class User extends Person{
         this.password = password;
         this.eMail = eMail;
         this.roles = new TreeSet<>();
+        this.ownedItems = new ArrayList<>();
+    }
+
+    public User() {
+        this.ownedItems = new ArrayList<>();
     }
 
 }

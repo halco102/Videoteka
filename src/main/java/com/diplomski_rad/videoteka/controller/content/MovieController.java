@@ -32,12 +32,15 @@ public class MovieController {
     @Autowired
     StarsService starsService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/movies")
     public String getMovies(Model model, String keyword, String searchGenre) {
         model.addAttribute("movies", movieService.searchEngine(searchGenre, keyword));
         model.addAttribute("genres", genreService.findAllGenres());
         model.addAttribute("stars", starsService.getAllPersons());
-        model.addAttribute("userName", UserController.displayName);
+        model.addAttribute("username", UserController.displayName);
 
         return  "videoteka/entertainment/movies.html";
     }
@@ -120,5 +123,10 @@ public class MovieController {
         return "redirect:/api/v1/videoteka/admin-add-delete/movies";
     }
 
+    @PostMapping("/user/buy/movie/{id}")
+    public String buyMovie(@ModelAttribute("id") String id, Model model) {
+        this.userService.buyContent(new Movie(), id);
+        return "redirect:/api/v1/videoteka/movies";
+    }
 
 }

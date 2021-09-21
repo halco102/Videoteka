@@ -1,14 +1,22 @@
 package com.diplomski_rad.videoteka.service.persons;
 
+import com.diplomski_rad.videoteka.exception.DuplicateException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
-import com.diplomski_rad.videoteka.model.User;
+import com.diplomski_rad.videoteka.model.*;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SigninRequest;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
+import com.diplomski_rad.videoteka.payload.response.BoughtContent;
 import com.diplomski_rad.videoteka.payload.response.SigninResponse;
 import com.diplomski_rad.videoteka.payload.response.SignupResponse;
+import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
+import com.diplomski_rad.videoteka.repository.content.CartoonRepository;
+import com.diplomski_rad.videoteka.repository.content.MovieRepository;
+import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,10 +25,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
+@Slf4j
 public class UserService extends AbstractPersonService<User> {
 
     private final UserRepository userRepository;
@@ -29,14 +41,22 @@ public class UserService extends AbstractPersonService<User> {
 
     private final FusionAuth fusionAuth;
 
+    private final MovieRepository movieRepository;
+
+    private final SeriesRepository seriesRepository;
+
+    private final CartoonRepository cartoonRepository;
 
     public static String jwtLoggedUser;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, FusionAuth fusionAuth) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, FusionAuth fusionAuth, MovieRepository movieRepository, SeriesRepository seriesRepository, CartoonRepository cartoonRepository) {
         super(userRepository);
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.fusionAuth = fusionAuth;
+        this.movieRepository = movieRepository;
+        this.cartoonRepository = cartoonRepository;
+        this.seriesRepository = seriesRepository;
     }
 
     @Override
@@ -186,5 +206,60 @@ public class UserService extends AbstractPersonService<User> {
         return null;
     }
 
+    private boolean ifUserBoughtContent (List<? extends Content> list, String id) {
+
+        if (list.stream().anyMatch(e -> e.getId().matches(id))) {
+            log.info("Item already in user buy list");
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public void buyContent(Object object, String id) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        var user = this.findUserByUsername(authentication.getPrincipal().toString());
+
+        if (user.get().getOwnedItems() == null) {
+            throw new NotFoundException("List is null");
+        }
+
+        if (object instanceof Movie) {
+               if (ifUserBoughtContent(user.get().getOwnedItems(), id)) {
+                    log.info("User has this item");
+                    return;
+                }
+                var movie =  movieRepository.findById(id);
+                user.get().getOwnedItems().add(new BoughtContent("Movie", movie.get()));
+                this.userRepository.save(user.get());
+                log.info("Bought movie");
+
+        }else if (object instanceof Series) {
+            if (ifUserBoughtContent(user.get().getOwnedItems(), id)) {
+                log.info("User has that item");
+                return;
+            }
+            var series = seriesRepository.findById(id);
+            //user.get().getOwnedItems().add(series.get());
+            user.get().getOwnedItems().add(new BoughtContent("Series", series.get()));
+            log.info("Bought series");
+            this.userRepository.save(user.get());
+        }else if (object instanceof Cartoon) {
+            if (ifUserBoughtContent(user.get().getOwnedItems(), id)) {
+                log.info("User has that item");
+                return;
+            }
+            var cartoon = cartoonRepository.findById(id);
+            // user.get().getOwnedItems().add(cartoon.get());
+            user.get().getOwnedItems().add(new BoughtContent("Cartoon", cartoon.get()));
+            log.info("Bought cartoon");
+            this.userRepository.save(user.get());
+        }else {
+            throw new NotFoundException("Class type cannot be found !");
+        }
+
+    }
 
 }

@@ -33,6 +33,9 @@ public abstract class Content {
     @Field
     private Set<Genre> genres = new HashSet<>();
 
+    @Field
+    private int price = 10; // let it be for every content 10$
+
     public Content(String name, int year){
         this.name = name;
         this.year = year;

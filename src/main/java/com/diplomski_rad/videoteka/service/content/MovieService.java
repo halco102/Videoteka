@@ -59,4 +59,7 @@ public class MovieService extends AbstractContentService<Movie>{
     public List<Movie> searchEngine(String searchGenre, String keyword) {
         return super.searchEngine(searchGenre, keyword);
     }
+
+
+
 }

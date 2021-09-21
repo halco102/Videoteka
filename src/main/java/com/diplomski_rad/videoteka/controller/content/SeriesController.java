@@ -7,6 +7,7 @@ import com.diplomski_rad.videoteka.model.Series;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
 import com.diplomski_rad.videoteka.service.persons.StarsService;
+import com.diplomski_rad.videoteka.service.persons.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,12 +30,15 @@ public class SeriesController {
     @Autowired
     StarsService starsService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/series")
     public String getSeries(Model model,String keyword,String searchGenre){
         model.addAttribute("series",seriesService.searchEngine(searchGenre,keyword));
         model.addAttribute("genres",genreService.findAllGenres());
         model.addAttribute("stars",starsService.getAllPersons());
-        model.addAttribute("userName", UserController.displayName);
+        model.addAttribute("username", UserController.displayName);
 
         return "videoteka/entertainment/series.html";
     }
@@ -93,4 +97,9 @@ public class SeriesController {
         return "redirect:/api/v1/videoteka/admin-add-delete/series";
     }
 
+    @PostMapping("/user/buy/series/{id}")
+    public String buyMovie(@ModelAttribute("id") String id) {
+        this.userService.buyContent(new Series(), id);
+        return "redirect:/api/v1/videoteka/series";
+    }
 }

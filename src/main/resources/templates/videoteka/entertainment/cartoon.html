@@ -54,6 +54,7 @@
             <th>Genre</th>
             <th>Creators</th>
             <th>Creators origin</th>
+            <th>Price</th>
         </tr>
         <tr th:each="cartoons : ${cartoons}">
             <td th:text="${cartoons.id}"></td>
@@ -71,6 +72,12 @@
                         th:text="${country.countryName}">
                         </span>
           </span></td>
+            <td th:text="${cartoons.price}"></td>
+            <td>
+                <form action="#"  th:action="@{/api/v1/videoteka/user/buy/{id}(id=${cartoons.id})}" method="post">
+                    <button>Buy</button>
+                </form>
+            </td>
         </tr>
 
     </table>

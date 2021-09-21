@@ -1,5 +1,6 @@
 package com.diplomski_rad.videoteka.controller.person;
 
+import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import javassist.NotFoundException;
