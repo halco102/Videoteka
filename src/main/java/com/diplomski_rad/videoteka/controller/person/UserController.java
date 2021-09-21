@@ -107,9 +107,11 @@ public class UserController {
     }//end createAccount method
 
     @GetMapping("/logout")
-    public String logoutController(){
+    public String logoutController(Model model){
+        model.addAttribute("null","null");
         UserService.jwtLoggedUser = null;
-        return "videoteka/login/sign-in.html";
+        SecurityContextHolder.clearContext();
+        return "redirect:/api/v1/videoteka/login";
     }
 
 }

@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -58,6 +59,8 @@ public class Authentication extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.csrf().disable();
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
@@ -84,10 +87,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/api/v1/videoteka/index", true)
                 .and()
                 .logout()
-                .logoutUrl("/api/v1/videoteka/logout")
                 .logoutSuccessUrl("/api/v1/videoteka/login");
-
-        http.csrf().disable();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
@@ -98,4 +98,7 @@ public class Authentication extends WebSecurityConfigurerAdapter {
                 .ignoring()
                 .antMatchers("/h2-console/**", "/static/**");
     }
+
+
+
 }
