@@ -211,36 +211,45 @@ public class UserService extends AbstractPersonService<User> {
 
     private boolean ifUserBoughtContent (List<BoughtContent> list, String id) {
 
-        var temp = list.get(0).getT();
-
-        if (temp instanceof Movie) {
-            // map to movie
-            if (list.stream().map(e -> (Movie) e.getT())
-                            .anyMatch(k -> k.getId().matches(id))) {
-                return true;
-            }
+        if(list == null || list.isEmpty()) {
+            // let it add first item to list
             return false;
-
-        }else if (temp instanceof Cartoon) {
-            // map to cartoon
-            if (list.stream().map(e -> (Cartoon) e.getT())
-                    .anyMatch(k -> k.getId().matches(id))) {
-                return true;
-            }
-            return false;
-        }else if (temp instanceof Cartoon){
-            // map to series
-            if (list.stream().map(e -> (Series) e.getT())
-                    .anyMatch(k -> k.getId().matches(id))) {
-                return true;
-            }
-            return false;
-        }else {
-            throw new  NotFoundException("Not found");
         }
 
+
+            // map to movie
+            if (list.stream()
+                    .filter(in -> in.getT() instanceof Movie)
+                    .map(e -> (Movie) e.getT())
+                    .anyMatch(k -> k.getId().matches(id))) {
+                return true;
+            }else  if (list.stream()
+                    .filter(in -> in.getT() instanceof Cartoon)
+                    .map(e -> (Cartoon) e.getT())
+                    .anyMatch(k -> k.getId().matches(id))) {
+                return true;
+            }else  if (list.stream()
+                    .filter(in -> in.getT() instanceof Series)
+                    .map(e -> (Series) e.getT())
+                    .anyMatch(k -> k.getId().matches(id))) {
+                return true;
+            }
+            return false;
     }
 
+    private User payProccess(User user, int price) {
+
+        int money;
+        if (user.getMoney() < price) {
+            log.info("You dont have enough money to buy this product");
+            return null;
+        }
+
+        money = user.getMoney() - price;
+
+        user.setMoney(money);
+        return user;
+    }
 
     public void buyContent(Object object, String id) {
 
@@ -258,7 +267,10 @@ public class UserService extends AbstractPersonService<User> {
                 }
                 var movie =  movieRepository.findById(id);
                 user.get().getOwnedItems().add(new BoughtContent("Movie", movie.get()));
-                this.userRepository.save(user.get());
+
+                //
+
+                this.userRepository.save(payProccess(user.get(), movie.get().getPrice()));
                 log.info("Bought movie");
 
         }else if (object instanceof Series) {
@@ -270,7 +282,7 @@ public class UserService extends AbstractPersonService<User> {
             //user.get().getOwnedItems().add(series.get());
             user.get().getOwnedItems().add(new BoughtContent("Series", series.get()));
             log.info("Bought series");
-            this.userRepository.save(user.get());
+            this.userRepository.save(payProccess(user.get(), series.get().getPrice()));
         }else if (object instanceof Cartoon) {
             if (ifUserBoughtContent(user.get().getOwnedItems(), id)) {
                 log.info("User has that item");
@@ -280,7 +292,7 @@ public class UserService extends AbstractPersonService<User> {
             // user.get().getOwnedItems().add(cartoon.get());
             user.get().getOwnedItems().add(new BoughtContent("Cartoon", cartoon.get()));
             log.info("Bought cartoon");
-            this.userRepository.save(user.get());
+            this.userRepository.save(payProccess(user.get(), cartoon.get().getPrice()));
         }else {
             throw new NotFoundException("Class type cannot be found !");
         }
