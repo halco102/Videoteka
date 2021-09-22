@@ -35,7 +35,7 @@ public class CartoonController {
 
     @GetMapping("/cartoons")
     public String getCartoons(Model model, String keyword, String searchGenre) {
-        model.addAttribute("cartoon", cartoonService.searchEngine(searchGenre, keyword));
+        model.addAttribute("cartoons", cartoonService.searchEngine(searchGenre, keyword));
         model.addAttribute("genres", genreService.findAllGenres());
         model.addAttribute("stars", starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
@@ -123,7 +123,7 @@ public class CartoonController {
     @PostMapping("/user/buy/cartoon/{id}")
     public String buyCartoon(@PathVariable("id") String id, Model model) {
         this.userService.buyContent(new Cartoon(), id);
-        return "redirect:/api/v1/videoteka/cartoon";
+        return "redirect:/api/v1/videoteka/cartoons";
     }
 
 
