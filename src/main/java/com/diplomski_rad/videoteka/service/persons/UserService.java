@@ -14,6 +14,7 @@ import com.diplomski_rad.videoteka.repository.content.CartoonRepository;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -206,14 +207,38 @@ public class UserService extends AbstractPersonService<User> {
         return null;
     }
 
-    private boolean ifUserBoughtContent (List<? extends Content> list, String id) {
 
-        if (list.stream().anyMatch(e -> e.getId().matches(id))) {
-            log.info("Item already in user buy list");
-            return true;
+
+    private boolean ifUserBoughtContent (List<BoughtContent> list, String id) {
+
+        var temp = list.get(0).getT();
+
+        if (temp instanceof Movie) {
+            // map to movie
+            if (list.stream().map(e -> (Movie) e.getT())
+                            .anyMatch(k -> k.getId().matches(id))) {
+                return true;
+            }
+            return false;
+
+        }else if (temp instanceof Cartoon) {
+            // map to cartoon
+            if (list.stream().map(e -> (Cartoon) e.getT())
+                    .anyMatch(k -> k.getId().matches(id))) {
+                return true;
+            }
+            return false;
+        }else if (temp instanceof Cartoon){
+            // map to series
+            if (list.stream().map(e -> (Series) e.getT())
+                    .anyMatch(k -> k.getId().matches(id))) {
+                return true;
+            }
+            return false;
+        }else {
+            throw new  NotFoundException("Not found");
         }
 
-        return false;
     }
 
 
