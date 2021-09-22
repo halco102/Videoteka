@@ -1,36 +1,27 @@
 package com.diplomski_rad.videoteka.service.persons;
 
-import com.diplomski_rad.videoteka.exception.DuplicateException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
-import com.diplomski_rad.videoteka.model.*;
+import com.diplomski_rad.videoteka.model.Cartoon;
+import com.diplomski_rad.videoteka.model.Movie;
+import com.diplomski_rad.videoteka.model.Series;
+import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SigninRequest;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
 import com.diplomski_rad.videoteka.payload.response.BoughtContent;
-import com.diplomski_rad.videoteka.payload.response.SigninResponse;
-import com.diplomski_rad.videoteka.payload.response.SignupResponse;
-import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import com.diplomski_rad.videoteka.repository.content.CartoonRepository;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j

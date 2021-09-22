@@ -1,6 +1,5 @@
 package com.diplomski_rad.videoteka.controller.person;
 
-import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import javassist.NotFoundException;
@@ -11,7 +10,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/api/v1/videoteka")

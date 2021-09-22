@@ -1,6 +1,5 @@
 package com.diplomski_rad.videoteka.security;
 
-import com.couchbase.client.core.deps.io.netty.buffer.ByteBuf;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
