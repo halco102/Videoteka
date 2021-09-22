@@ -35,7 +35,7 @@ public class CartoonController {
 
     @GetMapping("/cartoons")
     public String getCartoons(Model model, String keyword, String searchGenre) {
-        model.addAttribute("cartoons", cartoonService.searchEngine(searchGenre, keyword));
+        model.addAttribute("cartoon", cartoonService.searchEngine(searchGenre, keyword));
         model.addAttribute("genres", genreService.findAllGenres());
         model.addAttribute("stars", starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
@@ -61,13 +61,13 @@ public class CartoonController {
     //update
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin-add-delete/cartoon/update/{id}")
-    public String editCartoon(Model model, @PathVariable String id, String keyword){
+    public String editCartoon(Model model, @PathVariable String id){
 
         var updateCartoons = cartoonService.getContentById(id);
         List<Genre> genres = new ArrayList<>();
         genreService.findAllGenres().iterator().forEachRemaining(genres::add);
 
-        model.addAttribute("updateMovies", updateCartoons);
+        model.addAttribute("updateCartoons", updateCartoons);
         model.addAttribute("g",genreService.findAllGenres());
         //model.addAttribute("m",movieService.findByKeyword(keyword));
         model.addAttribute("c",cartoonService.getAllContent());
@@ -94,21 +94,21 @@ public class CartoonController {
     //add new movie
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/admin-add-delete/cartoon")
-    public  String addEntertainment(Model model,String keyword){
+    public  String addEntertainment(Model model){
 
         model.addAttribute("cartoons", new Cartoon());
         List<Genre> genres = new ArrayList<>();
         genreService.findAllGenres().iterator().forEachRemaining(genres::add);
-        model.addAttribute("g",genres);
+        model.addAttribute("genre",genres);
         //model.addAttribute("m",movieService.findByKeyword(keyword));
-        model.addAttribute("c",cartoonService.getAllContent());
+        model.addAttribute("cartoon",cartoonService.getAllContent());
 
-        return "videoteka/admin/add-cartoon.html";
+        return "videoteka/admin/add-cartoons.html";
     }
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping("/admin-add-delete/cartoon")
+    @PostMapping("/admin-add-delete/cartoons")
     public String submitForm( @ModelAttribute("cartoon") Cartoon cartoon,
                               @RequestParam("ids") List<Genre> genres,
                               Model model){
