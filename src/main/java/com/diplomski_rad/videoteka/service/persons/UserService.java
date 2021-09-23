@@ -1,5 +1,6 @@
 package com.diplomski_rad.videoteka.service.persons;
 
+import com.diplomski_rad.videoteka.exception.BadRequestException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
 import com.diplomski_rad.videoteka.model.Cartoon;
 import com.diplomski_rad.videoteka.model.Movie;
@@ -233,7 +234,7 @@ public class UserService extends AbstractPersonService<User> {
         int money;
         if (user.getMoney() < price) {
             log.info("You dont have enough money to buy this product");
-            return null;
+            throw new BadRequestException("User does not have any money");
         }
 
         money = user.getMoney() - price;

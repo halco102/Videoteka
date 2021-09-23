@@ -1,6 +1,8 @@
 package com.diplomski_rad.videoteka.controller.content;
 
 import com.diplomski_rad.videoteka.controller.person.UserController;
+import com.diplomski_rad.videoteka.exception.BadRequestException;
+import com.diplomski_rad.videoteka.exception.NotFoundException;
 import com.diplomski_rad.videoteka.model.Cartoon;
 import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.service.GenreService;
@@ -122,7 +124,15 @@ public class CartoonController {
 
     @PostMapping("/user/buy/cartoon/{id}")
     public String buyCartoon(@PathVariable("id") String id, Model model) {
-        this.userService.buyContent(new Cartoon(), id);
+        try {
+            this.userService.buyContent(new Cartoon(), id);
+        }catch (BadRequestException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "/videoteka/errorHandling.html";
+        }catch (NotFoundException not) {
+            model.addAttribute("errorMessage", not.getMessage());
+            return "/videoteka/errorHandling.html";
+        }
         return "redirect:/api/v1/videoteka/cartoons";
     }
 
