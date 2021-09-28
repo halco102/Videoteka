@@ -40,7 +40,9 @@ public class MovieController {
         model.addAttribute("stars", starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
 
-        return  "videoteka/entertainment/movies.html";
+       // return  "videoteka/entertainment/movies.html";
+
+        return  "videoteka/entertainment/test.html";
     }
 
     @GetMapping("/movies/{id}")

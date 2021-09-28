@@ -58,6 +58,7 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        String imageUrl = "https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UX182_CR0,0,182,268_AL_.jpg";
 
         System.out.println("Bootstrap started!");
         Role role = new Role("ADMIN");
@@ -100,23 +101,7 @@ public class Bootstrap implements CommandLineRunner {
 
 
         User user2 = new User("Lejla","Bandic","weejws","222","lejla@hotmail.com");
-/*
-        userRepository.save(user);
-        userRepository.save(user1);
-        userRepository.save(user2);
-*/
-/*
-        user.getRoles().add(role1);
-        user2.getRoles().add(role1);
-        user1.getRoles().add(role);*//*
 
-
-        userRepository.save(user);
-        userRepository.save(user1);
-        userRepository.save(user2);
-*/
-
-        //ennd
 
         //star
         Stars star = new Stars("Leonardo","DiCaprio");
@@ -132,10 +117,10 @@ public class Bootstrap implements CommandLineRunner {
 
 
         //create movie
-        Movie movie = new Movie("Wolf of the Wall Street",1999,20);
-        Movie movie1 = new Movie("Test2",2002,40);
-        Movie movie2 = new Movie("KKK",2003,30);
-        Movie movie3 = new Movie("Test3",2004,50);
+        Movie movie = new Movie("Wolf of the Wall Street",1999,20, imageUrl);
+        Movie movie1 = new Movie("Test2",2002,40, imageUrl);
+        Movie movie2 = new Movie("Test1",2003,30, imageUrl);
+        Movie movie3 = new Movie("Test3",2004,50, imageUrl);
 
         movie.getStars().addAll(Arrays.asList(star,star2,star1,star3));
         movie1.getStars().addAll(Arrays.asList(star3,star2));
@@ -147,10 +132,10 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie2);
         movieRepository.save(movie3);
 
-        Series series = new Series("Test1",1999,20);
-        Series series1 = new Series("Test2",2002,40);
-        Series series2 = new Series("Test3",2001,21);
-        Series series3 = new Series("KKK",2010,10);
+        Series series = new Series("Test1",1999,20, imageUrl);
+        Series series1 = new Series("Test2",2002,40, imageUrl);
+        Series series2 = new Series("Test3",2001,21, imageUrl);
+        Series series3 = new Series("Test4",2010,10, imageUrl);
 
         series.getStars().addAll(Arrays.asList(star,star2,star1,star3));
         series1.getStars().addAll(Arrays.asList(star3,star2));
@@ -178,10 +163,10 @@ public class Bootstrap implements CommandLineRunner {
 
 
 
-        Cartoon cartoon = new Cartoon("Test1",1999,20);
-        Cartoon cartoon1 = new Cartoon("Test2",2002,10);
-        Cartoon cartoon2 = new Cartoon("Test3",2007,4);
-        Cartoon cartoon3 = new Cartoon("KKK",2011,7);
+        Cartoon cartoon = new Cartoon("Test1",1999,20, imageUrl);
+        Cartoon cartoon1 = new Cartoon("Test2",2002,10, imageUrl);
+        Cartoon cartoon2 = new Cartoon("Test3",2007,4, imageUrl);
+        Cartoon cartoon3 = new Cartoon("Test4",2011,7, imageUrl);
 
         cartoon.getCreators().addAll(Arrays.asList(creator,creator1));
         cartoon1.getCreators().addAll(Arrays.asList(creator1,creator2));

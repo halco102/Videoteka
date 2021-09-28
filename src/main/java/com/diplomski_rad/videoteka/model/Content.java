@@ -36,9 +36,18 @@ public abstract class Content {
     @Field
     private int price = 10; // let it be for every content 10$
 
+    @Field
+    private String imageUrl;
+
     public Content(String name, int year){
         this.name = name;
         this.year = year;
+    }
+
+    public Content(String name, int year, String imageUrl) {
+        this.name = name;
+        this.year = year;
+        this.imageUrl = imageUrl;
     }
 
 }
