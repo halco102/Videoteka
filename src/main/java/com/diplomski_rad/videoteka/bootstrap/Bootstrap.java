@@ -140,8 +140,13 @@ public class Bootstrap implements CommandLineRunner {
         List<Movie> movies = new ArrayList<>();
         imdbIds.forEach(item -> {
             MainModel model = contentApi.getMoviesByPopularity(apiKey, item);
-            movies.add(new Movie(model.getData().getTitle(), model.getData().getRelease(), model.getData().getMovie_length(), model.getData().getImage_url(), model.getData().getDescription()));
+            movies.add(new Movie(model.getData().getTitle(),
+                    model.getData().getRelease(),
+                    model.getData().getMovie_length(),
+                    model.getData().getImage_url(),
+                    model.getData().getDescription()));
         });
+
 
         for (Movie m: movies
              ) {
