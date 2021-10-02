@@ -117,10 +117,10 @@ public class Bootstrap implements CommandLineRunner {
 
 
         //create movie
-        Movie movie = new Movie("Wolf of the Wall Street",1999,20, imageUrl);
-        Movie movie1 = new Movie("Test2",2002,40, imageUrl);
-        Movie movie2 = new Movie("Test1",2003,30, imageUrl);
-        Movie movie3 = new Movie("Test3",2004,50, imageUrl);
+        Movie movie = new Movie("Wolf of the Wall Street","1984-04-05",20, imageUrl);
+        Movie movie1 = new Movie("Test2","1984-04-05",40, imageUrl);
+        Movie movie2 = new Movie("Test1","1984-04-05",30, imageUrl);
+        Movie movie3 = new Movie("Test3","1984-04-05",50, imageUrl);
 
         movie.getStars().addAll(Arrays.asList(star,star2,star1,star3));
         movie1.getStars().addAll(Arrays.asList(star3,star2));
@@ -132,10 +132,10 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie2);
         movieRepository.save(movie3);
 
-        Series series = new Series("Test1",1999,20, imageUrl);
-        Series series1 = new Series("Test2",2002,40, imageUrl);
-        Series series2 = new Series("Test3",2001,21, imageUrl);
-        Series series3 = new Series("Test4",2010,10, imageUrl);
+        Series series = new Series("Test1","1984-04-05",20, imageUrl);
+        Series series1 = new Series("Test2","1984-04-05",40, imageUrl);
+        Series series2 = new Series("Test3","1984-04-05",21, imageUrl);
+        Series series3 = new Series("Test4","1984-04-05",10, imageUrl);
 
         series.getStars().addAll(Arrays.asList(star,star2,star1,star3));
         series1.getStars().addAll(Arrays.asList(star3,star2));
@@ -163,10 +163,10 @@ public class Bootstrap implements CommandLineRunner {
 
 
 
-        Cartoon cartoon = new Cartoon("Test1",1999,20, imageUrl);
-        Cartoon cartoon1 = new Cartoon("Test2",2002,10, imageUrl);
-        Cartoon cartoon2 = new Cartoon("Test3",2007,4, imageUrl);
-        Cartoon cartoon3 = new Cartoon("Test4",2011,7, imageUrl);
+        Cartoon cartoon = new Cartoon("Test1","1984-04-05",20, imageUrl);
+        Cartoon cartoon1 = new Cartoon("Test2","1984-04-05",10, imageUrl);
+        Cartoon cartoon2 = new Cartoon("Test3","1984-04-05",4, imageUrl);
+        Cartoon cartoon3 = new Cartoon("Test4","1984-04-05",7, imageUrl);
 
         cartoon.getCreators().addAll(Arrays.asList(creator,creator1));
         cartoon1.getCreators().addAll(Arrays.asList(creator1,creator2));

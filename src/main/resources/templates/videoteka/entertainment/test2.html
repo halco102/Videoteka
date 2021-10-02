@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <title>Test image from url</title>
+
+    <style>
+    *{
+        background-color: RGB(146, 168, 209)
+    }
+    .center_picture{
+        text-align: center;
+    }
+    .info{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+    .trailer{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 100px;
+    }
+    li{
+        list-style-type: none;
+    }
+
+    button{
+        width: 100px;
+        height: 50px;
+    }
+
+    .buy{
+        text-align: center;
+    }
+
+    .other_info{
+        display: flex;
+        justify-content: center;
+        margin: 20px;
+    }
+
+    table{
+        font-size: 30px;
+    }
+
+    th{
+        padding-right: 20px;
+    }
+    </style>
+
+</head>
+<body>
+
+
+<div>
+    <h1 style="text-align: center;">Movie title</h1>
+    <div class="center_picture" >
+        <img th:src="${movies.imageUrl}">
+    </div>
+</div>
+
+<div class="info">
+    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+        with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+
+<div class="main_content">
+    <div class="trailer">
+        <iframe width="500" height="350" src="https://www.youtube.com/embed/7cPMriE8fKU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="other_info">
+
+        <table>
+            <tr>
+                <th>Year</th>
+                <td th:text="${movies.year}"></th>
+            </tr>
+            <tr>
+                <th>Genres</th>
+                <td th:each="genre : ${movies.genres}" th:text="${genre.name + ' '}">
+                </td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td th:text="${movies.price}"></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="buy">
+        <button>Buy</button>
+    </div>
+
+</div>
+
+
+</body>
+</html>

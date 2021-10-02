@@ -48,7 +48,8 @@ public class MovieController {
     @GetMapping("/movies/{id}")
     public String getMovieById(Model model, @PathVariable String id){
         model.addAttribute("movies", movieService.getContentById(id).orElse(null));
-        return "videoteka/entertainment/movies.html";
+        //return "videoteka/entertainment/movies.html";
+        return "videoteka/entertainment/test2.html";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

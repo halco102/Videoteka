@@ -25,7 +25,7 @@ public abstract class Content {
     private String name;
 
     @Field
-    private int year;
+    private String release;
 
     @Field
     private Set<Creator> creators = new HashSet<>();
@@ -37,17 +37,20 @@ public abstract class Content {
     private int price = 10; // let it be for every content 10$
 
     @Field
-    private String imageUrl;
+    private String image_url;
 
-    public Content(String name, int year){
+    @Field
+    private String description;
+
+    public Content(String name, String release){
         this.name = name;
-        this.year = year;
+        this.release = release;
     }
 
-    public Content(String name, int year, String imageUrl) {
+    public Content(String name, String release, String imageUrl) {
         this.name = name;
-        this.year = year;
-        this.imageUrl = imageUrl;
+        this.release = release;
+        this.release = imageUrl;
     }
 
 }

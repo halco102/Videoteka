@@ -11,7 +11,7 @@
 
 <div class="responsive">
     <div class="gallery" th:each="movie : ${movies}">
-        <a target="_blank" href="img_5terre.jpg">
+        <a target="_blank" th:href="@{/api/v1/videoteka/movies/{id}(id=${movie.id})}">
             <img th:src="${movie.imageUrl}" alt="Cinque Terre" width="600" height="400">
         </a>
         <div class="desc">Add a description of the image here</div>

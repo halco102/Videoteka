@@ -22,8 +22,8 @@ public class Movie extends Content{
     @Field
     private Set<Stars> stars = new HashSet<>();
 
-    public Movie(String name, int year, int runtime, String imageUrl){
-        super(name, year, imageUrl);
+    public Movie(String name, String release, int runtime, String imageUrl){
+        super(name, release, imageUrl);
         this.runtime = runtime;
     }
 

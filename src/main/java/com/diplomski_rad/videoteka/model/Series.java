@@ -21,8 +21,8 @@ public class Series extends Content{
     @Field
     private int seasons;
 
-    public Series(String name, int year, int seasons, String imageUrl){
-        super(name, year, imageUrl);
+    public Series(String name, String release, int seasons, String imageUrl){
+        super(name, release, imageUrl);
         this.seasons = seasons;
     }
 
