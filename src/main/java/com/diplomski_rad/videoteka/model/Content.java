@@ -49,8 +49,15 @@ public abstract class Content {
 
     public Content(String name, String release, String imageUrl) {
         this.name = name;
-        this.release = release;
+        this.image_url = release;
         this.release = imageUrl;
+    }
+
+    public Content(String name, String release, String imageUrl, String description) {
+        this.name = name;
+        this.release = release;
+        this.image_url = imageUrl;
+        this.description = description;
     }
 
 }

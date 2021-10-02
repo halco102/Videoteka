@@ -21,5 +21,6 @@ public class ContentModel {
     private double rating;
     private String image_url;
     private String release;
+    private String type;
 
 }

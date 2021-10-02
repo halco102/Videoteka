@@ -27,4 +27,9 @@ public class Movie extends Content{
         this.runtime = runtime;
     }
 
+    public Movie(String name, String release, int runtime, String image_url, String description) {
+        super(name, release, image_url, description);
+        this.runtime = runtime;
+    }
+
 }

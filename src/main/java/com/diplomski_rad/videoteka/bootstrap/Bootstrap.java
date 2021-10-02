@@ -1,5 +1,7 @@
 package com.diplomski_rad.videoteka.bootstrap;
 
+import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
+import com.diplomski_rad.videoteka.externalapi.model.MainModel;
 import com.diplomski_rad.videoteka.model.*;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
@@ -13,17 +15,23 @@ import com.diplomski_rad.videoteka.repository.person.CreatorRepository;
 import com.diplomski_rad.videoteka.repository.person.StarRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
 
     @Autowired
     FusionAuth fusionAuth;
+
+    @Value("${apiKey}")
+    private String apiKey;
 
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
@@ -34,6 +42,7 @@ public class Bootstrap implements CommandLineRunner {
     private final StarRepository starRepository;
     private final CreatorRepository creatorRepository;
     private final CountryRepository countryRepository;
+    private final ContentApi contentApi;
 
     public Bootstrap(MovieRepository movieRepository,
                      GenreRepository genreRepository,
@@ -43,7 +52,8 @@ public class Bootstrap implements CommandLineRunner {
                      RoleRepository roleRepository,
                      StarRepository starRepository,
                      CreatorRepository creatorRepository,
-                     CountryRepository countryRepository){
+                     CountryRepository countryRepository,
+                     ContentApi contentApi){
         this.movieRepository=movieRepository;
         this.genreRepository=genreRepository;
         this.seriesRepository=seriesRepository;
@@ -53,12 +63,16 @@ public class Bootstrap implements CommandLineRunner {
         this.starRepository=starRepository;
         this.creatorRepository=creatorRepository;
         this.countryRepository=countryRepository;
+        this.contentApi = contentApi;
     }
+
 
     @Override
     public void run(String... args) throws Exception {
 
         String imageUrl = "https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UX182_CR0,0,182,268_AL_.jpg";
+        List<String> imdbIds = new ArrayList<>(Arrays.asList("tt10942302", "tt0111161", "tt0068646", "tt5773402"));
+
 
         System.out.println("Bootstrap started!");
         Role role = new Role("ADMIN");
@@ -117,12 +131,24 @@ public class Bootstrap implements CommandLineRunner {
 
 
         //create movie
-        Movie movie = new Movie("Wolf of the Wall Street","1984-04-05",20, imageUrl);
+/*        Movie movie = new Movie("Wolf of the Wall Street","1984-04-05",20, imageUrl);
         Movie movie1 = new Movie("Test2","1984-04-05",40, imageUrl);
         Movie movie2 = new Movie("Test1","1984-04-05",30, imageUrl);
-        Movie movie3 = new Movie("Test3","1984-04-05",50, imageUrl);
+        Movie movie3 = new Movie("Test3","1984-04-05",50, imageUrl);*/
 
-        movie.getStars().addAll(Arrays.asList(star,star2,star1,star3));
+
+        List<Movie> movies = new ArrayList<>();
+        imdbIds.forEach(item -> {
+            MainModel model = contentApi.getMoviesByPopularity(apiKey, item);
+            movies.add(new Movie(model.getData().getTitle(), model.getData().getRelease(), model.getData().getMovie_length(), model.getData().getImage_url(), model.getData().getDescription()));
+        });
+
+        for (Movie m: movies
+             ) {
+            movieRepository.save(m);
+        }
+
+/*        movie.getStars().addAll(Arrays.asList(star,star2,star1,star3));
         movie1.getStars().addAll(Arrays.asList(star3,star2));
         movie2.getStars().addAll(Arrays.asList(star1,star2));
         movie3.getStars().addAll(Arrays.asList(star,star1));
@@ -130,7 +156,7 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie);
         movieRepository.save(movie1);
         movieRepository.save(movie2);
-        movieRepository.save(movie3);
+        movieRepository.save(movie3);*/
 
         Series series = new Series("Test1","1984-04-05",20, imageUrl);
         Series series1 = new Series("Test2","1984-04-05",40, imageUrl);
@@ -196,7 +222,7 @@ public class Bootstrap implements CommandLineRunner {
         genreRepository.saveAll(Arrays.asList(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12));
 
         //add genres to movie
-        movie.getGenres().addAll(Arrays.asList(g1,g2,g3));
+/*        movie.getGenres().addAll(Arrays.asList(g1,g2,g3));
         movie1.getGenres().addAll(Arrays.asList(g1,g3));
         movie2.getGenres().addAll(Arrays.asList(g1));
         movie3.getGenres().addAll(Arrays.asList(g5));
@@ -204,7 +230,7 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie);
         movieRepository.save(movie1);
         movieRepository.save(movie2);
-        movieRepository.save(movie3);
+        movieRepository.save(movie3);*/
 
         series.getGenres().addAll(Arrays.asList(g1,g2,g3));
         series1.getGenres().addAll(Arrays.asList(g1,g3));

@@ -7,23 +7,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/external")
 public class ExternalApi {
-    @Value("apiKey")
+    @Value("${apiKey}")
     String apiKey;
 
     @Autowired
     ContentApi contentApi;
 
-    @GetMapping("/test")
-    public ResponseEntity<?> testing(){
-        return new ResponseEntity<>(this.contentApi.getMoviesByPopularity(apiKey), HttpStatus.OK);
+    @GetMapping("/test/{id}")
+    public ResponseEntity<?> testing(@PathVariable String id){
+        return new ResponseEntity<>(this.contentApi.getMoviesByPopularity(apiKey, id), HttpStatus.OK);
     }
 
 }

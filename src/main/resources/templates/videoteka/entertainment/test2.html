@@ -56,7 +56,7 @@
 <div>
     <h1 style="text-align: center;">Movie title</h1>
     <div class="center_picture" >
-        <img th:src="${movies.imageUrl}">
+        <img th:src="${movies.image_url}">
     </div>
 </div>
 
@@ -78,8 +78,8 @@
 
         <table>
             <tr>
-                <th>Year</th>
-                <td th:text="${movies.year}"></th>
+                <th>Runtime</th>
+                <td th:text="${movies.runtime}"></th>
             </tr>
             <tr>
                 <th>Genres</th>
