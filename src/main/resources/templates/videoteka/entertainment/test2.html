@@ -65,8 +65,11 @@
 </div>
 
 <div class="main_content">
-    <div class="trailer">
-        <iframe width="500" height="350" src="https://www.youtube.com/embed/7cPMriE8fKU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="trailer" th:if="${!#strings.isEmpty(movies.trailer)}">
+        <iframe width="500" height="350" th:src="${movies.trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="trailer" th:if="${#strings.isEmpty(movies.trailer)}">
+        <p>The trailer does not exist in our db</p>
     </div>
 
     <div class="other_info">
@@ -78,7 +81,7 @@
             </tr>
             <tr>
                 <th>Genres</th>
-                <td th:each="genre : ${movies.genres}" th:text="${genre.name + ' '}">
+                <td th:each="genre : ${movies.genres}" th:text="${genre.name + ', '}">
                 </td>
             </tr>
             <tr>

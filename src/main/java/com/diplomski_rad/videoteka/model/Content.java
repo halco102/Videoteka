@@ -42,6 +42,12 @@ public abstract class Content {
     @Field
     private String description;
 
+    @Field
+    private String trailer;
+
+    @Field
+    private double rating;
+
     public Content(String name, String release){
         this.name = name;
         this.release = release;
@@ -53,11 +59,14 @@ public abstract class Content {
         this.release = imageUrl;
     }
 
-    public Content(String name, String release, String imageUrl, String description) {
+    public Content(String name, String release, String imageUrl, String description, String trailer, double rating, Set<Genre> genres) {
         this.name = name;
         this.release = release;
         this.image_url = imageUrl;
         this.description = description;
+        this.trailer = trailer;
+        this.rating = rating;
+        this.genres = genres;
     }
 
 }

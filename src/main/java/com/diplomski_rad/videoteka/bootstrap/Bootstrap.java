@@ -20,9 +20,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class Bootstrap implements CommandLineRunner {
@@ -140,11 +138,24 @@ public class Bootstrap implements CommandLineRunner {
         List<Movie> movies = new ArrayList<>();
         imdbIds.forEach(item -> {
             MainModel model = contentApi.getMoviesByPopularity(apiKey, item);
-            movies.add(new Movie(model.getData().getTitle(),
+            Movie movie = new Movie(model.getData().getTitle(),
                     model.getData().getRelease(),
                     model.getData().getMovie_length(),
                     model.getData().getImage_url(),
-                    model.getData().getDescription()));
+                    model.getData().getDescription(),
+                    model.getData().getTrailer(),
+                    model.getData().getRating(),
+                    model.getData().getGen());
+            //add all genres to db
+            Set<Genre> myGenres = new HashSet<>();
+            for (Genre ge : model.getData().getGen()
+                    ) {
+               var temp = genreRepository.save(new Genre(null, ge.getName()));
+               myGenres.add(temp);
+            }
+            movie.setGenres(myGenres);
+            movies.add(movie);
+
         });
 
 
