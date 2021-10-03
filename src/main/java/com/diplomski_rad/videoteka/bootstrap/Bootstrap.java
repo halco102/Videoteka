@@ -1,3 +1,4 @@
+/*
 package com.diplomski_rad.videoteka.bootstrap;
 
 import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
@@ -129,10 +130,12 @@ public class Bootstrap implements CommandLineRunner {
 
 
         //create movie
+*/
 /*        Movie movie = new Movie("Wolf of the Wall Street","1984-04-05",20, imageUrl);
         Movie movie1 = new Movie("Test2","1984-04-05",40, imageUrl);
         Movie movie2 = new Movie("Test1","1984-04-05",30, imageUrl);
-        Movie movie3 = new Movie("Test3","1984-04-05",50, imageUrl);*/
+        Movie movie3 = new Movie("Test3","1984-04-05",50, imageUrl);*//*
+
 
 
         List<Movie> movies = new ArrayList<>();
@@ -145,7 +148,8 @@ public class Bootstrap implements CommandLineRunner {
                     model.getData().getDescription(),
                     model.getData().getTrailer(),
                     model.getData().getRating(),
-                    model.getData().getGen());
+                    model.getData().getGen(),
+                    model.getData().getType());
             //add all genres to db
             Set<Genre> myGenres = new HashSet<>();
             for (Genre ge : model.getData().getGen()
@@ -164,6 +168,7 @@ public class Bootstrap implements CommandLineRunner {
             movieRepository.save(m);
         }
 
+*/
 /*        movie.getStars().addAll(Arrays.asList(star,star2,star1,star3));
         movie1.getStars().addAll(Arrays.asList(star3,star2));
         movie2.getStars().addAll(Arrays.asList(star1,star2));
@@ -172,7 +177,8 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie);
         movieRepository.save(movie1);
         movieRepository.save(movie2);
-        movieRepository.save(movie3);*/
+        movieRepository.save(movie3);*//*
+
 
         Series series = new Series("Test1","1984-04-05",20, imageUrl);
         Series series1 = new Series("Test2","1984-04-05",40, imageUrl);
@@ -238,6 +244,7 @@ public class Bootstrap implements CommandLineRunner {
         genreRepository.saveAll(Arrays.asList(g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12));
 
         //add genres to movie
+*/
 /*        movie.getGenres().addAll(Arrays.asList(g1,g2,g3));
         movie1.getGenres().addAll(Arrays.asList(g1,g3));
         movie2.getGenres().addAll(Arrays.asList(g1));
@@ -246,7 +253,8 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie);
         movieRepository.save(movie1);
         movieRepository.save(movie2);
-        movieRepository.save(movie3);*/
+        movieRepository.save(movie3);*//*
+
 
         series.getGenres().addAll(Arrays.asList(g1,g2,g3));
         series1.getGenres().addAll(Arrays.asList(g1,g3));
@@ -275,3 +283,4 @@ public class Bootstrap implements CommandLineRunner {
 
     }
 }
+*/

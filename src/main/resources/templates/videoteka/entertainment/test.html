@@ -2,17 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
 <html>
 <head>
-    <title>Movies</title>
+    <title th:text="${title}"></title>
     <link href="/css/gallery.css" rel="stylesheet" type="text/css" th:href="@{/css/gallery.css}" />
+    <link href="/css/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigation_bar.css}" />
 </head>
 
 <body>
-<h1 style="text-align:center">Movies</h1>
+
+<header>
+
+    <p id="username" th:text="${username}"></p>
+    <nav>
+        <ul class="nav_ul">
+           <li th:each="link : ${links}">
+               <a th:href="@{/api/v1/videoteka/{link}(link=${link})}" th:text="${link}"></a>
+           </li>
+        </ul>
+    </nav>
+
+    <button id="login_button">Login</button>
+</header>
+
+<h1 style="text-align:center" th:text="${title}"></h1>
 
 <div class="responsive">
-    <div class="gallery" th:each="movie : ${movies}">
-        <a target="_blank" th:href="@{/api/v1/videoteka/movies/{id}(id=${movie.id})}">
-            <img th:src="${movie.image_url}" alt="Cinque Terre" width="600" height="400">
+    <div class="gallery" th:each="content : ${contents}">
+        <a target="_blank" th:href="@{/api/v1/videoteka/{type}/{id}(type=${title},id=${content.id})}">
+            <img th:src="${content.image_url}" alt="Cinque Terre" width="600" height="400">
         </a>
     </div>
 </div>

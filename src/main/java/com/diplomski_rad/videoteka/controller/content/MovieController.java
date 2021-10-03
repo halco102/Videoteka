@@ -1,5 +1,6 @@
 package com.diplomski_rad.videoteka.controller.content;
 
+import com.diplomski_rad.videoteka.constants.Titles;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
@@ -35,12 +36,12 @@ public class MovieController {
 
     @GetMapping("/movies")
     public String getMovies(Model model, String keyword, String searchGenre) {
-        model.addAttribute("movies", movieService.searchEngine(searchGenre, keyword));
+        model.addAttribute("contents", movieService.searchEngine(searchGenre, keyword));
         model.addAttribute("genres", genreService.findAllGenres());
         model.addAttribute("stars", starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
-
-       // return  "videoteka/entertainment/movies.html";
+        model.addAttribute("title", Titles.movieType);
+        model.addAttribute("links", movieService.getType(Titles.movieType));
 
         return  "videoteka/entertainment/test.html";
     }
@@ -48,7 +49,6 @@ public class MovieController {
     @GetMapping("/movies/{id}")
     public String getMovieById(Model model, @PathVariable String id){
         model.addAttribute("movies", movieService.getContentById(id).orElse(null));
-        //return "videoteka/entertainment/movies.html";
         return "videoteka/entertainment/test2.html";
     }
 

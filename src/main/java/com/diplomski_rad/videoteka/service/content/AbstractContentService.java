@@ -4,6 +4,8 @@ import com.diplomski_rad.videoteka.model.Content;
 import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,6 +14,8 @@ import java.util.stream.Collectors;
 public abstract class AbstractContentService<T extends Content> implements ContentService<T> {
 
     private final AbstractContentRepo<T> abstractContentRepo;
+
+    private final List<String> types = new ArrayList<>(Arrays.asList("movie", "series", "cartoon"));
 
     public AbstractContentService(AbstractContentRepo<T> abstractContentRepo) {
         this.abstractContentRepo = abstractContentRepo;
@@ -75,4 +79,14 @@ public abstract class AbstractContentService<T extends Content> implements Conte
         return abstractContentRepo.findAll();
     }
 
+    public List<String> getType(String type){
+        List<String> temp = new ArrayList<>();
+        for (String s: types
+             ) {
+            if (!s.matches(type)) {
+                temp.add(s);
+            }
+        }
+        return temp;
+    }
 }
