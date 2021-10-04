@@ -15,7 +15,7 @@
     <nav>
         <ul class="nav_ul">
            <li th:each="link : ${links}">
-               <a th:href="@{/api/v1/videoteka/{link}(link=${link})}" th:text="${link}"></a>
+               <a th:href="@{/api/v1/videoteka/{link}(link=${#strings.toLowerCase(link)})}"><p th:text="${#strings.capitalize(link)}"></p></a>
            </li>
         </ul>
     </nav>
@@ -27,7 +27,7 @@
 
 <div class="responsive">
     <div class="gallery" th:each="content : ${contents}">
-        <a target="_blank" th:href="@{/api/v1/videoteka/{type}/{id}(type=${title},id=${content.id})}">
+        <a target="_blank" th:href="@{/api/v1/videoteka/{type}/{id}(type=${#strings.toLowerCase(title)},id=${content.id})}">
             <img th:src="${content.image_url}" alt="Cinque Terre" width="600" height="400">
         </a>
     </div>

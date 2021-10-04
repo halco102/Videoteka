@@ -52,23 +52,22 @@
 </head>
 <body>
 
-
 <div>
-    <h1 style="text-align: center;" th:text="${movies.name}"></h1>
+    <h1 style="text-align: center;" th:text="${content.name}"></h1>
     <div class="center_picture" >
-        <img th:src="${movies.image_url}">
+        <img th:src="${content.image_url}">
     </div>
 </div>
 
 <div class="info">
-    <p th:text="${movies.description}"></p>
+    <p th:text="${content.description}"></p>
 </div>
 
 <div class="main_content">
-    <div class="trailer" th:if="${!#strings.isEmpty(movies.trailer)}">
-        <iframe width="500" height="350" th:src="${movies.trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="trailer" th:if="${!#strings.isEmpty(content.trailer)}">
+        <iframe width="500" height="350" th:src="${content.trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <div class="trailer" th:if="${#strings.isEmpty(movies.trailer)}">
+    <div class="trailer" th:if="${#strings.isEmpty(content.trailer)}">
         <p>The trailer does not exist in our db</p>
     </div>
 
@@ -77,23 +76,27 @@
         <table>
             <tr>
                 <th>Runtime</th>
-                <td th:text="${movies.runtime}"></th>
+                <td th:text="${content.runtime}"></th>
             </tr>
             <tr>
                 <th>Genres</th>
-                <td th:each="genre : ${movies.genres}" th:text="${genre.name + ', '}">
+                <td th:each="genre : ${content.genres}" th:text="${genre.name + ', '}">
                 </td>
             </tr>
             <tr>
                 <th>Price</th>
-                <td th:text="${movies.price}"></td>
+                <td th:text="${content.price}"></td>
             </tr>
         </table>
 
     </div>
 
     <div class="buy">
-        <button>Buy</button>
+        <td th:if="${username != 'anonymousUser'}">
+            <form action="#"  th:action="@{/api/v1/videoteka/user/buy/{title}/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}" method="post">
+                <button>Buy</button>
+            </form>
+        </td>
     </div>
 
 </div>

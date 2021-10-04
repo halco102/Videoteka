@@ -1,5 +1,6 @@
 package com.diplomski_rad.videoteka.controller.content;
 
+import com.diplomski_rad.videoteka.constants.Titles;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
@@ -36,18 +37,21 @@ public class SeriesController {
 
     @GetMapping("/series")
     public String getSeries(Model model,String keyword,String searchGenre){
-        model.addAttribute("series",seriesService.searchEngine(searchGenre,keyword));
+        model.addAttribute("contents",seriesService.searchEngine(searchGenre,keyword));
         model.addAttribute("genres",genreService.findAllGenres());
         model.addAttribute("stars",starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
+        model.addAttribute("title", Titles.seriesType);
+        model.addAttribute("links", seriesService.getType(Titles.seriesType));
 
-        return "videoteka/entertainment/series.html";
+        return "videoteka/entertainment/test.html";
     }
 
-    @GetMapping("series/{id}")
+    @GetMapping("/series/{id}")
     public String getSeriesById(Model model, @PathVariable String id){
-        model.addAttribute("series",seriesService.getContentById(id).get());
-        return "videoteka/entertainment/series.html";
+        model.addAttribute("content",seriesService.getContentById(id).get());
+        model.addAttribute("title", Titles.seriesType);
+        return "videoteka/entertainment/test2.html";
     }
 
     //for admin
@@ -113,7 +117,7 @@ public class SeriesController {
     }
 
     @PostMapping("/user/buy/series/{id}")
-    public String buyMovie(@ModelAttribute("id") String id) {
+    public String buyMovie(@ModelAttribute("id") String id, Model model) {
         this.userService.buyContent(new Series(), id);
         return "redirect:/api/v1/videoteka/series";
     }

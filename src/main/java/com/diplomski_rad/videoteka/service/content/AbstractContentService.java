@@ -15,7 +15,7 @@ public abstract class AbstractContentService<T extends Content> implements Conte
 
     private final AbstractContentRepo<T> abstractContentRepo;
 
-    private final List<String> types = new ArrayList<>(Arrays.asList("movie", "series", "cartoon"));
+    private final List<String> types = new ArrayList<>(Arrays.asList("movies", "series", "cartoons"));
 
     public AbstractContentService(AbstractContentRepo<T> abstractContentRepo) {
         this.abstractContentRepo = abstractContentRepo;
@@ -83,7 +83,7 @@ public abstract class AbstractContentService<T extends Content> implements Conte
         List<String> temp = new ArrayList<>();
         for (String s: types
              ) {
-            if (!s.matches(type)) {
+            if (!s.matches(type.toLowerCase())) {
                 temp.add(s);
             }
         }

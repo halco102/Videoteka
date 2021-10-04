@@ -148,8 +148,7 @@ public class Bootstrap implements CommandLineRunner {
                     model.getData().getDescription(),
                     model.getData().getTrailer(),
                     model.getData().getRating(),
-                    model.getData().getGen(),
-                    model.getData().getType());
+                    model.getData().getGen());
             //add all genres to db
             Set<Genre> myGenres = new HashSet<>();
             for (Genre ge : model.getData().getGen()
@@ -180,7 +179,38 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie3);*//*
 
 
-        Series series = new Series("Test1","1984-04-05",20, imageUrl);
+
+        List<Series> series = new ArrayList<>();
+        imdbIds.forEach(item -> {
+            MainModel model = contentApi.getMoviesByPopularity(apiKey, item);
+            Series series1 = new Series(model.getData().getTitle(),
+                    model.getData().getRelease(),
+                    model.getData().getImage_url(),
+                    model.getData().getDescription(),
+                    model.getData().getTrailer(),
+                    model.getData().getRating(),
+                    model.getData().getGen(),
+                    model.getData().getMovie_length());
+            //add all genres to db
+            Set<Genre> myGenres = new HashSet<>();
+            for (Genre ge : model.getData().getGen()
+            ) {
+                var temp = genreRepository.save(new Genre(null, ge.getName()));
+                myGenres.add(temp);
+            }
+            series1.setGenres(myGenres);
+            series.add(series1);
+
+        });
+
+
+        for (Series s: series
+        ) {
+            seriesRepository.save(s);
+        }
+
+*/
+/*        Series series = new Series("Test1","1984-04-05",20, imageUrl);
         Series series1 = new Series("Test2","1984-04-05",40, imageUrl);
         Series series2 = new Series("Test3","1984-04-05",21, imageUrl);
         Series series3 = new Series("Test4","1984-04-05",10, imageUrl);
@@ -193,7 +223,8 @@ public class Bootstrap implements CommandLineRunner {
         seriesRepository.save(series);
         seriesRepository.save(series1);
         seriesRepository.save(series2);
-        seriesRepository.save(series3);
+        seriesRepository.save(series3);*//*
+
 
         Creator creator = new Creator("test1","test1");
         Creator creator1 = new Creator("test2","test2");
@@ -256,7 +287,8 @@ public class Bootstrap implements CommandLineRunner {
         movieRepository.save(movie3);*//*
 
 
-        series.getGenres().addAll(Arrays.asList(g1,g2,g3));
+*/
+/*        series.getGenres().addAll(Arrays.asList(g1,g2,g3));
         series1.getGenres().addAll(Arrays.asList(g1,g3));
         series2.getGenres().addAll(Arrays.asList(g1));
         series3.getGenres().addAll(Arrays.asList(g5));
@@ -265,7 +297,8 @@ public class Bootstrap implements CommandLineRunner {
         seriesRepository.save(series);
         seriesRepository.save(series1);
         seriesRepository.save(series2);
-        seriesRepository.save(series3);
+        seriesRepository.save(series3);*//*
+
 
         cartoon.getGenres().addAll(Arrays.asList(g1,g2,g3));
         cartoon1.getGenres().addAll(Arrays.asList(g1,g3));

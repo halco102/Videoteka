@@ -48,7 +48,8 @@ public class MovieController {
 
     @GetMapping("/movies/{id}")
     public String getMovieById(Model model, @PathVariable String id){
-        model.addAttribute("movies", movieService.getContentById(id).orElse(null));
+        model.addAttribute("content", movieService.getContentById(id).orElse(null));
+        model.addAttribute("title", Titles.movieType);
         return "videoteka/entertainment/test2.html";
     }
 
@@ -124,7 +125,7 @@ public class MovieController {
         return "redirect:/api/v1/videoteka/admin-add-delete/movies";
     }
 
-    @PostMapping("/user/buy/movie/{id}")
+    @PostMapping("/user/buy/movies/{id}")
     public String buyMovie(@ModelAttribute("id") String id, Model model) {
         this.userService.buyContent(new Movie(), id);
         return "redirect:/api/v1/videoteka/movies";
