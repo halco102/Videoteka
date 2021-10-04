@@ -63,6 +63,7 @@ public class MovieController {
     @GetMapping("/admin/movies")
     public String getAdminPage(Model model){
         model.addAttribute("content", new Movie());
+        model.addAttribute("title", Titles.movieType);
         return "videoteka/admin/testAdmin.html";
     }
 

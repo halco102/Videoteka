@@ -28,7 +28,7 @@
 <div class="maindiv">
     <div class="inputs">
         <form action="#"
-              th:action="@{/api/v1/videoteka/admin/movies}"
+              th:action="@{/api/v1/videoteka/admin/{title}(title=${#strings.toLowerCase(title)})}"
               method="post"
               th:object="${content}">
             <input readonly th:if="${id != null}" type="text" placeholder="Id" th:field="*{id}">

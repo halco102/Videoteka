@@ -102,9 +102,9 @@
     <div style="display:flex">
         <div>
             <p>Edit page</p>
-            <button class="button">
-                <a th:href="@{/api/v1/videoteka/admin/{title}/update/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}">Edit</a>
-            </button>
+            <form action="#" th:action="@{/api/v1/videoteka/admin/{title}/update/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}">
+                <button type="submit">Edit</button>
+            </form>
         </div>
         <div>
             <p>Delete</p>

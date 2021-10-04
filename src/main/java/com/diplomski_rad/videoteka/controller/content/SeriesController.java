@@ -2,22 +2,15 @@ package com.diplomski_rad.videoteka.controller.content;
 
 import com.diplomski_rad.videoteka.constants.Titles;
 import com.diplomski_rad.videoteka.controller.person.UserController;
-import com.diplomski_rad.videoteka.model.Genre;
-import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.model.Series;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
 import com.diplomski_rad.videoteka.service.persons.StarsService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1/videoteka")
@@ -54,7 +47,44 @@ public class SeriesController {
         return "videoteka/entertainment/test2.html";
     }
 
-    //for admin
+    @PostMapping("/user/buy/series/{id}")
+    public String buyMovie(@ModelAttribute("id") String id, Model model) {
+        this.userService.buyContent(new Series(), id);
+        return "redirect:/api/v1/videoteka/series";
+    }
+
+    @GetMapping("/admin/series")
+    public String getAdminPage(Model model){
+        model.addAttribute("content", new Series());
+        model.addAttribute("title", Titles.seriesType);
+        return "videoteka/admin/testAdmin.html";
+    }
+
+    @PostMapping("/admin/series")
+    public String submitAdminForm(@ModelAttribute("content") Series series){
+        if (series.getId() != null) {
+            // do update
+            seriesService.saveContent(series);
+            return "redirect:/api/v1/videoteka/series";
+        }
+        seriesService.saveContent(series);
+        return "redirect:/api/v1/videoteka/admin/series";
+    }
+
+    @GetMapping("/admin/series/update/{id}")
+    public String getFormToUpdateMovie(Model model, @PathVariable String id) {
+        model.addAttribute("content", seriesService.getContentById(id));
+        model.addAttribute("title", Titles.seriesType);
+        return "videoteka/admin/testAdmin.html";
+    }
+
+    @PostMapping("/admin/series/delete/{id}")
+    public String deleteMovieById(@PathVariable String id) {
+        this.seriesService.deleteById(id);
+        return "redirect:/api/v1/videoteka/series";
+    }
+
+        /*//for admin
     @GetMapping("/delete-series/{id}")
     public String deleteId(Model model, @PathVariable String id){
         seriesService.deleteById(id);
@@ -114,11 +144,6 @@ public class SeriesController {
         }
         seriesService.saveContent(series);
         return "redirect:/api/v1/videoteka/admin-add-delete/series";
-    }
+    }*/
 
-    @PostMapping("/user/buy/series/{id}")
-    public String buyMovie(@ModelAttribute("id") String id, Model model) {
-        this.userService.buyContent(new Series(), id);
-        return "redirect:/api/v1/videoteka/series";
-    }
 }
