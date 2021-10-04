@@ -37,8 +37,6 @@ public class MovieController {
     @GetMapping("/movies")
     public String getMovies(Model model, String keyword, String searchGenre) {
         model.addAttribute("contents", movieService.searchEngine(searchGenre, keyword));
-        model.addAttribute("genres", genreService.findAllGenres());
-        model.addAttribute("stars", starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Titles.movieType);
         model.addAttribute("links", movieService.getType(Titles.movieType));
@@ -50,6 +48,7 @@ public class MovieController {
     public String getMovieById(Model model, @PathVariable String id){
         model.addAttribute("content", movieService.getContentById(id).orElse(null));
         model.addAttribute("title", Titles.movieType);
+        model.addAttribute("username", UserController.displayName);
         return "videoteka/entertainment/test2.html";
     }
 
@@ -114,7 +113,7 @@ public class MovieController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin-add-delete/movies")
-    public String submitForm( @ModelAttribute("movies") Movie movies,
+    public String submitForm(@ModelAttribute("movies") Movie movies,
                              @RequestParam("ids") List<Genre> genres,
                              Model model){
 
@@ -129,6 +128,25 @@ public class MovieController {
     public String buyMovie(@ModelAttribute("id") String id, Model model) {
         this.userService.buyContent(new Movie(), id);
         return "redirect:/api/v1/videoteka/movies";
+    }
+
+    //novi admin endpoints, oni stari su bljak
+    @GetMapping("/admin/movies")
+    public String getAdminPage(Model model){
+        model.addAttribute("movies", new Movie());
+        return "videoteka/admin/testAdmin.html";
+    }
+
+    @PostMapping("/admin/movies")
+    public String submitAdminForm(@ModelAttribute("movies") Movie movies){
+        movieService.saveContent(movies);
+        return "redirect:/api/v1/videoteka/admin/movies";
+    }
+
+    @GetMapping("/admin/movies/update/{id}")
+    public String getFormToUpdateMovie(Model model, @PathVariable String id) {
+        model.addAttribute("movies", movieService.getContentById(id));
+        return "videoteka/admin/testAdmin.html";
     }
 
 }

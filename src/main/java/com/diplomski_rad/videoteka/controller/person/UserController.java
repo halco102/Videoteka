@@ -36,7 +36,7 @@ public class UserController {
         if (displayName.matches("anonymousUser")) {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }else if (displayName.matches("Admin")) {
-            return "redirect:/api/v1/videoteka/admin-add-delete/movies";
+           // return "redirect:/api/v1/videoteka/admin-add-delete/movies";
         }
 
         model.addAttribute("username", authentication.getPrincipal().toString());

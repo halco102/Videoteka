@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Admin</title>
+    <link href="/css/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigation_bar.css}" />
+    <link href="/css/admin.css" rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
+</head>
+
+<body>
+
+<header>
+
+    <p id="username"></p>
+    <nav>
+        <ul class="nav_ul">
+            <li>
+                <a href="www.google.com">Series</a>
+                <a href="www.google.com">Movies</a>
+                <a href="www.google.com">Cartoons</a>
+            </li>
+        </ul>
+    </nav>
+
+    <button id="login_button">Login</button>
+</header>
+
+<div class="maindiv">
+    <div class="inputs">
+        <form action="#"
+              th:action="@{/api/v1/videoteka/admin/movies}"
+              method="post"
+              th:object="${movies}">
+
+            <input type="text" placeholder="Title" th:field="*{name}">
+            <input type="text" placeholder="Release" th:field="*{release}">
+            <input type="text" placeholder="Image" th:field="*{image_url}">
+            <input type="text" placeholder="Trailer" th:field="*{trailer}">
+            <input type="text" placeholder="Rating" th:field="*{rating}">
+
+            <div>
+                <label>Description</label><br>
+                <textarea rows="4" cols="50" th:field="*{description}"></textarea>
+            </div>
+
+            <div class="submit" >
+                <button type="submit">Submit</button>
+            </div>
+
+    </form>
+
+</div>
+
+</div>
+
+</body>
+
+
+</html>
