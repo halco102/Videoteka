@@ -34,7 +34,7 @@ public abstract class Content {
     private Set<Genre> genres = new HashSet<>();
 
     @Field
-    private int price = 10; // let it be for every content 10$
+    private int price;
 
     @Field
     private String image_url;

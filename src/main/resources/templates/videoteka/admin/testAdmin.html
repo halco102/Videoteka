@@ -30,8 +30,8 @@
         <form action="#"
               th:action="@{/api/v1/videoteka/admin/movies}"
               method="post"
-              th:object="${movies}">
-
+              th:object="${content}">
+            <input readonly th:if="${id != null}" type="text" placeholder="Id" th:field="*{id}">
             <input type="text" placeholder="Title" th:field="*{name}">
             <input type="text" placeholder="Release" th:field="*{release}">
             <input type="text" placeholder="Image" th:field="*{image_url}">

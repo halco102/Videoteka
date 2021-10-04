@@ -28,7 +28,7 @@
 <div class="responsive">
     <div class="gallery" th:each="content : ${contents}">
         <a target="_blank" th:href="@{/api/v1/videoteka/{type}/{id}(type=${#strings.toLowerCase(title)},id=${content.id})}">
-            <img th:src="${content.image_url}" alt="Cinque Terre" width="600" height="400">
+            <img th:src="${content.image_url}" alt="Error" width="600" height="400">
         </a>
     </div>
 </div>

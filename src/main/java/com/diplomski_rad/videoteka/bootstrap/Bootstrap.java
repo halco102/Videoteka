@@ -65,6 +65,12 @@ public class Bootstrap implements CommandLineRunner {
         this.contentApi = contentApi;
     }
 
+    private int randomPriceGenerator() {
+        Random random = new Random();
+        int price = random.nextInt(50);
+        return price;
+    }
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -157,6 +163,7 @@ public class Bootstrap implements CommandLineRunner {
                myGenres.add(temp);
             }
             movie.setGenres(myGenres);
+            movie.setPrice(randomPriceGenerator());
             movies.add(movie);
 
         });
@@ -199,6 +206,7 @@ public class Bootstrap implements CommandLineRunner {
                 myGenres.add(temp);
             }
             series1.setGenres(myGenres);
+            series1.setPrice(randomPriceGenerator());
             series.add(series1);
 
         });

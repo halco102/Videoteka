@@ -99,8 +99,20 @@
         </td>
     </div>
 
-    <div th:if="${username == 'Admin'}">
-        <p>Edit content</p>
+    <div style="display:flex">
+        <div>
+            <p>Edit page</p>
+            <button class="button">
+                <a th:href="@{/api/v1/videoteka/admin/{title}/update/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}">Edit</a>
+            </button>
+        </div>
+        <div>
+            <p>Delete</p>
+                <form action="#" method="post" th:action="@{/api/v1/videoteka/admin/{title}/delete/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}">
+                    <button>Delete</button>
+                </form>
+            </button>
+        </div>
     </div>
 </div>
 
