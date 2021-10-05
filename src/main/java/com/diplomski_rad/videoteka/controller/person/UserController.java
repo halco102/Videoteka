@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/api/v1/videoteka")
 @Slf4j
@@ -75,7 +77,7 @@ public class UserController {
             return "videoteka/errorHandling.html";
         }
 
-        model.addAttribute("errorMessage", "unknown error ocured");
+        model.addAttribute("errorMessage", "unknown error occurred");
         return "videoteka/errorHandling.html";
     }
 
@@ -89,10 +91,9 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public String createAccount(@ModelAttribute("users")  User user,
+    public String createAccount(@ModelAttribute("users") @Valid User user,
                                 BindingResult result,
-                                Model model,
-                                Error error){
+                                Model model){
 
         if (result.hasErrors()) {
             return "videoteka/login/create-account.html";

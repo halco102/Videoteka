@@ -1,7 +1,9 @@
 package com.diplomski_rad.videoteka.service.content;
 
+import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Series;
-import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
+import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,8 +11,11 @@ import java.util.Optional;
 
 @Service
 public class SeriesService extends AbstractContentService<Series> {
-    public SeriesService(AbstractContentRepo<Series> abstractContentRepo) {
-        super(abstractContentRepo);
+    @Autowired
+    SeriesRepository seriesRepository;
+
+    public SeriesService(SeriesRepository seriesRepository) {
+        super(seriesRepository);
     }
 
     @Override
@@ -52,4 +57,24 @@ public class SeriesService extends AbstractContentService<Series> {
     public List<Series> searchEngine(String searchGenre, String keyword) {
         return super.searchEngine(searchGenre, keyword);
     }
+
+    public String submitAdminForm(Series series, List<Genre> genres) {
+
+        if (series.getId() != null) {
+            var oldSeries = seriesRepository.findById(series.getId()).get();
+
+            if (genres != null) {
+                series.getGenres().clear();
+                series.getGenres().addAll(genres);
+            }else {
+                series.getGenres().addAll(oldSeries.getGenres());
+            }
+
+            seriesRepository.save(series);
+            return "redirect:/api/v1/videoteka/series";
+        }
+        seriesRepository.save(series);
+        return "redirect:/api/v1/videoteka/admin/series";
+    }
+
 }

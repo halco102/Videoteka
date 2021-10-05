@@ -1,11 +1,16 @@
 package com.diplomski_rad.videoteka.service.content;
 
+import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,6 +42,7 @@ public class MovieService extends AbstractContentService<Movie>{
 
     @Override
     public Movie updateById(String id, Movie entity) {
+
         return super.updateById(id, entity);
     }
 
@@ -60,6 +66,23 @@ public class MovieService extends AbstractContentService<Movie>{
         return super.searchEngine(searchGenre, keyword);
     }
 
+    public String submitAdminForm(Movie movies, List<Genre> genres) {
 
+        if (movies.getId() != null) {
+            var oldMovie = movieRepository.findById(movies.getId()).get();
+
+            if (genres != null) {
+                movies.getGenres().clear();
+                movies.getGenres().addAll(genres);
+            }else {
+                movies.getGenres().addAll(oldMovie.getGenres());
+            }
+
+            movieRepository.save(movies);
+            return "redirect:/api/v1/videoteka/movies";
+        }
+        movieRepository.save(movies);
+        return "redirect:/api/v1/videoteka/admin/movies";
+    }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.couchbase.core.mapping.Field;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.GenerationStrategy;
 
+import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,9 +23,11 @@ public abstract class Content {
     private String id;
 
     @Field
+    @NotBlank
     private String name;
 
     @Field
+    @NotBlank
     private String release;
 
     @Field
@@ -34,18 +37,25 @@ public abstract class Content {
     private Set<Genre> genres = new HashSet<>();
 
     @Field
-    private int price;
+    @Min(1)
+    @Max(100)
+    private Integer price;
 
     @Field
+    @NotBlank
     private String image_url;
 
     @Field
+    @NotBlank
     private String description;
 
     @Field
+    @NotBlank
     private String trailer;
 
     @Field
+    @DecimalMin(value = "0.0", message = "Minimal rating is 0.0")
+    @DecimalMax(value = "10.0", message = "Maximal rating is 10.0")
     private double rating;
 
     public Content(String name, String release){
