@@ -29,21 +29,7 @@ public class UserController {
 
     @GetMapping("/index")
     public  String getIndex(Model model){
-
-        //check koji user je loged in trenutno
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        displayName = authentication.getPrincipal().toString();
-
-        if (displayName.matches("anonymousUser")) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }else if (displayName.matches("Admin")) {
-           // return "redirect:/api/v1/videoteka/admin-add-delete/movies";
-        }
-
-        model.addAttribute("username", authentication.getPrincipal().toString());
-
-        return "videoteka/index.html";
+        return userService.getIndexPage(model);
     }
 
     @GetMapping("")
@@ -61,24 +47,8 @@ public class UserController {
 
 
     @PostMapping("/login/post")
-    public String loginToPage(@ModelAttribute("users")  User user,
-                              BindingResult result,
-                              Model model,
-                              Error error) throws NotFoundException {
-
-        try {
-            if(userService.login(user.getUsername(), user.getPassword()) != null) {
-                if (getIndex(model) != null) {
-                    return "redirect:/api/v1/videoteka/index";
-                }
-            }
-        }catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "videoteka/errorHandling.html";
-        }
-
-        model.addAttribute("errorMessage", "unknown error occurred");
-        return "videoteka/errorHandling.html";
+    public String loginToPage(@ModelAttribute("users")  User user, Model model) throws NotFoundException {
+        return userService.submitLogin(user, model, getIndex(model));
     }
 
 

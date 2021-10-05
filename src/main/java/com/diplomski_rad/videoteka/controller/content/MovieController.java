@@ -77,6 +77,7 @@ public class MovieController {
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("title", Titles.movieType);
+            model.addAttribute("genres", genreService.findAllGenres());
             return "videoteka/admin/testAdmin.html";
         }
         return this.movieService.submitAdminForm(movies, genres);

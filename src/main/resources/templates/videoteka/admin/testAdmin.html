@@ -23,15 +23,15 @@
     <nav>
         <ul class="nav_ul">
             <li>
-                <a href="www.google.com">Series</a>
-                <a href="www.google.com">Movies</a>
-                <a href="www.google.com">Cartoons</a>
+                <a th:href="@{/api/v1/videoteka/admin/series}">Series</a>
+                <a th:href="@{/api/v1/videoteka/admin/movies}">Movies</a>
+                <a th:href="@{/api/v1/videoteka/admin/cartoons}">Cartoons</a>
             </li>
         </ul>
     </nav>
-
-    <button id="login_button">Login</button>
 </header>
+
+<h1 style="text-align:center" th:text="${title}"></h1>
 
 <div class="maindiv">
     <div class="inputs">

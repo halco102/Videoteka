@@ -17,10 +17,21 @@
            <li th:each="link : ${links}">
                <a th:href="@{/api/v1/videoteka/{link}(link=${#strings.toLowerCase(link)})}"><p th:text="${#strings.capitalize(link)}"></p></a>
            </li>
+           <li>
+               <a th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+           </li>
         </ul>
     </nav>
-
-    <button id="login_button">Login</button>
+    <div th:if="${username == 'anonymousUser'}">
+        <form action="#" method="get" th:action="@{/api/v1/videoteka/login}">
+            <button id="login_button" type="submit">Login</button>
+        </form>
+    </div>
+    <div th:unless="${username == 'anonymousUser'}">
+        <form action="#" th:action="@{/api/v1/videoteka/logout}">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
 </header>
 
 <h1 style="text-align:center" th:text="${title}"></h1>
