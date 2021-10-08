@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="/css/test/test_login.css" rel="stylesheet" type="text/css" th:href="@{/css/test/test_login.css}" />
+    <title>Login</title>
+</head>
+<body>
+<div class="title">
+    <h1>Welcome</h1>
+</div>
+<div class="wrapper">
+    <div class="left_side">
+        <div class="image">
+            <img th:src="@{/css/images/popcorn.png}" width="300px" height="350px">
+        </div>
+    </div>
+    <div class="right_side">
+        <div class="content">
+            <div class="avatar_icon">
+                <img th:src="@{/css/images/user.png}"  width="80px" height="80px">
+            </div>
+            <form action="#" method="post" th:object="${users}"  th:action="@{/api/v1/videoteka/login/post}" >
+                <div class="login_form">
+                    <input type="text" placeholder="Username" th:field="*{username}">
+                    <input type="password" placeholder="Password" th:field="*{password}">
+                </div>
+                <div th:if="${param.error}">
+                    Invalid username or password.
+                </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <div class="login_button">
+                    <button type="submit" style="background-color: rgb(40, 40, 163); color: aliceblue;">Sign in</button>
+                    <button onclick="location.href='/api/v1/videoteka/register'" type="button" style="background-color: aliceblue;">Sign up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

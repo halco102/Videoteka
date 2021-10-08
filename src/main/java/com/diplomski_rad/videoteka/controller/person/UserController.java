@@ -42,7 +42,8 @@ public class UserController {
     public String loginToPage(Model model){
         User user = new User();
         model.addAttribute("users",user);
-        return "videoteka/login/sign-in.html";
+       // return "videoteka/login/sign-in.html";
+        return "videoteka/login/login_page.html";
     }
 
 
@@ -70,7 +71,6 @@ public class UserController {
         }
         else if(this.userService.validation(user)==true){
 
-            // user.getRoleSet().add(this.roleService.findByRole(2L)); //test purpose when using Bootstrap!!
             this.userService.saveUser(user);
             return "redirect:/api/v1/videoteka/login";
 
