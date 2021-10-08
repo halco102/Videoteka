@@ -43,7 +43,7 @@ public class UserController {
         User user = new User();
         model.addAttribute("users",user);
        // return "videoteka/login/sign-in.html";
-        return "videoteka/login/login_page.html";
+        return "videoteka/login/signin.html";
     }
 
 
@@ -57,7 +57,7 @@ public class UserController {
     public String createAccount(Model model){
         User user = new User();
         model.addAttribute("users",user);
-        return "videoteka/login/create-account.html";
+        return "videoteka/login/signup.html";
     }
 
 
@@ -67,16 +67,16 @@ public class UserController {
                                 Model model){
 
         if (result.hasErrors()) {
-            return "videoteka/login/create-account.html";
+            return "videoteka/login/signup.html";
         }
         else if(this.userService.validation(user)==true){
 
             this.userService.saveUser(user);
-            return "redirect:/api/v1/videoteka/login";
-
+            //return "redirect:/api/v1/videoteka/login";
+            return "videoteka/login/signup.html";
         }
 
-        return "videoteka/login/create-account.html";
+        return "videoteka/login/signup.html";
 
     }//end createAccount method
 

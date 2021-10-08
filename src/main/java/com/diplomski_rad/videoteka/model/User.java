@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.couchbase.core.mapping.Document;
 import org.springframework.data.couchbase.core.mapping.Field;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.*;
 
 @Data
@@ -39,6 +36,7 @@ public class User extends Person{
 
     @Field
     @Email(message = "Use valid email")
+    @NotBlank(message = "Email field cannot be blank")
     private String eMail;
 
     @Field
