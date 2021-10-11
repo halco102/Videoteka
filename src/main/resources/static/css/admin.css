@@ -1,0 +1,35 @@
+
+
+.maindiv{
+    display: grid;
+    justify-content: center;
+}
+
+.inpust{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+input{
+    margin: 15px;
+    display: block;
+    padding: 5px;
+    width: 300px;
+}
+
+.submit{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+button{
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0;
+    margin-bottom: 20px;
+}

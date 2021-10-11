@@ -1,0 +1,52 @@
+#username{
+    font-size: 16px;
+}
+#login_button{
+    font-size: 16px;
+    cursor: pointer;
+}
+
+li{
+    text-decoration: none;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+
+.nav_ul{
+    list-style: none;
+}
+
+.nav_ul li{
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.nav_ul li a{
+    transition: all 0.3s ease 0;
+
+}
+
+
+.nav_ul li a:hover{
+    transition: all 0.3s ease 0;
+    color:aqua;
+}
+
+button{
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0;
+}
+
+button:hover{
+    color: aqua;
+}

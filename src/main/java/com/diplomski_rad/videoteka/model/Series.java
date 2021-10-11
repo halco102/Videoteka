@@ -19,11 +19,18 @@ public class Series extends Content{
     private Set<Stars> stars = new HashSet<>();
 
     @Field
+    private int runtime;
+
+    @Field
     private int seasons;
 
-    public Series(String name, int year, int seasons){
-        super(name, year);
+    public Series(String name, String release, int seasons, String imageUrl){
+        super(name, release, imageUrl);
         this.seasons = seasons;
     }
 
+    public Series(String name, String release, String imageUrl, String description, String trailer, double rating, Set<Genre> genres, int runtime) {
+        super(name, release, imageUrl, description, trailer, rating, genres);
+        this.runtime = runtime;
+    }
 }

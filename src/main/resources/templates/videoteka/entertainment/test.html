@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<html>
+<head>
+    <title th:text="${title}"></title>
+    <link href="/css/gallery.css" rel="stylesheet" type="text/css" th:href="@{/css/gallery.css}" />
+    <link href="/css/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigation_bar.css}" />
+</head>
+
+<body>
+
+<header>
+
+    <p id="username" th:text="${username}"></p>
+    <nav>
+        <ul class="nav_ul">
+           <li th:each="link : ${links}">
+               <a th:href="@{/api/v1/videoteka/{link}(link=${#strings.toLowerCase(link)})}"><p th:text="${#strings.capitalize(link)}"></p></a>
+           </li>
+           <li>
+               <a th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+           </li>
+        </ul>
+    </nav>
+    <div th:if="${username == 'anonymousUser'}">
+        <form action="#" method="get" th:action="@{/api/v1/videoteka/login}">
+            <button id="login_button" type="submit">Login</button>
+        </form>
+    </div>
+    <div th:unless="${username == 'anonymousUser'}">
+        <form action="#" th:action="@{/api/v1/videoteka/logout}">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+</header>
+
+<h1 style="text-align:center" th:text="${title}"></h1>
+
+<div class="responsive">
+    <div class="gallery" th:each="content : ${contents}">
+        <a target="_blank" th:href="@{/api/v1/videoteka/{type}/{id}(type=${#strings.toLowerCase(title)},id=${content.id})}">
+            <img th:src="${content.image_url}" alt="Error" width="600" height="400">
+        </a>
+    </div>
+</div>
+
+
+
+</body>
+
+
+</html>

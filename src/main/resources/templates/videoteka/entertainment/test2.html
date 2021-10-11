@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/html">
+<head>
+    <title>Test image from url</title>
+
+    <style>
+    *{
+        background-color: RGB(146, 168, 209)
+    }
+    .center_picture{
+        text-align: center;
+    }
+    .info{
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+    .trailer{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 100px;
+    }
+    li{
+        list-style-type: none;
+    }
+
+
+button{
+    padding: 9px 25px;
+    background-color: rgba(0, 136, 169, 1);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0;
+    margin-bottom: 20px;
+    font-size:17px;
+}
+
+    .buy{
+        display:flex;
+        justify-content:center;
+        text-align: center;
+        margin:0 25px;
+    }
+
+    .other_info{
+        display: flex;
+        justify-content: center;
+        text-align:center;
+        margin:0 25%;
+    }
+
+    table{
+        font-size: 30px;
+    }
+
+    th{
+        padding-right: 20px;
+    }
+    </style>
+
+</head>
+<body>
+
+<div>
+    <h1 style="text-align: center;" th:text="${content.name}"></h1>
+    <div class="center_picture" >
+        <img th:src="${content.image_url}">
+    </div>
+</div>
+
+<div class="info">
+    <p th:text="${content.description}"></p>
+</div>
+
+<div class="main_content">
+    <div class="trailer" th:if="${!#strings.isEmpty(content.trailer)}">
+        <iframe width="500" height="350" th:src="${content.trailer}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="trailer" th:if="${#strings.isEmpty(content.trailer)}">
+        <p>The trailer does not exist in our db</p>
+    </div>
+
+    <div class="other_info">
+
+        <table>
+            <tr>
+                <th>Runtime</th>
+                <td th:text="${content.runtime}"></th>
+            </tr>
+            <tr>
+                <th>Genres</th>
+                <td th:each="genre : ${content.genres}" th:text="${genre.name + ', '}">
+                </td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td th:text="${content.price}"></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div style="margin: 10px 25%; display: flex; justify-content: center; padding-right:40px;">
+        <td th:if="${username != 'anonymousUser'}">
+            <form action="#"  th:action="@{/api/v1/videoteka/user/buy/{title}/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}" method="post">
+                <button>Buy</button>
+            </form>
+        </td>
+    </div>
+
+    <div style="display: flex; justify-content: space-around; width: 50%; margin-left: 25%;">
+        <div>
+            <p style="text-align:center">Edit page</p>
+            <form action="#" th:action="@{/api/v1/videoteka/admin/{title}/update/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}">
+                <button type="submit">Edit</button>
+            </form>
+        </div>
+        <div>
+            <p style="text-align:center">Delete</p>
+                <form action="#" method="post" th:action="@{/api/v1/videoteka/admin/{title}/delete/{id}(title=${#strings.toLowerCase(title)},id=${content.id})}">
+                    <button>Delete</button>
+                </form>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

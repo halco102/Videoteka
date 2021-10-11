@@ -1,5 +1,6 @@
 package com.diplomski_rad.videoteka.service.persons;
 
+import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.exception.BadRequestException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
 import com.diplomski_rad.videoteka.model.Cartoon;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -289,6 +291,39 @@ public class UserService extends AbstractPersonService<User> {
             throw new NotFoundException("Class type cannot be found !");
         }
 
+    }
+
+    public String getIndexPage(Model model) {
+        //check koji user je loged in trenutno
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        UserController.displayName = authentication.getPrincipal().toString();
+
+        if (UserController.displayName.matches("anonymousUser")) {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }else if (UserController.displayName.matches("Admin")) {
+            // return "redirect:/api/v1/videoteka/admin-add-delete/movies";
+        }
+
+        model.addAttribute("username", authentication.getPrincipal().toString());
+
+        return "videoteka/index.html";
+    }
+
+    public String submitLogin(User user, Model model, String getIndex) {
+        try {
+            if(login(user.getUsername(), user.getPassword()) != null) {
+                if (getIndex != null) {
+                    return "redirect:/api/v1/videoteka/index";
+                }
+            }
+        }catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "videoteka/errorHandling.html";
+        }
+
+        model.addAttribute("errorMessage", "unknown error occurred");
+        return "videoteka/errorHandling.html";
     }
 
 }

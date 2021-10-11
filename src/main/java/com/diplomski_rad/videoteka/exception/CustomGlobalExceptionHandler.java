@@ -87,14 +87,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ErrorMessage(410, ex.getMessage());
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ResponseBody
-    public ErrorMessage handleException(UnprocessableEntityException ex) {
-        LOGGER.error(ex.getMessage(), ex);
-
-        return new ErrorMessage(422, ex.getMessage());
-    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.LOCKED)

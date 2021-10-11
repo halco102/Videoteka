@@ -136,5 +136,4 @@ public class CartoonController {
         return "redirect:/api/v1/videoteka/cartoons";
     }
 
-
 }

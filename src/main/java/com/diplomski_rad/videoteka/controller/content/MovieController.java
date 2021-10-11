@@ -1,24 +1,29 @@
 package com.diplomski_rad.videoteka.controller.content;
 
+import com.diplomski_rad.videoteka.constants.Titles;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.content.MovieService;
-import com.diplomski_rad.videoteka.service.persons.StarsService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1/videoteka")
+@Slf4j
 public class MovieController {
 
     @Autowired
@@ -28,28 +33,72 @@ public class MovieController {
     GenreService genreService;
 
     @Autowired
-    StarsService starsService;
-
-    @Autowired
     UserService userService;
 
     @GetMapping("/movies")
     public String getMovies(Model model, String keyword, String searchGenre) {
-        model.addAttribute("movies", movieService.searchEngine(searchGenre, keyword));
-        model.addAttribute("genres", genreService.findAllGenres());
-        model.addAttribute("stars", starsService.getAllPersons());
+        model.addAttribute("contents", movieService.searchEngine(searchGenre, keyword));
         model.addAttribute("username", UserController.displayName);
+        model.addAttribute("title", Titles.movieType);
+        model.addAttribute("links", movieService.getType(Titles.movieType));
 
-        return  "videoteka/entertainment/movies.html";
+        return  "videoteka/entertainment/test.html";
     }
 
     @GetMapping("/movies/{id}")
     public String getMovieById(Model model, @PathVariable String id){
-        model.addAttribute("movies", movieService.getContentById(id).orElse(null));
-        return "videoteka/entertainment/movies.html";
+        model.addAttribute("content", movieService.getContentById(id).orElse(null));
+        model.addAttribute("title", Titles.movieType);
+        model.addAttribute("username", UserController.displayName);
+        return "videoteka/entertainment/test2.html";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+    @PostMapping("/user/buy/movies/{id}")
+    public String buyMovie(@ModelAttribute("id") String id, Model model) {
+        this.userService.buyContent(new Movie(), id);
+        return "redirect:/api/v1/videoteka/movies";
+    }
+
+    //novi admin endpoints, oni stari su bljak
+    @GetMapping("/admin/movies")
+    public String getAdminPage(Model model){
+        model.addAttribute("content", new Movie());
+        model.addAttribute("title", Titles.movieType);
+        model.addAttribute("genres", genreService.findAllGenres());
+        return "videoteka/admin/testAdmin.html";
+    }
+
+    @PostMapping("/admin/movies")
+    public String submitAdminForm(@ModelAttribute("content") @Valid Movie movies,
+                                  BindingResult bindingResult,
+                                  @RequestParam(name = "ids", required = false) List<Genre> genres,
+                                  Model model){
+
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("title", Titles.movieType);
+            model.addAttribute("genres", genreService.findAllGenres());
+            return "videoteka/admin/testAdmin.html";
+        }
+        return this.movieService.submitAdminForm(movies, genres);
+    }
+
+    @GetMapping("/admin/movies/update/{id}")
+    public String getFormToUpdateMovie(Model model, @PathVariable String id) {
+        var movie = movieService.getContentById(id);
+        model.addAttribute("content", movie.get());
+        model.addAttribute("genres", genreService.findAllGenres());
+        model.addAttribute("title", Titles.movieType);
+        return "videoteka/admin/testAdmin.html";
+    }
+
+    @PostMapping("/admin/movies/delete/{id}")
+    public String deleteMovieById(@PathVariable String id) {
+        this.movieService.deleteById(id);
+        return "redirect:/api/v1/videoteka/movies";
+    }
+
+/*    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/deleteMovie/{id}")
     public String deleteId(Model model, @PathVariable String id){
         movieService.deleteById(id);
@@ -110,7 +159,7 @@ public class MovieController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/admin-add-delete/movies")
-    public String submitForm( @ModelAttribute("movies") Movie movies,
+    public String submitForm(@ModelAttribute("movies") Movie movies,
                              @RequestParam("ids") List<Genre> genres,
                              Model model){
 
@@ -119,12 +168,6 @@ public class MovieController {
         }
         movieService.saveContent(movies);
         return "redirect:/api/v1/videoteka/admin-add-delete/movies";
-    }
-
-    @PostMapping("/user/buy/movie/{id}")
-    public String buyMovie(@ModelAttribute("id") String id, Model model) {
-        this.userService.buyContent(new Movie(), id);
-        return "redirect:/api/v1/videoteka/movies";
-    }
+    }*/
 
 }

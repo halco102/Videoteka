@@ -16,8 +16,8 @@ public class Cartoon extends Content{
     @Field
     private int seasons;
 
-    public Cartoon(String name, int year, int seasons){
-        super(name, year);
+    public Cartoon(String name, String release, int seasons, String imageUrl){
+        super(name, release, imageUrl);
         this.seasons = seasons;
     }
 

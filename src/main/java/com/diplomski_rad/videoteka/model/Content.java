@@ -8,6 +8,7 @@ import org.springframework.data.couchbase.core.mapping.Field;
 import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 import org.springframework.data.couchbase.core.mapping.id.GenerationStrategy;
 
+import javax.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,10 +23,12 @@ public abstract class Content {
     private String id;
 
     @Field
+    @NotBlank
     private String name;
 
     @Field
-    private int year;
+    @NotBlank
+    private String release;
 
     @Field
     private Set<Creator> creators = new HashSet<>();
@@ -34,11 +37,46 @@ public abstract class Content {
     private Set<Genre> genres = new HashSet<>();
 
     @Field
-    private int price = 10; // let it be for every content 10$
+    @Min(1)
+    @Max(100)
+    private Integer price;
 
-    public Content(String name, int year){
+    @Field
+    @NotBlank
+    private String image_url;
+
+    @Field
+    @NotBlank
+    private String description;
+
+    @Field
+    @NotBlank
+    private String trailer;
+
+    @Field
+    @DecimalMin(value = "0.0", message = "Minimal rating is 0.0")
+    @DecimalMax(value = "10.0", message = "Maximal rating is 10.0")
+    private double rating;
+
+    public Content(String name, String release){
         this.name = name;
-        this.year = year;
+        this.release = release;
+    }
+
+    public Content(String name, String release, String imageUrl) {
+        this.name = name;
+        this.image_url = release;
+        this.release = imageUrl;
+    }
+
+    public Content(String name, String release, String imageUrl, String description, String trailer, double rating, Set<Genre> genres) {
+        this.name = name;
+        this.release = release;
+        this.image_url = imageUrl;
+        this.description = description;
+        this.trailer = trailer;
+        this.rating = rating;
+        this.genres = genres;
     }
 
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/api/v1/videoteka")
 @Slf4j
@@ -27,21 +29,7 @@ public class UserController {
 
     @GetMapping("/index")
     public  String getIndex(Model model){
-
-        //check koji user je loged in trenutno
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        displayName = authentication.getPrincipal().toString();
-
-        if (displayName.matches("anonymousUser")) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }else if (displayName.matches("Admin")) {
-            return "redirect:/api/v1/videoteka/admin-add-delete/movies";
-        }
-
-        model.addAttribute("username", authentication.getPrincipal().toString());
-
-        return "videoteka/index.html";
+        return userService.getIndexPage(model);
     }
 
     @GetMapping("")
@@ -54,29 +42,14 @@ public class UserController {
     public String loginToPage(Model model){
         User user = new User();
         model.addAttribute("users",user);
-        return "videoteka/login/sign-in.html";
+       // return "videoteka/login/sign-in.html";
+        return "videoteka/login/signin.html";
     }
 
 
     @PostMapping("/login/post")
-    public String loginToPage(@ModelAttribute("users")  User user,
-                              BindingResult result,
-                              Model model,
-                              Error error) throws NotFoundException {
-
-        try {
-            if(userService.login(user.getUsername(), user.getPassword()) != null) {
-                if (getIndex(model) != null) {
-                    return "redirect:/api/v1/videoteka/index";
-                }
-            }
-        }catch (Exception e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "videoteka/errorHandling.html";
-        }
-
-        model.addAttribute("errorMessage", "unknown error ocured");
-        return "videoteka/errorHandling.html";
+    public String loginToPage(@ModelAttribute("users")  User user, Model model) throws NotFoundException {
+        return userService.submitLogin(user, model, getIndex(model));
     }
 
 
@@ -84,28 +57,26 @@ public class UserController {
     public String createAccount(Model model){
         User user = new User();
         model.addAttribute("users",user);
-        return "videoteka/login/create-account.html";
+        return "videoteka/login/signup.html";
     }
 
 
     @PostMapping("/register")
-    public String createAccount(@ModelAttribute("users")  User user,
+    public String createAccount(@ModelAttribute("users") @Valid User user,
                                 BindingResult result,
-                                Model model,
-                                Error error){
+                                Model model){
 
         if (result.hasErrors()) {
-            return "videoteka/login/create-account.html";
+            return "videoteka/login/signup.html";
         }
         else if(this.userService.validation(user)==true){
 
-            // user.getRoleSet().add(this.roleService.findByRole(2L)); //test purpose when using Bootstrap!!
             this.userService.saveUser(user);
-            return "redirect:/api/v1/videoteka/login";
-
+            //return "redirect:/api/v1/videoteka/login";
+            return "videoteka/login/signup.html";
         }
 
-        return "videoteka/login/create-account.html";
+        return "videoteka/login/signup.html";
 
     }//end createAccount method
 

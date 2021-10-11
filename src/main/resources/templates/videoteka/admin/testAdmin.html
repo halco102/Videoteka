@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Admin</title>
+    <link href="/css/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigation_bar.css}" />
+    <link href="/css/admin.css" rel="stylesheet" type="text/css" th:href="@{/css/admin.css}" />
+    <style>
+        .error{
+            font-size:17px;
+            color:red;
+            font-weight:bold;
+            text-align:center;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <p id="username"></p>
+    <nav>
+        <ul class="nav_ul">
+            <li>
+                <a th:href="@{/api/v1/videoteka/admin/series}">Series</a>
+                <a th:href="@{/api/v1/videoteka/admin/movies}">Movies</a>
+                <a th:href="@{/api/v1/videoteka/admin/cartoons}">Cartoons</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<h1 style="text-align:center" th:text="${title}"></h1>
+
+<div class="maindiv">
+    <div class="inputs">
+        <form action="#"
+              th:action="@{/api/v1/videoteka/admin/{title}(title=${#strings.toLowerCase(title)})}"
+              method="post"
+              th:object="${content}">
+            <input readonly th:if="${id != null}" type="text" placeholder="Id" th:field="*{id}">
+            <input type="text" placeholder="Title" th:field="*{name}">
+            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></div>
+            <input type="text" placeholder="Release" th:field="*{release}">
+            <div th:if="${#fields.hasErrors('release')}" th:errors="*{release}" class="error"></div>
+            <input type="text" placeholder="Image" th:field="*{image_url}">
+            <div th:if="${#fields.hasErrors('image_url')}" th:errors="*{image_url}" class="error"></div>
+            <input type="text" placeholder="Trailer" th:field="*{trailer}">
+            <div th:if="${#fields.hasErrors('trailer')}" th:errors="*{trailer}" class="error"></div>
+            <input type="text" placeholder="Rating" th:field="*{rating}">
+            <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="error"></div>
+            <input type="text" placeholder="Runtime" th:field="*{runtime}">
+            <div th:if="${#fields.hasErrors('runtime')}" th:errors="*{runtime}" class="error"></div>
+            <input type="text" placeholder="Price" th:field="*{price}">
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></div>
+            <div style="padding:0 20px; display:flex; justify-content:center; padding:0px 20px;">
+                <select multiple="multiple" th:name="ids">
+                    <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">
+
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label>Description</label><br>
+                <textarea rows="4" cols="50" th:field="*{description}"></textarea>
+            </div>
+
+            <div class="submit" >
+                <button type="submit">Submit</button>
+            </div>
+
+    </form>
+
+</div>
+
+</div>
+
+</body>
+
+
+</html>
