@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MainModel {
-    @JsonProperty("Data")
+    @JsonProperty("results")
     private ContentModel data;
 }

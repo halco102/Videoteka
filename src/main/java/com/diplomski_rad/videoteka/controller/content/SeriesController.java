@@ -34,13 +34,11 @@ public class SeriesController {
     @GetMapping("/series")
     public String getSeries(Model model,String keyword,String searchGenre){
         model.addAttribute("contents",seriesService.searchEngine(searchGenre,keyword));
-        model.addAttribute("genres",genreService.findAllGenres());
-        model.addAttribute("stars",starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Titles.seriesType);
         model.addAttribute("links", seriesService.getType(Titles.seriesType));
 
-        return "videoteka/entertainment/test.html";
+        return  "videoteka/entertainment/main/main.html";
     }
 
     @GetMapping("/series/{id}")

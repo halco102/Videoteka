@@ -42,7 +42,8 @@ public class MovieController {
         model.addAttribute("title", Titles.movieType);
         model.addAttribute("links", movieService.getType(Titles.movieType));
 
-        return  "videoteka/entertainment/test.html";
+        //return  "videoteka/entertainment/test.html";
+        return  "videoteka/entertainment/main/main.html";
     }
 
     @GetMapping("/movies/{id}")

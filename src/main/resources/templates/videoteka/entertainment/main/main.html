@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Service</title>
+    <link href="/css/entertainment/gallery.css" rel="stylesheet" type="text/css" th:href="@{/css/entertainment/gallery.css}" />
+    <link href="/css/navigationbar/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigationbar/navigation_bar.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="navigation_bar">
+
+    <div class="username">
+        <h4 th:text="${username}"></h4>
+    </div>
+    <div class="list">
+        <ul>
+            <li th:each="link : ${links}">
+                <a th:href="@{/api/v1/videoteka/{link}(link=${#strings.toLowerCase(link)})}"><p th:text="${#strings.capitalize(link)}"></p></a>
+            </li>
+        </ul>
+    </div>
+    <div class="dropdown_list">
+
+        <form>
+            <div class="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+                <input type="text" placeholder="Search">
+            </div>
+        </form>
+
+
+        <div class="dropdown_wrapper">
+            <div class="dropdown">
+                <button class="drop_button"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a th:if="${username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
+                    <a th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+                    <a th:unless="${username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <div class="gallery">
+        <a th:each="content : ${contents}" target="_blank" th:href="@{/api/v1/videoteka/{type}/{id}(type=${#strings.toLowerCase(title)},id=${content.id})}">
+            <img th:if="${content.image_url != 'aa.com'}" th:src="${content.image_url}" alt="${content.name}" width="250px" height="250px">
+            <img src="https://image.shutterstock.com/image-vector/online-cinema-art-movie-watching-260nw-586719869.jpg" th:if="${content.image_url == 'aa.com'}" alt="ERRORS" width="250px" height="250px">
+        </a>
+    </div>
+
+</body>
+</html>

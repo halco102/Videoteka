@@ -1,6 +1,9 @@
 package com.diplomski_rad.videoteka.controller.person;
 
+import com.diplomski_rad.videoteka.constants.Titles;
 import com.diplomski_rad.videoteka.model.User;
+import com.diplomski_rad.videoteka.service.content.MovieService;
+import com.diplomski_rad.videoteka.service.content.SeriesService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.*;
 
 @Controller
 @RequestMapping("/api/v1/videoteka")
@@ -24,12 +28,27 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    MovieService movieService;
+    @Autowired
+    SeriesService seriesService;
 
     public static String displayName;
 
     @GetMapping("/index")
-    public  String getIndex(Model model){
-        return userService.getIndexPage(model);
+    public String getIndex(Model model){
+        if (displayName != null) {
+            model.addAttribute("username", displayName);
+        }else {
+            model.addAttribute("username", "anonymousUser");
+        }
+
+        Map<String, Object> temp = new HashMap<>();
+        temp.put(Titles.movieType, movieService.getAllContent());
+        temp.put(Titles.seriesType, seriesService.getAllContent());
+        model.addAttribute("temp", temp);
+
+        return "videoteka/index.html";
     }
 
     @GetMapping("")
