@@ -1,6 +1,6 @@
 package com.diplomski_rad.videoteka.controller.person;
 
-import com.diplomski_rad.videoteka.constants.Titles;
+import com.diplomski_rad.videoteka.constants.Types;
 import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.service.content.MovieService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
@@ -8,7 +8,6 @@ import com.diplomski_rad.videoteka.service.persons.UserService;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +44,8 @@ public class UserController {
         }
 
         Map<String, Object> temp = new HashMap<>();
-        temp.put(Titles.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
-        temp.put(Titles.seriesType, seriesService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
+        temp.put(Types.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
+        temp.put(Types.seriesType, seriesService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
         model.addAttribute("temp", temp);
 
         return "videoteka/index.html";

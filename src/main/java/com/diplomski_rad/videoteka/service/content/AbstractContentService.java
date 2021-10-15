@@ -63,7 +63,7 @@ public abstract class AbstractContentService<T extends Content> implements Conte
 
     public List<T> searchEngine(String keyword) {
 
-        if(keyword != null) {
+        if(keyword != null && !keyword.isBlank()) {
             keyword = keyword+"%";
             return abstractContentRepo.findByKeyword(keyword);
         }
