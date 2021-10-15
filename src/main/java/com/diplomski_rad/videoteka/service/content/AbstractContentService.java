@@ -61,23 +61,17 @@ public abstract class AbstractContentService<T extends Content> implements Conte
     }
 
 
-    public List<T> searchEngine(String searchGenre, String keyword) {
+    public List<T> searchEngine(String keyword) {
 
-        if(keyword != null && searchGenre == null) {
+        if(keyword != null) {
             keyword = keyword+"%";
-
             return abstractContentRepo.findByKeyword(keyword);
-        }else if (keyword == null && searchGenre != null){
-            var temp = abstractContentRepo.findAll()
-                    .stream()
-                    .filter(movie -> movie.getGenres().stream().anyMatch(g -> g.getName().matches(searchGenre)))
-                    .collect(Collectors.toList());
-
-            return temp;
         }
 
         return abstractContentRepo.findAll();
     }
+
+
 
     public List<String> getType(String type){
         List<String> temp = new ArrayList<>();

@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
 
-@FeignClient(name = "content", url = "https://data-imdb1.p.rapidapi.com/movie")
+@FeignClient(name = "content", url = "https://data-imdb1.p.rapidapi.com")
 public interface ContentApi {
-    @GetMapping("/id/{id}/")
-    MainModel getMoviesByPopularity(@RequestHeader("x-rapidapi-key") String key, @PathVariable String id);
+    @GetMapping("/movie/id/{id}/")
+    MainModel getMovieByImdbId(@RequestHeader("x-rapidapi-key") String key, @PathVariable String id);
+
+    @GetMapping("/series/id/{id}/")
+    MainModel getSeriesByImdbId(@RequestHeader("x-rapidapi-key") String key, @PathVariable String id);
 }

@@ -48,4 +48,5 @@ public class CartoonService extends AbstractContentService<Cartoon>{
     public List<Cartoon> findByKeyword(String keyword) {
         return super.findByKeyword(keyword);
     }
+
 }

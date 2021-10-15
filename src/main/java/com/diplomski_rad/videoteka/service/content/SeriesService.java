@@ -54,8 +54,8 @@ public class SeriesService extends AbstractContentService<Series> {
     }
 
     @Override
-    public List<Series> searchEngine(String searchGenre, String keyword) {
-        return super.searchEngine(searchGenre, keyword);
+    public List<Series> searchEngine(String keyword) {
+        return super.searchEngine(keyword);
     }
 
     public String submitAdminForm(Series series, List<Genre> genres) {

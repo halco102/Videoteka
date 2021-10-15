@@ -14,6 +14,6 @@ public interface ContentService<T extends Content> {
     void deleteById(String id);
     T getByName(String name);
     List<T> findByKeyword(String keyword);
-    List<T> searchEngine(String searchGenre, String keyword);
+    List<T> searchEngine(String keyword);
 
 }

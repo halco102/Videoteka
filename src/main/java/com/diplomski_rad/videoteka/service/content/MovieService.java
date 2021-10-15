@@ -62,9 +62,10 @@ public class MovieService extends AbstractContentService<Movie>{
     }
 
     @Override
-    public List<Movie> searchEngine(String searchGenre, String keyword) {
-        return super.searchEngine(searchGenre, keyword);
+    public List<Movie> searchEngine(String keyword) {
+        return super.searchEngine(keyword);
     }
+
 
     public String submitAdminForm(Movie movies, List<Genre> genres) {
 

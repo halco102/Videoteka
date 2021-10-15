@@ -1,4 +1,3 @@
-/*
 package com.diplomski_rad.videoteka.bootstrap;
 
 import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
@@ -25,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
@@ -77,22 +77,25 @@ public class Bootstrap implements CommandLineRunner {
         return price;
     }
 
-
-    @Override
-    public void run(String... args) throws Exception {
-        */
-/*List<String> imdbIds = new ArrayList<>(Arrays.asList("tt10942302", "tt0111161", "tt0068646", "tt5773402",));*//*
-
-
-        List<String> imdbIds = new ArrayList<>();
-        Resource resource = new ClassPathResource("/contentids/MovieIds.txt");
+    private List<String> listOfElements(Resource resource) throws IOException {
+        List<String> ids = new ArrayList<>();
         BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(resource.getInputStream())
         );
         String id;
         while ((id = bufferedReader.readLine()) != null) {
-            imdbIds.add(id);
+            ids.add(id);
         }
+
+        return ids;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+
+        List<String> imdbIds = new ArrayList<>();
+        Resource movieResource = new ClassPathResource("/contentids/MovieIds.txt");
+        Resource seriesResource = new ClassPathResource("/contentids/SeriesIds.txt");
 
         System.out.println("Bootstrap started!");
         Role role = new Role("ADMIN");
@@ -150,9 +153,9 @@ public class Bootstrap implements CommandLineRunner {
         //end
 
         List<Movie> movies = new ArrayList<>();
-        imdbIds.forEach(item -> {
+        listOfElements(movieResource).forEach(item -> {
             log.info(item);
-            MainModel model = contentApi.getMoviesByPopularity(apiKey, item);
+            MainModel model = contentApi.getMovieByImdbId(apiKey, item);
             Movie movie = new Movie(model.getData().getTitle(),
                     model.getData().getRelease(),
                     model.getData().getMovie_length(),
@@ -175,6 +178,8 @@ public class Bootstrap implements CommandLineRunner {
         });
 
 
+
+
         for (Movie m: movies
              ) {
             movieRepository.save(m);
@@ -184,8 +189,8 @@ public class Bootstrap implements CommandLineRunner {
 
 
         List<Series> series = new ArrayList<>();
-        imdbIds.forEach(item -> {
-            MainModel model = contentApi.getMoviesByPopularity(apiKey, item);
+        listOfElements(seriesResource).forEach(item -> {
+            MainModel model = contentApi.getSeriesByImdbId(apiKey, item);
             Series series1 = new Series(model.getData().getTitle(),
                     model.getData().getRelease(),
                     model.getData().getImage_url(),
@@ -235,4 +240,3 @@ public class Bootstrap implements CommandLineRunner {
 
     }
 }
-*/

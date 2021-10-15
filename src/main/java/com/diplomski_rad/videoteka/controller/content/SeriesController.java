@@ -32,11 +32,12 @@ public class SeriesController {
     UserService userService;
 
     @GetMapping("/series")
-    public String getSeries(Model model,String keyword,String searchGenre){
-        model.addAttribute("contents",seriesService.searchEngine(searchGenre,keyword));
+    public String getSeries(Model model,String keyword){
+        model.addAttribute("contents",seriesService.getAllContent());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Titles.seriesType);
         model.addAttribute("links", seriesService.getType(Titles.seriesType));
+        model.addAttribute("search", seriesService.searchEngine(keyword));
 
         return  "videoteka/entertainment/main/main.html";
     }

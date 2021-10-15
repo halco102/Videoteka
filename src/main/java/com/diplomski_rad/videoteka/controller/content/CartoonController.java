@@ -36,11 +36,12 @@ public class CartoonController {
     UserService userService;
 
     @GetMapping("/cartoons")
-    public String getCartoons(Model model, String keyword, String searchGenre) {
-        model.addAttribute("cartoons", cartoonService.searchEngine(searchGenre, keyword));
+    public String getCartoons(Model model, String keyword) {
+        model.addAttribute("cartoons", cartoonService.getAllContent());
         model.addAttribute("genres", genreService.findAllGenres());
         model.addAttribute("stars", starsService.getAllPersons());
         model.addAttribute("username", UserController.displayName);
+        model.addAttribute("search", cartoonService.searchEngine(keyword));
 
         return  "videoteka/entertainment/cartoon.html";
     }
