@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/v1/videoteka")
@@ -44,8 +45,8 @@ public class UserController {
         }
 
         Map<String, Object> temp = new HashMap<>();
-        temp.put(Titles.movieType, movieService.getAllContent());
-        temp.put(Titles.seriesType, seriesService.getAllContent());
+        temp.put(Titles.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
+        temp.put(Titles.seriesType, seriesService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
         model.addAttribute("temp", temp);
 
         return "videoteka/index.html";
