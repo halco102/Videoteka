@@ -1,3 +1,4 @@
+/*
 package com.diplomski_rad.videoteka.bootstrap;
 
 import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
@@ -236,3 +237,4 @@ public class Bootstrap implements CommandLineRunner {
 
     }
 }
+*/

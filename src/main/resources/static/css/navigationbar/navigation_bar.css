@@ -13,6 +13,7 @@
 .username{
     flex: 0.7;
     text-align: center;
+    color:whitesmoke;
 }
 
 .list ul{

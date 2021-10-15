@@ -25,7 +25,6 @@
         <ul>
             <li><a th:href="@{/api/v1/videoteka/movies}">Movies</a></li>
             <li><a th:href="@{/api/v1/videoteka/series}">Series</a></li>
-            <li><a th:href="@{/api/v1/videoteka/cartoons}">Cartoons</a></li>
         </ul>
     </div>
     <div class="dropdown_list">
@@ -45,7 +44,8 @@
 </div>
 
 <div class="main_div" th:each="element : ${temp}">
-    <h2 style="text-align:center; color:whitesmoke;" th:text="${element.key}"></h2>
+    <h2 style="text-align:center; color:whitesmoke;" th:text=" 'Top rated' + ' ' + ${#strings.toLowerCase(element.key)}">
+    </h2>
     <div th:with="a=${element.key}" th:id="${a}" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">

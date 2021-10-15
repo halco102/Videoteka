@@ -11,7 +11,6 @@ import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SigninRequest;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
 import com.diplomski_rad.videoteka.payload.response.BoughtContent;
-import com.diplomski_rad.videoteka.repository.content.CartoonRepository;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
@@ -40,17 +39,14 @@ public class UserService extends AbstractPersonService<User> {
 
     private final SeriesRepository seriesRepository;
 
-    private final CartoonRepository cartoonRepository;
-
     public static String jwtLoggedUser;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, FusionAuth fusionAuth, MovieRepository movieRepository, SeriesRepository seriesRepository, CartoonRepository cartoonRepository) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, FusionAuth fusionAuth, MovieRepository movieRepository, SeriesRepository seriesRepository) {
         super(userRepository);
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.fusionAuth = fusionAuth;
         this.movieRepository = movieRepository;
-        this.cartoonRepository = cartoonRepository;
         this.seriesRepository = seriesRepository;
     }
 
@@ -277,16 +273,6 @@ public class UserService extends AbstractPersonService<User> {
             user.get().getOwnedItems().add(new BoughtContent("Series", series.get()));
             log.info("Bought series");
             this.userRepository.save(payProccess(user.get(), series.get().getPrice()));
-        }else if (object instanceof Cartoon) {
-            if (ifUserBoughtContent(user.get().getOwnedItems(), id)) {
-                log.info("User has that item");
-                return;
-            }
-            var cartoon = cartoonRepository.findById(id);
-            // user.get().getOwnedItems().add(cartoon.get());
-            user.get().getOwnedItems().add(new BoughtContent("Cartoon", cartoon.get()));
-            log.info("Bought cartoon");
-            this.userRepository.save(payProccess(user.get(), cartoon.get().getPrice()));
         }else {
             throw new NotFoundException("Class type cannot be found !");
         }
