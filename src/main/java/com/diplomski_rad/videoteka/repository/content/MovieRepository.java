@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieRepository extends AbstractContentRepo<Movie> {
 }
-/*public interface MovieRepository extends CouchbaseRepository<Movie, String> {
-}*/
+
 

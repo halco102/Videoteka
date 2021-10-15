@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SeriesRepository extends AbstractContentRepo<Series>{
 }
-/*public interface SeriesRepository extends CouchbaseRepository<Series, String> {
-}*/
+

@@ -15,7 +15,7 @@ public abstract class AbstractContentService<T extends Content> implements Conte
 
     private final AbstractContentRepo<T> abstractContentRepo;
 
-    private final List<String> types = new ArrayList<>(Arrays.asList("movies", "series", "cartoons"));
+    private final List<String> types = new ArrayList<>(Arrays.asList("movies", "series"));
 
     public AbstractContentService(AbstractContentRepo<T> abstractContentRepo) {
         this.abstractContentRepo = abstractContentRepo;

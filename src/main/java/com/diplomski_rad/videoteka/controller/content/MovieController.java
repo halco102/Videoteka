@@ -35,14 +35,12 @@ public class MovieController {
         return this.movieService.getMovieById(model, id);
     }
 
-
     @PostMapping("/user/buy/movies/{id}")
     public String buyMovie(@ModelAttribute("id") String id, Model model) {
         this.userService.buyContent(new Movie(), id);
         return "redirect:/api/v1/videoteka/movies";
     }
 
-    //novi admin endpoints, oni stari su bljak
     @GetMapping("/admin/movies")
     public String getAdminPage(Model model){
         return this.movieService.getAdminPage(model);

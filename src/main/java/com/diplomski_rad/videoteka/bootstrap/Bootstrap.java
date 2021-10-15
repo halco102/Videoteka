@@ -1,4 +1,3 @@
-/*
 package com.diplomski_rad.videoteka.bootstrap;
 
 import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
@@ -9,7 +8,6 @@ import com.diplomski_rad.videoteka.payload.request.SignupRequest;
 import com.diplomski_rad.videoteka.repository.CountryRepository;
 import com.diplomski_rad.videoteka.repository.GenreRepository;
 import com.diplomski_rad.videoteka.repository.RoleRepository;
-import com.diplomski_rad.videoteka.repository.content.CartoonRepository;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.repository.person.CreatorRepository;
@@ -42,7 +40,6 @@ public class Bootstrap implements CommandLineRunner {
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
     private final SeriesRepository seriesRepository;
-    private final CartoonRepository cartoonRepository;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final StarRepository starRepository;
@@ -53,7 +50,6 @@ public class Bootstrap implements CommandLineRunner {
     public Bootstrap(MovieRepository movieRepository,
                      GenreRepository genreRepository,
                      SeriesRepository seriesRepository,
-                     CartoonRepository cartoonRepository,
                      UserRepository userRepository,
                      RoleRepository roleRepository,
                      StarRepository starRepository,
@@ -63,7 +59,6 @@ public class Bootstrap implements CommandLineRunner {
         this.movieRepository=movieRepository;
         this.genreRepository=genreRepository;
         this.seriesRepository=seriesRepository;
-        this.cartoonRepository=cartoonRepository;
         this.userRepository=userRepository;
         this.roleRepository=roleRepository;
         this.starRepository=starRepository;
@@ -241,4 +236,3 @@ public class Bootstrap implements CommandLineRunner {
 
     }
 }
-*/
