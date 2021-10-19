@@ -1,0 +1,52 @@
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #191919;
+}
+
+.trailer{
+    margin: 0 20%;
+}
+
+.description{
+    margin: 0 20%;
+    word-wrap: break-word;
+}
+
+.description p {
+    color:white;
+}
+
+.other_info{
+    display: grid;
+    place-items: center;
+    margin: 0 20%;
+}
+
+.info{
+    width: 25%;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.genres{
+    position: relative;
+    width: 20%;
+    height: 20px;
+    margin: 0 20%;
+    float: right;
+}
+
+.para{
+    display: flex;
+
+}
+
+.para p{
+    color:white;
+    margin: auto;
+}
+

@@ -1,101 +1,87 @@
-
-.navigation_bar{
-    position: sticky;
+.navigation{
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    background-color: #343a40;
+    height: 70px;
     width: 100%;
-
     display: flex;
+    background-color: #343a40;
 }
 
 .username{
-    flex: 0.7;
-    text-align: center;
-    color:whitesmoke;
+    padding: 0 5%;
+    flex:0.1;
+    padding: 0 5px;
+    margin: 0 2px;
+    max-width: 278px;
+    min-width: 278px;
 }
 
-.list ul{
+.links ul{
     list-style-type: none;
-    margin: 5px;
-}
-
-.list{
-    flex: 2;
     display: flex;
-    justify-content: space-around;
 }
 
-.list li{
-    float: left;
-    padding: 0 100px;
+.links li{
+    padding: 0 50px;
 }
 
-.list a{
-    color: whitesmoke;
+.links{
+    display: grid;
+    place-items: center;
+    flex:1;
+
+    justify-content:space-around;
+}
+
+li a{
+    font-size: 20px;
+    color: white;
     text-decoration: none;
 }
 
-.search{
-    margin-top: 20px;
+.search_bar{
+    display: inline-block;
+    margin: auto;
     background-color: white;
+    padding: 5px 0;
 }
 
-.search button{
-    width: 32px;
-    height: 32px;
+.search_bar button{
+    float: left;
     background-color: transparent;
     border: none;
 }
 
-.search input{
-    width: 320px;
-    height: 25px;
-    margin-left: -5px;
+.search_bar input{
+    width: 89%;
     border: none;
 }
 
-.dropdown_list{
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-}
-
-.dropdown_list select{
-    width: 40px;
-    height: 30px;
-    margin: 20px;
-}
-
-
-.dropdown_wrapper{
-    width: 20%;
-    height: 20px;
-    margin-top: 20px;
+.drop_down_button{
     display: grid;
     place-items: center;
+    padding: 0 25px;
 }
 
-.drop_button {
-
+.drop_button{
     background-color: #343a40;
     width: 30px;
     height: 32px;
     color: white;
     border: none;
     cursor: pointer;
-  }
+    background:url(/css/images/drop.png) no-repeat;
+    background-position: center;
+}
 
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
 
-  .dropdown-content {
+.dropdown-content {
     display: none;
     position: absolute;
     right: 0;
+    top: 70px;
     background-color: #a3adb8;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -109,6 +95,7 @@
     display: block;
   }
 
+
   .dropdown-content a:hover {background-color: #f1f1f1;}
-  .dropdown:hover .dropdown-content {display: block;}
-  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+  .drop_down_button:hover .dropdown-content {display: block;}
+  .drop_down_button:hover .dropbtn {background-color: #3e8e41;}
