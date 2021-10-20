@@ -18,35 +18,76 @@ body {
     color:white;
 }
 
-.other_info{
-    display: grid;
-    place-items: center;
-    margin: 0 20%;
-}
-
-.info{
-    width: 25%;
-}
 
 ul{
     list-style-type: none;
 }
 
 .genres{
-    position: relative;
-    width: 20%;
-    height: 20px;
     margin: 0 20%;
-    float: right;
+    text-align: end;
 }
 
-.para{
-    display: flex;
 
-}
-
-.para p{
+.genres p{
     color:white;
-    margin: auto;
+    display: inline-block;
+    padding: 0 20px;
 }
 
+
+.other_info{
+    margin: 0 20%;
+    display: flex;
+}
+
+.content_image{
+    width: 20%;
+}
+
+.content_buttons{
+    margin-left: auto;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.content_buttons button{
+    width: 100px;
+    height: 50px;
+    margin: 0 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: antiquewhite;
+}
+
+.info{
+    margin: 0 20px;
+    padding: 0 20px;
+    display: flex;
+}
+
+.user_buttons{
+    margin-bottom: 60px;
+}
+
+.info th{
+    text-align: left;
+    color: whitesmoke;
+}
+.info td{
+    text-align: right;
+    color: whitesmoke;
+    padding-left: 50px;
+}
+
+.vertical_line{
+    border-left: 2px solid whitesmoke;
+    display: inline;
+    margin-left: 10px;
+}
+
+.title{
+    text-align: center;
+    color: whitesmoke;
+}

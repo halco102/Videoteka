@@ -58,6 +58,8 @@ public abstract class Content {
     @DecimalMax(value = "10.0", message = "Maximal rating is 10.0")
     private double rating;
 
+    private String content_rating;
+
     public Content(String name, String release){
         this.name = name;
         this.release = release;
@@ -77,6 +79,17 @@ public abstract class Content {
         this.trailer = trailer;
         this.rating = rating;
         this.genres = genres;
+    }
+
+    public Content(String name, String release, String imageUrl, String description, String trailer, double rating, Set<Genre> genres, String content_rating) {
+        this.name = name;
+        this.release = release;
+        this.image_url = imageUrl;
+        this.description = description;
+        this.trailer = trailer;
+        this.rating = rating;
+        this.genres = genres;
+        this.content_rating = content_rating;
     }
 
 }

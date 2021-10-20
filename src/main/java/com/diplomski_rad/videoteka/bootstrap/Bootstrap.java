@@ -160,7 +160,8 @@ public class Bootstrap implements CommandLineRunner {
                     model.getData().getDescription(),
                     model.getData().getTrailer(),
                     model.getData().getRating(),
-                    model.getData().getGen());
+                    model.getData().getGen(),
+                    model.getData().getContent_rating());
             //add all genres to db
             Set<Genre> myGenres = new HashSet<>();
             for (Genre ge : model.getData().getGen()
@@ -174,16 +175,11 @@ public class Bootstrap implements CommandLineRunner {
 
         });
 
-
-
-
         for (Movie m: movies
              ) {
             movieRepository.save(m);
             log.info("Saved movie");
         }
-
-
 
         List<Series> series = new ArrayList<>();
         listOfElements(seriesResource).forEach(item -> {
@@ -195,7 +191,8 @@ public class Bootstrap implements CommandLineRunner {
                     model.getData().getTrailer(),
                     model.getData().getRating(),
                     model.getData().getGen(),
-                    model.getData().getMovie_length());
+                    model.getData().getMovie_length(),
+                    model.getData().getContent_rating());
             //add all genres to db
             Set<Genre> myGenres = new HashSet<>();
             for (Genre ge : model.getData().getGen()

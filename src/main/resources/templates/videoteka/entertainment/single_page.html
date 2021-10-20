@@ -39,7 +39,7 @@
 </div>
 
 
-<h1 style="text-align: center;" th:text="${content.name}"></h1>
+<h1 class="title" th:text="${content.name}"></h1>
 
 <div>
     <div class="trailer">
@@ -50,32 +50,50 @@
     </div>
 </div>
 <div class="genres">
-    <div class="para">
-        <p>g1</p>
-        <p>g2</p>
-    </div>
+    <p th:each="genre : ${genres}" th:text="${genre.name}"></p>
 </div>
 <div class="description">
     <p th:text="${content.description}"></p>
 </div>
 
 <div class="other_info">
-    <img th:src="${content.image_url}">
+
+    <div class="content_image">
+        <img th:src="${content.image_url}">
+    </div>
+    <div class="vertical_line"></div>
     <div class="info">
         <table>
             <tr>
-                <th>Glumci</th>
-                <td>Neko</td>
-                <br>
-                <td>Neko</td>
-                <br>
-                <td>Neko</td>
+                <th>Rating</th>
+                <td th:text="${content.rating}"></td>
             </tr>
             <tr>
-                <th>Reziser</th>
-                <td>Neko</td>
+                <th>Length</th>
+                <td th:text="${content.runtime}"></td>
+            </tr>
+            <tr>
+                <th>Release</th>
+                <td th:text="${content.release}"></td>
+            </tr>
+            <tr>
+                <th>Content rating</th>
+                <td th:text="${content.content_rating}"></td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td th:text="${content.price}"></td>
             </tr>
         </table>
+    </div>
+    <div class="content_buttons">
+        <div class="admin_buttons">
+            <button>Edit</button>
+            <button>Delete</button>
+        </div>
+        <div class="user_buttons">
+            <button>Buy</button>
+        </div>
     </div>
 </div>
 

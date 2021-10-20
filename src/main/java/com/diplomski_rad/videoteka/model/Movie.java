@@ -30,8 +30,8 @@ public class Movie extends Content{
         this.runtime = runtime;
     }
 
-    public Movie(String name, String release, int runtime, String image_url, String description, String trailer, double rating, Set<Genre> genres) {
-        super(name, release, image_url, description, trailer, rating, genres);
+    public Movie(String name, String release, int runtime, String image_url, String description, String trailer, double rating, Set<Genre> genres, String content_rating) {
+        super(name, release, image_url, description, trailer, rating, genres, content_rating);
         this.runtime = runtime;
     }
 

@@ -29,8 +29,8 @@ public class Series extends Content{
         this.seasons = seasons;
     }
 
-    public Series(String name, String release, String imageUrl, String description, String trailer, double rating, Set<Genre> genres, int runtime) {
-        super(name, release, imageUrl, description, trailer, rating, genres);
+    public Series(String name, String release, String imageUrl, String description, String trailer, double rating, Set<Genre> genres, int runtime, String content_rating) {
+        super(name, release, imageUrl, description, trailer, rating, genres, content_rating);
         this.runtime = runtime;
     }
 }

@@ -25,5 +25,6 @@ public class ContentModel {
     private String release;
     private String trailer;
     private Set<Genre> gen;
+    private String content_rating;
 
 }

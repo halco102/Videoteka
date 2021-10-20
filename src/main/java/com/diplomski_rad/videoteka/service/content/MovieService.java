@@ -101,9 +101,11 @@ public class MovieService extends AbstractContentService<Movie>{
     }
 
     public String getMovieById(Model model, String id) {
-        model.addAttribute("content", getContentById(id).orElse(null));
+        var content = getContentById(id).orElse(null);
+        model.addAttribute("content", content);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("username", UserController.displayName);
+        model.addAttribute("genres", content.getGenres());
         return "videoteka/entertainment/single_page.html";
     }
 
