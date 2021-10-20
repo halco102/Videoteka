@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+
+  cb:
+    build: couchbase-docker
+    container_name: videoteka-couchbase
+
+    ports:
+      - "3001:8091"
+      - "3002:8092"
+      - "3003:8093"
+
+    environment:
+      - COUCHBASE_ADMINISTRATOR_USERNAME=Admin
+      - COUCHBASE_ADMINISTRATOR_PASSWORD=halco1002
+      - COUCHBASE_BUCKET=videoteka
+      - PORT=3001
+
+    volumes:
+      - cb_data:/opt/couchbase/var
+
+  videoteka:
+    build: .
+    container_name: videoteka-mvn
+    ports:
+      - "8200:8200"
+
+    restart: always
+
+    depends_on:
+      - cb
+
+    environment:
+      - server.port=8200
+      - spring.couchbase.connection-string=couchbase://videoteka-couchbase
+      - spring.couchbase.username=Admin
+      - spring.couchbase.password=halco1002
+      - spring.data.couchbase.bucket-name=videoteka
+      - FUSIONAUTH_URL=localhost:8085
+
+
+networks:
+  default:
+    external:
+      name: mynetwork
+
+volumes:
+  cb_data:
+
+
