@@ -50,6 +50,9 @@ public class User extends Person{
     @Field
     private int money;
 
+    @Field
+    private String avatar;
+
 /*    @Field
     private Set<Role> roles = new HashSet<>();*/
 

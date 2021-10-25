@@ -1,5 +1,6 @@
 package com.diplomski_rad.videoteka.service.persons;
 
+import com.diplomski_rad.videoteka.constants.Types;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.exception.BadRequestException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
@@ -14,6 +15,8 @@ import com.diplomski_rad.videoteka.payload.response.BoughtContent;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
+import com.diplomski_rad.videoteka.service.content.MovieService;
+import com.diplomski_rad.videoteka.service.content.SeriesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,12 +25,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class UserService extends AbstractPersonService<User> {
+
+    private final String avatarUrl = "https://avatars.dicebear.com/api/bottts/";
 
     private final UserRepository userRepository;
 
@@ -69,6 +74,11 @@ public class UserService extends AbstractPersonService<User> {
 
     private final String appId = "c155033d-8a15-4bea-ad87-b57bc4d65d64"; // posto imam samo 1 tenant i 1 app u tenantu dovoljno je hardcodirati appId
 
+
+    private String randomUUID() {
+        return String.valueOf(UUID.randomUUID());
+    }
+
     public User saveUser(User user) {
 
         SignupRequest signupRequest = new SignupRequest();
@@ -84,6 +94,7 @@ public class UserService extends AbstractPersonService<User> {
         user.setRoles(fusionAuth.getUserRolesFromApp(appId, temp.getId()));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setMoney(200); // always give 200$
+        user.setAvatar(avatarUrl + randomUUID() + ".svg");
 
         return userRepository.save(user);
     }
@@ -279,7 +290,7 @@ public class UserService extends AbstractPersonService<User> {
 
     }
 
-    public String getIndexPage(Model model) {
+    public String getIndexPage(Model model, MovieService movieService, SeriesService seriesService) {
         //check koji user je loged in trenutno
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -292,6 +303,10 @@ public class UserService extends AbstractPersonService<User> {
         }
 
         model.addAttribute("username", authentication.getPrincipal().toString());
+        Map<String, Object> temp = new HashMap<>();
+        temp.put(Types.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
+        temp.put(Types.seriesType, seriesService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
+        model.addAttribute("temp", temp);
 
         return "videoteka/index.html";
     }

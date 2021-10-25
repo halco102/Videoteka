@@ -37,18 +37,7 @@ public class UserController {
 
     @GetMapping("/index")
     public String getIndex(Model model){
-        if (displayName != null) {
-            model.addAttribute("username", displayName);
-        }else {
-            model.addAttribute("username", "anonymousUser");
-        }
-
-        Map<String, Object> temp = new HashMap<>();
-        temp.put(Types.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
-        temp.put(Types.seriesType, seriesService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
-        model.addAttribute("temp", temp);
-
-        return "videoteka/index.html";
+        return userService.getIndexPage(model, movieService, seriesService);
     }
 
     @GetMapping("")
@@ -92,7 +81,7 @@ public class UserController {
 
             this.userService.saveUser(user);
             //return "redirect:/api/v1/videoteka/login";
-            return "videoteka/login/signup.html";
+            return "videoteka/login/signin.html";
         }
 
         return "videoteka/login/signup.html";

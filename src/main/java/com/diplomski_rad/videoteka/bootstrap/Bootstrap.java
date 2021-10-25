@@ -35,6 +35,8 @@ public class Bootstrap implements CommandLineRunner {
     @Autowired
     FusionAuth fusionAuth;
 
+    private final String avatarUrl = "https://avatars.dicebear.com/api/bottts/";
+
     @Value("${apiKey}")
     private String apiKey;
 
