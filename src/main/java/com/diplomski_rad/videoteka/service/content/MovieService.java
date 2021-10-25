@@ -6,7 +6,9 @@ import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
+import com.diplomski_rad.videoteka.security.Decoder;
 import com.diplomski_rad.videoteka.service.GenreService;
+import com.diplomski_rad.videoteka.service.persons.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -105,6 +107,7 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("content", content);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("username", UserController.displayName);
+        model.addAttribute("role", Decoder.getRoles(UserService.jwtLoggedUser).get(0));
         model.addAttribute("genres", content.getGenres());
         return "videoteka/entertainment/single_page.html";
     }

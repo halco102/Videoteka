@@ -1,41 +1,62 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/css/entertainment.css" rel="stylesheet" type="text/css" th:href="@{/css/entertainment.css}" />
+    <link href="/css/account/profile.css" rel="stylesheet" type="text/css" th:href="@{/css/account/profile.css}" />
+
 </head>
 <body>
+<form action="#" method="get" th:object="${user}"  th:action="@{/api/v1/videoteka/user/profile}" >
 
-<div>
-    <h1>Profile</h1>
-    <h3>User: <span th:text="${username}"></span></h3>
+    <div class="main_body">
+        <div class="avatar">
+            <img th:src="${user.avatar}">
+        </div>
+        <div class="user_info">
+            <div class="basic_info">
+                <table>
+                    <tr>
+                        <th>First name:</th>
+                        <td th:text="${user.firstName}"></td>
+                    </tr>
+                    <tr>
+                        <th>Last name:</th>
+                        <td th:text="${user.lastName}"></td>
+                    </tr>
+                    <tr>
+                        <th>Username:</th>
+                        <td th:text="${user.username}"></td>
+                    </tr>
+                    <tr>
+                        <th>Country:</th>
+                        <td th:text="${user.country}"></td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td th:text="${user.eMail}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="price">
+                <table>
+                    <tr>
+                        <th>Balance</th>
+                        <td th:text="${user.money}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-</div>
+        <hr class="h_line">
 
+        <p style="text-align: center;">Bought content</p>
 
-<form action="#" method="get" th:object="${users}"  th:action="@{/api/v1/videoteka/user/profile}" >
+        <div class="slideshow">
+            <img th:each="image : ${user.ownedItems}" th:src="${image.t.image_url}">
+        </div>
 
-    <h3>User id :<span th:text="${users.id}"></span></h3>
-    <h3>First name :<span th:text="${users.firstName}"></span></h3>
-    <h3>Last name :<span th:text="${users.lastName}"></span></h3>
-    <h3>Country :<span th:text="${users.country}"></span></h3>
-    <h3>Email :<span th:text="${users.eMail}"></span></h3>
-    <h3>Money :<span th:text="${users.money}"></span></h3>
-
-        <table class="table" th:if="${users.ownedItems != null and !users.ownedItems.empty}">
-            <tr>ID</tr>
-            <tr>Title</tr>
-            <tr>Content</tr>
-
-            <tr th:each="item: ${users.ownedItems}">
-                <td th:text="${item.t.id}"></td>
-                <td th:text="${item.t.name}"></td>
-                <td th:text="${item.className}"></td>
-            </tr>
-        </table>
+    </div>
 
 </form>
-
 </body>
+
 </html>

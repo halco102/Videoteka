@@ -13,7 +13,7 @@ public class Decoder {
 
         public static List<String> getRoles(String jwt) {
             Claims claims = Jwts.parser()
-                    .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)) // ako nije utf_8 il error, pa biraj
+                    .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                     .parseClaimsJws(jwt)
                     .getBody();
 
@@ -22,7 +22,7 @@ public class Decoder {
 
         public static String getUsername(String jwt) {
             Claims claims = Jwts.parser()
-                    .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8)) // ako nije utf_8 il error, pa biraj
+                    .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                     .parseClaimsJws(jwt)
                     .getBody();
 

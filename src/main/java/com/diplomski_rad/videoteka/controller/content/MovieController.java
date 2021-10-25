@@ -35,7 +35,7 @@ public class MovieController {
         return this.movieService.getMovieById(model, id);
     }
 
-    @PostMapping("/user/buy/movies/{id}")
+    @PostMapping("/content/buy/movies/{id}")
     public String buyMovie(@ModelAttribute("id") String id, Model model) {
         this.userService.buyContent(new Movie(), id);
         return "redirect:/api/v1/videoteka/movies";

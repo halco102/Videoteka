@@ -49,7 +49,7 @@ public class SeriesController {
         return "videoteka/entertainment/single_page.html";
     }
 
-    @PostMapping("/user/buy/series/{id}")
+    @PostMapping("/content/buy/series/{id}")
     public String buySeries(@ModelAttribute("id") String id, Model model) {
         this.userService.buyContent(new Series(), id);
         return "redirect:/api/v1/videoteka/series";

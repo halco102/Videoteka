@@ -1,0 +1,71 @@
+body{
+    width: 100%;
+}
+
+.main_body{
+    margin: 10px 25%;
+    display: grid;
+
+}
+
+.avatar img {
+    width: 200px;
+    height: 200px;
+}
+
+.avatar{
+    display: grid;
+    place-items: center;
+    margin: 10px 0;
+}
+
+.user_info{
+    display: flex;
+    margin: 15px 20%;
+
+}
+
+.basic_info {
+    width: 100%;
+}
+
+.basic_info th, td {
+    padding: 10px;
+}
+
+.price{
+    display: grid;
+    width: 100%;
+    place-items: center;
+}
+
+.h_line{
+    border: 1px solid black;
+    width: 100%;
+}
+
+.content_buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.content_buttons button{
+    border: none;
+    background-color: burlywood;
+    border-radius: 10px;
+    width: 100px;
+    height: 35px;
+}
+
+
+.slideshow{
+    overflow: auto;
+    white-space: nowrap;
+    margin: 10px 0;
+}
+
+.slideshow img{
+    width: 250px;
+    height: 250px;
+    margin: 0 25px;
+}

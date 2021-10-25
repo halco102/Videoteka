@@ -98,11 +98,13 @@ public class UserController {
 
     @GetMapping("/user/profile")
     public String getUserProfile(Model model) {
-        model.addAttribute("users", this.userService.getUserProfile());
+        model.addAttribute("user", this.userService.getUserProfile());
+        model.addAttribute("col", 2);
         model.addAttribute("username", displayName);
 
         return "videoteka/profile/profile.html";
     }
+
 
 
 }
