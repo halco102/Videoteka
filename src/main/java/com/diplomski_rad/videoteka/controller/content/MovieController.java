@@ -35,8 +35,13 @@ public class MovieController {
         return this.movieService.getMovieById(model, id);
     }
 
+    @GetMapping("/movies/search")
+    public String searchMovie(Model model, @RequestParam("keyword") String name) {
+        return this.movieService.search(name, model);
+    }
+
     @PostMapping("/content/buy/movies/{id}")
-    public String buyMovie(@ModelAttribute("id") String id, Model model) {
+    public String buyMovie(@ModelAttribute("id") String id) {
         this.userService.buyContent(new Movie(), id);
         return "redirect:/api/v1/videoteka/movies";
     }

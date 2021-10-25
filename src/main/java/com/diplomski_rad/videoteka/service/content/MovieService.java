@@ -9,6 +9,7 @@ import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.security.Decoder;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
+import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -93,12 +94,21 @@ public class MovieService extends AbstractContentService<Movie>{
 
     //movies
     public String getAllMovies(Model model, String keyword){
-        model.addAttribute("contents", searchEngine(keyword));
+        //model.addAttribute("contents", searchEngine(keyword));
+        model.addAttribute("contents", movieRepository.findAll());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("links", getType(Types.movieType));
-        model.addAttribute("search", searchEngine(keyword));
+        //model.addAttribute("search", searchEngine(keyword));
 
+        return  "videoteka/entertainment/main/main.html";
+    }
+
+    public String search(String name, Model model) {
+        model.addAttribute("username", UserController.displayName);
+        model.addAttribute("title", Types.movieType);
+        model.addAttribute("links", getType(Types.movieType));
+        model.addAttribute("contents", searchEngine(name));
         return  "videoteka/entertainment/main/main.html";
     }
 
@@ -107,7 +117,9 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("content", content);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("username", UserController.displayName);
-        model.addAttribute("role", Decoder.getRoles(UserService.jwtLoggedUser).get(0));
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            model.addAttribute("role", Decoder.getRoles(UserService.jwtLoggedUser).get(0));
+        }
         model.addAttribute("genres", content.getGenres());
         return "videoteka/entertainment/single_page.html";
     }

@@ -22,8 +22,10 @@
     </div>
 
     <div class="search_bar">
-        <button type="submit"><i class="fa fa-search"></i></button>
-        <input type="text" placeholder="Search">
+        <form action="#" th:action="@{/api/v1/videoteka/{type}/search(type=${#strings.toLowerCase(title)})}">
+            <button type="submit"><i class="fa fa-search"></i></button>
+            <input type="text" placeholder="Search" name="keyword">
+        </form>
     </div>
 
     <div class="drop_down_button">

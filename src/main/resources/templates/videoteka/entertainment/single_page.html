@@ -31,7 +31,7 @@
         <button class="drop_button"></button>
         <div class="dropdown-content">
             <a th:if="${#strings.isEmpty(username) || username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
-            <a th:if="${username != 'anonymousUser' || username == null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+            <a th:if="${username != 'anonymousUser' && username != null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
             <a th:unless="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
         </div>
     </div>
@@ -86,7 +86,7 @@
             </tr>
         </table>
     </div>
-    <div class="content_buttons">
+    <div class="content_buttons" th:if="${username} != 'anonymousUser'">
         <div class="admin_buttons" th:if="${role} == 'ROLE_ADMIN'">
             <button>Edit</button>
             <button>Delete</button>
