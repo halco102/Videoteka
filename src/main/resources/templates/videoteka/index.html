@@ -19,8 +19,17 @@
 
 <div class="navigation" style="z-index:1;">
 
-    <div class="username" >
-        <h2 th:text="${username}"></h2>
+    <div class="username">
+        <h2 th:text="${username}" style="margin:auto !important;">
+        </h2>
+        <div th:if="${username != 'anonymousUser' && username != null}" class="user_avatar_balance">
+            <img th:src="${user.avatar}" style="width:50px !important; height:50px !important;" >
+            <div class="txt" style="margin:auto !important;">
+                <p>Balance:</p>
+                <p th:text="${user.money}"></p>
+                <p>$</p>
+            </div>
+        </div>
     </div>
 
 
@@ -31,16 +40,12 @@
         </ul>
     </div>
 
-    <div class="search_bar">
-        <button type="submit"><i class="fa fa-search"></i></button>
-        <input type="text" placeholder="Search">
-    </div>
 
     <div class="drop_down_button">
         <button class="drop_button"></button>
         <div class="dropdown-content">
             <a th:if="${#strings.isEmpty(username) || username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
-            <a th:if="${username != 'anonymousUser' || username == null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+            <a th:if="${username != 'anonymousUser' && username != null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
             <a th:unless="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
         </div>
     </div>

@@ -303,6 +303,9 @@ public class UserService extends AbstractPersonService<User> {
         }
 
         model.addAttribute("username", authentication.getPrincipal().toString());
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            model.addAttribute("user", getUserProfile());
+        }
         Map<String, Object> temp = new HashMap<>();
         temp.put(Types.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));
         temp.put(Types.seriesType, seriesService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));

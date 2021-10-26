@@ -16,6 +16,20 @@
     margin: 0 2px;
     max-width: 278px;
     min-width: 278px;
+    display:flex;
+}
+
+.username img{
+    margin:5px 10px;
+}
+
+.txt{
+   display:flex;
+   margin:auto;
+}
+
+.user_avatar_balance{
+    display:flex;
 }
 
 .links ul{

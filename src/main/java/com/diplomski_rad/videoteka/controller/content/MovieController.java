@@ -26,8 +26,8 @@ public class MovieController {
     UserService userService;
 
     @GetMapping("/movies")
-    public String getMovies(Model model, String keyword) {
-        return this.movieService.getAllMovies(model, keyword);
+    public String getMovies(Model model) {
+        return this.movieService.getAllMovies(model);
     }
 
     @GetMapping("/movies/{id}")

@@ -11,7 +11,16 @@
 <div class="navigation">
 
     <div class="username">
-        <h2 th:text="${username}"></h2>
+        <h2 th:text="${username}">
+        </h2>
+        <div th:if="${username != 'anonymousUser' && username != null}" class="user_avatar_balance">
+            <img th:src="${user.avatar}" width="50px" height="50px">
+            <div class="txt">
+                <p>Balance:</p>
+                <p th:text="${user.money}"></p>
+                <p>$</p>
+            </div>
+        </div>
     </div>
 
     <div class="links">

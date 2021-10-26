@@ -27,6 +27,9 @@ public class MovieService extends AbstractContentService<Movie>{
     @Autowired
     GenreService genreService;
 
+    @Autowired
+    UserService userService;
+
     public MovieService(AbstractContentRepo<Movie> abstractContentRepo) {
         super(abstractContentRepo);
     }
@@ -93,13 +96,17 @@ public class MovieService extends AbstractContentService<Movie>{
     }
 
     //movies
-    public String getAllMovies(Model model, String keyword){
-        //model.addAttribute("contents", searchEngine(keyword));
+    public String getAllMovies(Model model){
+
         model.addAttribute("contents", movieRepository.findAll());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("links", getType(Types.movieType));
-        //model.addAttribute("search", searchEngine(keyword));
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            //get currently logged user profile
+            model.addAttribute("user", this.userService.getUserProfile());
+
+        }
 
         return  "videoteka/entertainment/main/main.html";
     }
@@ -117,8 +124,13 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("content", content);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("username", UserController.displayName);
+
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
-            model.addAttribute("role", Decoder.getRoles(UserService.jwtLoggedUser).get(0));
+            var user = userService.getUserProfile();
+            model.addAttribute("role", user.getRoles().first());
+            model.addAttribute("ownedItems", user.getOwnedItems());
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
         }
         model.addAttribute("genres", content.getGenres());
         return "videoteka/entertainment/single_page.html";

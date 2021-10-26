@@ -1,24 +1,26 @@
-version: '3'
+version: '3.5'
 
 services:
 
   cb:
-    build: couchbase-docker
+    build: couchbase-docker/.
     container_name: videoteka-couchbase
 
     ports:
-      - "3001:8091"
-      - "3002:8092"
-      - "3003:8093"
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
 
     environment:
       - COUCHBASE_ADMINISTRATOR_USERNAME=Admin
       - COUCHBASE_ADMINISTRATOR_PASSWORD=halco1002
       - COUCHBASE_BUCKET=videoteka
-      - PORT=3001
+      - PORT=8091
 
-    volumes:
-      - cb_data:/opt/couchbase/var
+    networks:
+      - mynetwork
+#    volumes:
+#      - cb_data:/opt/couchbase/var
 
   videoteka:
     build: .
@@ -41,11 +43,17 @@ services:
 
 
 networks:
-  default:
-    external:
-      name: mynetwork
+  mynetwork:
+    name: custom_network
 
-volumes:
-  cb_data:
+
+
+#networks:
+#  default:
+#    external:
+#      name: mynetwork
+
+#volumes:
+#  cb_data:
 
 
