@@ -4,7 +4,7 @@ services:
 
   cb:
     build: couchbase-docker/.
-    container_name: videoteka-couchbase
+    container_name: cb
 
     ports:
       - "8091:8091"
@@ -17,8 +17,6 @@ services:
       - COUCHBASE_BUCKET=videoteka
       - PORT=8091
 
-    networks:
-      - mynetwork
 #    volumes:
 #      - cb_data:/opt/couchbase/var
 
@@ -35,7 +33,7 @@ services:
 
     environment:
       - server.port=8200
-      - spring.couchbase.connection-string=couchbase://videoteka-couchbase
+      - spring.couchbase.connection-string=couchbase://cb
       - spring.couchbase.username=Admin
       - spring.couchbase.password=halco1002
       - spring.data.couchbase.bucket-name=videoteka
@@ -43,10 +41,9 @@ services:
 
 
 networks:
-  mynetwork:
-    name: custom_network
-
-
+  default:
+    external:
+      name: videoteka_network
 
 #networks:
 #  default:
