@@ -1,18 +1,32 @@
 package com.diplomski_rad.videoteka.service.content;
 
+import com.diplomski_rad.videoteka.constants.Types;
+import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.model.Genre;
+import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.model.Series;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
+import com.diplomski_rad.videoteka.service.GenreService;
+import com.diplomski_rad.videoteka.service.persons.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class SeriesService extends AbstractContentService<Series> {
+
     @Autowired
     SeriesRepository seriesRepository;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    GenreService genreService;
 
     public SeriesService(SeriesRepository seriesRepository) {
         super(seriesRepository);
@@ -58,7 +72,7 @@ public class SeriesService extends AbstractContentService<Series> {
         return super.searchEngine(keyword);
     }
 
-    public String submitAdminForm(Series series, List<Genre> genres) {
+    private String submitAdminForm(Series series, List<Genre> genres) {
 
         if (series.getId() != null) {
             var oldSeries = seriesRepository.findById(series.getId()).get();
@@ -75,6 +89,77 @@ public class SeriesService extends AbstractContentService<Series> {
         }
         seriesRepository.save(series);
         return "redirect:/api/v1/videoteka/admin/series";
+    }
+
+
+    public String getAllSeries(Model model, String keyword) {
+        model.addAttribute("contents", seriesRepository.findAll());
+        model.addAttribute("username", UserController.displayName);
+        model.addAttribute("title", Types.seriesType);
+        model.addAttribute("links", getType(Types.seriesType));
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            //get currently logged user profile
+            model.addAttribute("user", this.userService.getUserProfile());
+
+        }
+
+        return  "videoteka/entertainment/main/main.html";
+    }
+
+    public String search(String name, Model model) {
+        model.addAttribute("username", UserController.displayName);
+        model.addAttribute("title", Types.seriesType);
+        model.addAttribute("links", getType(Types.seriesType));
+        model.addAttribute("contents", searchEngine(name));
+        return  "videoteka/entertainment/main/main.html";
+    }
+
+    public String getSeriesById(Model model, String id) {
+        var content = getContentById(id).orElse(null);
+        model.addAttribute("content", content);
+        model.addAttribute("title", Types.seriesType);
+        model.addAttribute("username", UserController.displayName);
+
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            var user = userService.getUserProfile();
+            model.addAttribute("role", user.getRoles().first());
+            model.addAttribute("ownedItems", user.getOwnedItems());
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
+        }
+        model.addAttribute("genres", content.getGenres());
+        return "videoteka/entertainment/single_page.html";
+    }
+
+
+    public String getAdminPage(Model model){
+        model.addAttribute("content", new Movie());
+        model.addAttribute("title", Types.seriesType);
+        model.addAttribute("genres", genreService.findAllGenres());
+        return "videoteka/admin/admin.html";
+    }
+
+
+    public String postAdminForm(Series movies,
+                                BindingResult bindingResult,
+                                List<Genre> genres,
+                                Model model){
+
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("title", Types.seriesType);
+            model.addAttribute("genres", genreService.findAllGenres());
+            return "videoteka/admin/admin.html";
+        }
+        return submitAdminForm(movies, genres);
+    }
+
+
+    public String getSeriesForm(Model model, String id) {
+        var series = getContentById(id);
+        model.addAttribute("content", series.get());
+        model.addAttribute("genres", genreService.findAllGenres());
+        model.addAttribute("title", Types.seriesType);
+        return "videoteka/admin/admin.html";
     }
 
 }

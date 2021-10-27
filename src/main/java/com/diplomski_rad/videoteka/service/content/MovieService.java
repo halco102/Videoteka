@@ -76,7 +76,7 @@ public class MovieService extends AbstractContentService<Movie>{
     }
 
 
-    public String submitAdminForm(Movie movies, List<Genre> genres) {
+    private String submitAdminForm(Movie movies, List<Genre> genres) {
 
         if (movies.getId() != null) {
             var oldMovie = movieRepository.findById(movies.getId()).get();
