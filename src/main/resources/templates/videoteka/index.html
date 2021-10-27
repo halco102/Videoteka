@@ -20,7 +20,7 @@
 <div class="navigation" style="z-index:1;">
 
     <div class="username">
-        <h2 th:text="${username}" style="margin:auto !important;">
+        <h2 th:text="${username}" style="margin-top:23px !important;">
         </h2>
         <div th:if="${username != 'anonymousUser' && username != null}" class="user_avatar_balance">
             <img th:src="${user.avatar}" style="width:50px !important; height:50px !important;" >
@@ -33,7 +33,7 @@
     </div>
 
 
-    <div class="links">
+    <div class="links" style="padding-right: 15% !important; margin-top:20px !important;">
         <ul>
             <li><a th:href="@{/api/v1/videoteka/movies}">Movies</a></li>
             <li><a th:href="@{/api/v1/videoteka/series}">Series</a></li>

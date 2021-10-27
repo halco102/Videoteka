@@ -8,6 +8,7 @@ import com.diplomski_rad.videoteka.model.Series;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class SeriesService extends AbstractContentService<Series> {
 
     @Autowired
@@ -126,6 +128,13 @@ public class SeriesService extends AbstractContentService<Series> {
             model.addAttribute("ownedItems", user.getOwnedItems());
             model.addAttribute("avatar", user.getAvatar());
             model.addAttribute("money", user.getMoney());
+
+            if (user.getOwnedItems().stream().anyMatch(boughtContent -> boughtContent.getT().equals(content))) {
+                log.info("This content is already bought");
+                model.addAttribute("alreadyBought", true);
+            } else {
+                model.addAttribute("alreadyBought", false);
+            }
         }
         model.addAttribute("genres", content.getGenres());
         return "videoteka/entertainment/single_page.html";

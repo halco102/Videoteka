@@ -93,18 +93,23 @@
             </tr>
         </table>
     </div>
+
     <div class="content_buttons" th:if="${username} != 'anonymousUser'">
         <div class="admin_buttons" th:if="${role} == 'ROLE_ADMIN'">
             <button>Edit</button>
             <button>Delete</button>
         </div>
 
-        <div class="user_buttons" th:if="${role == 'ROLE_USER' && #lists.contains(ownedItems, content)}">
+        <div class="user_buttons" th:if="${role == 'ROLE_USER' && alreadyBought == false && money >= content.price}">
             <form action="#" th:action="@{/api/v1/videoteka/content/buy/{type}/{id}(type=${#strings.toLowerCase(title)},id=${content.id})}" method="post">
                 <button type="submit">Buy</button>
             </form>
         </div>
 
+        <div>
+            <p style="text-align:center;color:wheat;" th:if="${alreadyBought == true}"> You already bought this content !</p>
+            <p style="text-align:center;color:wheat;" th:if="${money < content.price && alreadyBought == false}">You don't have enough money to buy this content !</p>
+        </div>
 
 
     </div>
