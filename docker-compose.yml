@@ -30,6 +30,9 @@ services:
 
     depends_on:
       - cb
+      
+#    networks:
+#      - videoteka_network
 
     environment:
       - server.port=8200
@@ -37,12 +40,12 @@ services:
       - spring.couchbase.username=Admin
       - spring.couchbase.password=halco1002
       - spring.data.couchbase.bucket-name=videoteka
-      - FUSIONAUTH_URL=localhost:8085
+      - FUSIONAUTH_URL=fusionauth-microservice:8085
 
 
-networks:
-  default:
-    external:
+networks: 
+  default: 
+    external: 
       name: videoteka_network
 
 #networks:

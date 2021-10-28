@@ -72,7 +72,7 @@ public class UserService extends AbstractPersonService<User> {
 
     public static String username;
 
-    private final String appId = "c155033d-8a15-4bea-ad87-b57bc4d65d64"; // posto imam samo 1 tenant i 1 app u tenantu dovoljno je hardcodirati appId
+    private final String appId = "25a872da-bb44-4af8-a43d-e7bcb5351ebc"; // posto imam samo 1 tenant i 1 app u tenantu dovoljno je hardcodirati appId
 
 
     private String randomUUID() {
