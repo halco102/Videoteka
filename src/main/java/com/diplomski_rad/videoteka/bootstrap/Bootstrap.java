@@ -1,4 +1,3 @@
-/*
 package com.diplomski_rad.videoteka.bootstrap;
 
 import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
@@ -39,6 +38,9 @@ public class Bootstrap implements CommandLineRunner {
 
     @Value("${apiKey}")
     private String apiKey;
+
+    @Value("${fusionauth.appId}")
+    private String fusionauthAppId;
 
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
@@ -114,8 +116,6 @@ public class Bootstrap implements CommandLineRunner {
         countryRepository.save(country2);
         countryRepository.save(country3);
 
-        //create user
-        User user = new User("Admir","Halilovic","halco","123","admir@hotmail.com");
         User user1 = new User("Admin","Admin","Admin","password123","admin@hotmail.com");
 
         SignupRequest signupRequest = new SignupRequest();
@@ -123,7 +123,7 @@ public class Bootstrap implements CommandLineRunner {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10);
         signupRequest.setPassword(user1.getPassword());
         signupRequest.setEmail(user1.getEMail());
-        signupRequest.setAppId("c155033d-8a15-4bea-ad87-b57bc4d65d64");
+        signupRequest.setAppId(fusionauthAppId);
 
         if (userRepository.checkIfUserExists("Admin").isEmpty()) {
             var fa = fusionAuth.createAdmin(signupRequest);
@@ -236,4 +236,3 @@ public class Bootstrap implements CommandLineRunner {
 
     }
 }
-*/

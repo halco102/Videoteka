@@ -12,10 +12,10 @@ services:
       - "8093:8093"
 
     environment:
-      - COUCHBASE_ADMINISTRATOR_USERNAME=Admin
-      - COUCHBASE_ADMINISTRATOR_PASSWORD=halco1002
-      - COUCHBASE_BUCKET=videoteka
-      - PORT=8091
+      - COUCHBASE_ADMINISTRATOR_USERNAME=${COUCHBASE_USERNAME}
+      - COUCHBASE_ADMINISTRATOR_PASSWORD=${COUCHBASE_PASSWORD}
+      - COUCHBASE_BUCKET=${COUCHBASE_BUCKET}
+      - PORT=${CB_PORT}
 
 #    volumes:
 #      - cb_data:/opt/couchbase/var
@@ -35,13 +35,15 @@ services:
 #      - videoteka_network
 
     environment:
-      - server.port=8200
+      - server.port=${VIDEOTEKA_PORT}
       - spring.couchbase.connection-string=couchbase://cb
-      - spring.couchbase.username=Admin
-      - spring.couchbase.password=halco1002
-      - spring.data.couchbase.bucket-name=videoteka
+      - spring.couchbase.username=${COUCHBASE_USERNAME}
+      - spring.couchbase.password=${COUCHBASE_PASSWORD}
+      - spring.data.couchbase.bucket-name=${COUCHBASE_BUCKET}
       - FUSIONAUTH_URL=fusionauth-microservice:8085
-      - jwt_secret_key=x0CyrZyHCtQD989r4rSX7fQ5tUP2SPhK6FrP+37y32M=
+      - fusionauth.jwt.secret=${JWT_SECRET}
+      - fusionauth.appId=${FUSIONAUTH_APP_ID}
+      - apiKey=${EXTERNAL_API_KEY}
 
 
 networks: 
