@@ -23,6 +23,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     FusionAuth fusionAuth;
 
+    @Autowired
+    Decoder decoder;
+
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         // treba nekako do filter preskociti na login da ima vise smisla
@@ -30,8 +33,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = UserService.jwtLoggedUser;
 
             if(fusionAuth.validateJwt(jwt)){
-                    var ro = Decoder.getRoles(jwt);
-                    var username = Decoder.getUsername(jwt);
+                    var ro = decoder.getRoles(jwt);
+                    var username = decoder.getUsername(jwt);
                     List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
                 for (String r: ro
                      ) {

@@ -41,6 +41,7 @@ services:
       - spring.couchbase.password=halco1002
       - spring.data.couchbase.bucket-name=videoteka
       - FUSIONAUTH_URL=fusionauth-microservice:8085
+      - jwt_secret_key=x0CyrZyHCtQD989r4rSX7fQ5tUP2SPhK6FrP+37y32M=
 
 
 networks: 

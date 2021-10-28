@@ -18,6 +18,7 @@ import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import com.diplomski_rad.videoteka.service.content.MovieService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -72,8 +73,8 @@ public class UserService extends AbstractPersonService<User> {
 
     public static String username;
 
-    private final String appId = "25a872da-bb44-4af8-a43d-e7bcb5351ebc"; // posto imam samo 1 tenant i 1 app u tenantu dovoljno je hardcodirati appId
-
+    @Value("${fusionauth.appId}")
+    private String appId;
 
     private String randomUUID() {
         return String.valueOf(UUID.randomUUID());

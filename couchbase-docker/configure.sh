@@ -40,7 +40,8 @@ couchbase-cli bucket-create -c $IPADDRESS:8091 -u $COUCHBASE_ADMINISTRATOR_USERN
        --enable-flush=1 \
        --enable-index-replica=1
 
-#sleep 15
+sleep 15
+echo "Create primary index on bucket"
 
 curl -X POST -v -u $COUCHBASE_ADMINISTRATOR_USERNAME:$COUCHBASE_ADMINISTRATOR_PASSWORD http://$IPADDRESS:8093/query/service -d statement=CREATE%20PRIMARY%20INDEX%20primary_index%20ON%20$COUCHBASE_BUCKET
 
