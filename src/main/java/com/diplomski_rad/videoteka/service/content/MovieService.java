@@ -134,7 +134,7 @@ public class MovieService extends AbstractContentService<Movie>{
 
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
             var user = userService.getUserProfile();
-            model.addAttribute("role", user.getRoles().first());
+            model.addAttribute("role", user.getRoles().stream().anyMatch(roles -> roles != null ? roles.matches("ROLE_ADMIN") : roles.matches("ROLE_USER")));
             model.addAttribute("ownedItems", user.getOwnedItems());
             model.addAttribute("avatar", user.getAvatar());
             model.addAttribute("money", user.getMoney());
