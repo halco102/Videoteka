@@ -1,6 +1,7 @@
 package com.diplomski_rad.videoteka.controller.person;
 
 import com.diplomski_rad.videoteka.constants.Types;
+import com.diplomski_rad.videoteka.model.CountryEnum;
 import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.service.content.MovieService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
@@ -12,10 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -63,8 +61,9 @@ public class UserController {
 
     @GetMapping("/register")
     public String createAccount(Model model){
-        User user = new User();
-        model.addAttribute("users",user);
+        model.addAttribute("users",new User());
+
+        model.addAttribute("countries", CountryEnum.values());
         return "videoteka/login/signup.html";
     }
 
@@ -72,14 +71,14 @@ public class UserController {
     @PostMapping("/register")
     public String createAccount(@ModelAttribute("users") @Valid User user,
                                 BindingResult result,
-                                Model model){
+                                Model model,
+                                @RequestParam("country") String country){
 
         if (result.hasErrors()) {
             return "videoteka/login/signup.html";
         }
         else if(this.userService.validation(user)==true){
-
-            this.userService.saveUser(user);
+            this.userService.saveUser(user, model, country);
             //return "redirect:/api/v1/videoteka/login";
             return "videoteka/login/signin.html";
         }

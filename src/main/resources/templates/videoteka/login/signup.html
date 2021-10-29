@@ -27,8 +27,10 @@
             <input type="password" th:field="*{confirmPassword}" placeholder="Confirm password">
             <div th:if = "${users.password != users.confirmPassword}" class="error">Passwords does not match</div>
 
-            <input type="text" th:field="*{country}" placeholder="Country">
-            <div th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="error"></div>
+            <select th:name="country">
+                <option th:each="country : ${countries}" th:value="${country}" th:text="${country}">
+                </option>
+            </select>
 
             <input type="text" th:field="*{eMail}" placeholder="Email">
             <div th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}" class="error"></div>

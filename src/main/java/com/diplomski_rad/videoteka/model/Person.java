@@ -22,7 +22,7 @@ public abstract class Person {
     private String lastName;
 
     @Field
-    private Country country;
+    private CountryEnum country;
 
     public Person(String firstName, String lastName) {
         this.firstName = firstName;

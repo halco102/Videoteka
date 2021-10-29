@@ -118,6 +118,11 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("title", Types.movieType);
         model.addAttribute("links", getType(Types.movieType));
         model.addAttribute("contents", searchEngine(name));
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            //get currently logged user profile
+            model.addAttribute("user", this.userService.getUserProfile());
+
+        }
         return  "videoteka/entertainment/main/main.html";
     }
 

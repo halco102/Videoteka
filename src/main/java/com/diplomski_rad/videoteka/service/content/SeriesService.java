@@ -113,6 +113,11 @@ public class SeriesService extends AbstractContentService<Series> {
         model.addAttribute("title", Types.seriesType);
         model.addAttribute("links", getType(Types.seriesType));
         model.addAttribute("contents", searchEngine(name));
+        if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
+            //get currently logged user profile
+            model.addAttribute("user", this.userService.getUserProfile());
+
+        }
         return  "videoteka/entertainment/main/main.html";
     }
 

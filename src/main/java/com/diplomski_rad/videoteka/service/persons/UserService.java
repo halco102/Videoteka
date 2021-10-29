@@ -4,10 +4,7 @@ import com.diplomski_rad.videoteka.constants.Types;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.exception.BadRequestException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
-import com.diplomski_rad.videoteka.model.Cartoon;
-import com.diplomski_rad.videoteka.model.Movie;
-import com.diplomski_rad.videoteka.model.Series;
-import com.diplomski_rad.videoteka.model.User;
+import com.diplomski_rad.videoteka.model.*;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SigninRequest;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
@@ -80,7 +77,7 @@ public class UserService extends AbstractPersonService<User> {
         return String.valueOf(UUID.randomUUID());
     }
 
-    public User saveUser(User user) {
+    public User saveUser(User user, Model model, String country) {
 
         SignupRequest signupRequest = new SignupRequest();
 
@@ -96,6 +93,9 @@ public class UserService extends AbstractPersonService<User> {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setMoney(200); // always give 200$
         user.setAvatar(avatarUrl + randomUUID() + ".svg");
+        //get the selected country
+        user.setCountry(CountryEnum.valueOf(country));
+
 
         return userRepository.save(user);
     }
