@@ -1,17 +1,16 @@
+/*
 package com.diplomski_rad.videoteka.bootstrap;
 
 import com.diplomski_rad.videoteka.externalapi.feign.ContentApi;
+import com.diplomski_rad.videoteka.externalapi.model.GenreResult;
 import com.diplomski_rad.videoteka.externalapi.model.MainModel;
 import com.diplomski_rad.videoteka.model.*;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
-import com.diplomski_rad.videoteka.repository.CountryRepository;
 import com.diplomski_rad.videoteka.repository.GenreRepository;
 import com.diplomski_rad.videoteka.repository.RoleRepository;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.repository.content.SeriesRepository;
-import com.diplomski_rad.videoteka.repository.person.CreatorRepository;
-import com.diplomski_rad.videoteka.repository.person.StarRepository;
 import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +41,15 @@ public class Bootstrap implements CommandLineRunner {
     @Value("${fusionauth.appId}")
     private String fusionauthAppId;
 
+    private Set<Genre> myGenres = new HashSet<>();
+
+    private Set<Genre> currentContentGenre;
+
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
     private final SeriesRepository seriesRepository;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final StarRepository starRepository;
-    private final CreatorRepository creatorRepository;
-    private final CountryRepository countryRepository;
     private final ContentApi contentApi;
 
     public Bootstrap(MovieRepository movieRepository,
@@ -57,18 +57,12 @@ public class Bootstrap implements CommandLineRunner {
                      SeriesRepository seriesRepository,
                      UserRepository userRepository,
                      RoleRepository roleRepository,
-                     StarRepository starRepository,
-                     CreatorRepository creatorRepository,
-                     CountryRepository countryRepository,
                      ContentApi contentApi){
         this.movieRepository=movieRepository;
         this.genreRepository=genreRepository;
         this.seriesRepository=seriesRepository;
         this.userRepository=userRepository;
         this.roleRepository=roleRepository;
-        this.starRepository=starRepository;
-        this.creatorRepository=creatorRepository;
-        this.countryRepository=countryRepository;
         this.contentApi = contentApi;
     }
 
@@ -94,7 +88,6 @@ public class Bootstrap implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<String> imdbIds = new ArrayList<>();
         Resource movieResource = new ClassPathResource("/contentids/MovieIds.txt");
         Resource seriesResource = new ClassPathResource("/contentids/SeriesIds.txt");
 
@@ -103,18 +96,6 @@ public class Bootstrap implements CommandLineRunner {
         Role role1 = new Role("USER");
         roleRepository.save(role);
         roleRepository.save(role1);
-
-
-        Country country = new Country("Bosna");
-        Country country1 = new Country("Njemacka");
-        Country country2 = new Country("Srbija");
-        Country country3 = new Country("Slovenija");
-
-
-        countryRepository.save(country);
-        countryRepository.save(country1);
-        countryRepository.save(country2);
-        countryRepository.save(country3);
 
         User user1 = new User("Admin","Admin","Admin","password123","admin@hotmail.com");
 
@@ -131,25 +112,16 @@ public class Bootstrap implements CommandLineRunner {
             temp.setPassword(bCryptPasswordEncoder.encode(user1.getPassword()));
             temp.setEMail(fa.getEmail());
             temp.setUsername(fa.getUsername());
+            SortedSet<String> t = new TreeSet<>();
+            t.add("ROLE_ADMIN");
+            temp.setRoles(t);
 
             userRepository.save(temp);
         }
 
-
-        User user2 = new User("Lejla","Bandic","weejws","222","lejla@hotmail.com");
-
-
-        //star
-        Stars star = new Stars("Leonardo","DiCaprio");
-        Stars star1 = new Stars("Christian","Bale");
-        Stars star2 = new Stars("Brad","Pitt");
-        Stars star3 = new Stars("Steve","Carell");
-
-        starRepository.save(star);
-        starRepository.save(star1);
-        starRepository.save(star2);
-        starRepository.save(star3);
-        //end
+        //add all genres
+        GenreResult allGenres = this.contentApi.getAllGenres(apiKey);
+        allGenres.getResults().stream().forEach(g -> genreRepository.save(new Genre(null, g.getGenre())));
 
         List<Movie> movies = new ArrayList<>();
         listOfElements(movieResource).forEach(item -> {
@@ -164,14 +136,13 @@ public class Bootstrap implements CommandLineRunner {
                     model.getData().getRating(),
                     model.getData().getGen(),
                     model.getData().getContent_rating());
-            //add all genres to db
-            Set<Genre> myGenres = new HashSet<>();
+                    currentContentGenre = new HashSet<>();
             for (Genre ge : model.getData().getGen()
                     ) {
-               var temp = genreRepository.save(new Genre(null, ge.getName()));
-               myGenres.add(temp);
+                currentContentGenre.add(genreRepository.findGenreByName(ge.getName()).get());
             }
-            movie.setGenres(myGenres);
+            //so that we dont have duplicates
+            movie.setGenres(currentContentGenre);
             movie.setPrice(randomPriceGenerator());
             movies.add(movie);
 
@@ -195,14 +166,12 @@ public class Bootstrap implements CommandLineRunner {
                     model.getData().getGen(),
                     model.getData().getMovie_length(),
                     model.getData().getContent_rating());
-            //add all genres to db
-            Set<Genre> myGenres = new HashSet<>();
+                    currentContentGenre = new HashSet<>();
             for (Genre ge : model.getData().getGen()
             ) {
-                var temp = genreRepository.save(new Genre(null, ge.getName()));
-                myGenres.add(temp);
+                currentContentGenre.add(genreRepository.findGenreByName(ge.getName()).get());
             }
-            series1.setGenres(myGenres);
+            series1.setGenres(currentContentGenre);
             series1.setPrice(randomPriceGenerator());
             series.add(series1);
 
@@ -215,24 +184,8 @@ public class Bootstrap implements CommandLineRunner {
             log.info("Saved series");
         }
 
-
-
-        Creator creator = new Creator("test1","test1");
-        Creator creator1 = new Creator("test2","test2");
-        Creator creator2 = new Creator("test3","test3");
-        Creator creator3 = new Creator("test4","test4");
-
-        creator.setCountry(country);
-        creator1.setCountry(country1);
-        creator2.setCountry(country2);
-
-        creatorRepository.save(creator);
-        creatorRepository.save(creator1);
-        creatorRepository.save(creator2);
-        creatorRepository.save(creator3);
-
-
         System.out.println("Bootsrap ended!");
 
     }
 }
+*/

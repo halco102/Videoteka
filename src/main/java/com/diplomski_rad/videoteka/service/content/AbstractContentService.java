@@ -1,13 +1,15 @@
 package com.diplomski_rad.videoteka.service.content;
 
 import com.diplomski_rad.videoteka.model.Content;
+import com.diplomski_rad.videoteka.model.Genre;
+import com.diplomski_rad.videoteka.model.Movie;
+import com.diplomski_rad.videoteka.model.Series;
 import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
+import com.diplomski_rad.videoteka.service.GenreService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -15,11 +17,15 @@ public abstract class AbstractContentService<T extends Content> implements Conte
 
     private final AbstractContentRepo<T> abstractContentRepo;
 
+    @Autowired
+    GenreService genreService;
+
     private final List<String> types = new ArrayList<>(Arrays.asList("movies", "series"));
 
     public AbstractContentService(AbstractContentRepo<T> abstractContentRepo) {
         this.abstractContentRepo = abstractContentRepo;
     }
+
 
     @Override
     public List<T> getAllContent() {
@@ -82,6 +88,17 @@ public abstract class AbstractContentService<T extends Content> implements Conte
             }
         }
         return temp;
+    }
+
+    public List<T> getPopularContent(Class t) {
+        if (t.getClass().isInstance(Movie.class)){
+            return this.abstractContentRepo.getPopularContent();
+        }else if (t.getClass().isInstance(Series.class)){
+            return this.abstractContentRepo.getPopularContent();
+        }else {
+            log.info("Unexpected error");
+            return null;
+        }
     }
 
 

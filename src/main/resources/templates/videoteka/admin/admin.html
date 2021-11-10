@@ -3,8 +3,9 @@
 <html>
 <head>
     <title>Admin</title>
-    <link href="/css/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigation_bar.css}" />
+    <link href="/css/navigationbar/navigation_bar.css" rel="stylesheet" type="text/css" th:href="@{/css/navigationbar/navigation_bar.css}" />
     <link href="/css/admin/admin.css" rel="stylesheet" type="text/css" th:href="@{/css/admin/admin.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .error{
             font-size:17px;
@@ -17,19 +18,37 @@
 
 <body>
 
-<header>
+<div class="navigation">
 
-    <p id="username"></p>
-    <nav>
-        <ul class="nav_ul">
-            <li>
-                <a th:href="@{/api/v1/videoteka/admin/series}">Series</a>
-                <a th:href="@{/api/v1/videoteka/admin/movies}">Movies</a>
-                <a th:href="@{/api/v1/videoteka/admin/cartoons}">Cartoons</a>
-            </li>
+    <div class="username">
+        <h2 th:text="${username}">
+        </h2>
+        <div th:if="${username != 'anonymousUser' && username != null}" class="user_avatar_balance">
+            <img th:src="${avatar}" width="50px" height="50px">
+            <div class="txt">
+                <p>Balance:</p>
+                <p th:text="${money}"></p>
+                <p>$</p>
+            </div>
+        </div>
+    </div>
+    <div class="links">
+        <ul>
+            <li><a th:href="@{/api/v1/videoteka/movies}">Movies</a></li>
+            <li><a th:href="@{/api/v1/videoteka/series}">Series</a></li>
         </ul>
-    </nav>
-</header>
+    </div>
+
+    <div class="drop_down_button">
+        <button class="drop_button"></button>
+        <div class="dropdown-content">
+            <a th:if="${#strings.isEmpty(username) || username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
+            <a th:if="${username != 'anonymousUser' && username != null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+            <a th:unless="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
+        </div>
+    </div>
+</div>
+
 
 <h1 style="text-align:center" th:text="${title}"></h1>
 

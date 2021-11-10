@@ -16,4 +16,10 @@ public interface AbstractContentRepo<T extends Content> extends CouchbaseReposit
     @Query("#{#n1ql.selectEntity} where name Like $1 and #{#n1ql.filter}")
     List<T> findByKeyword(String name);
 
+    @Query("#{#n1ql.selectEntity} where $1 IN genres[*].name and #{#n1ql.filter}")
+    List<T> getContentByGenre(String genre);
+
+    @Query("#{#n1ql.selectEntity} where rating > 8 and #{#n1ql.filter}")
+    List<T> getPopularContent();
+
 }

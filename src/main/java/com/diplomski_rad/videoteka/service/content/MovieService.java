@@ -6,11 +6,9 @@ import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
-import com.diplomski_rad.videoteka.security.Decoder;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,6 +16,7 @@ import org.springframework.validation.BindingResult;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Slf4j
@@ -134,7 +133,21 @@ public class MovieService extends AbstractContentService<Movie>{
 
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
             var user = userService.getUserProfile();
-            model.addAttribute("role", user.getRoles().stream().anyMatch(roles -> roles != null ? roles.matches("ROLE_ADMIN") : roles.matches("ROLE_USER")));
+            AtomicReference<String> role = new AtomicReference<>("");
+
+            user.getRoles().stream().anyMatch(e -> {
+                if (e.matches("ROLE_USER")) {
+                    role.set("ROLE_USER");
+                    return true;
+                }else {
+                    role.set("ROLE_ADMIN");
+                    return false;
+                }
+            });
+
+            log.info("ROLE " + role.get());
+
+            model.addAttribute("role", role.get());
             model.addAttribute("ownedItems", user.getOwnedItems());
             model.addAttribute("avatar", user.getAvatar());
             model.addAttribute("money", user.getMoney());
@@ -179,6 +192,31 @@ public class MovieService extends AbstractContentService<Movie>{
         return "videoteka/admin/admin.html";
     }
 
+/*
+    public List<Genre> getAllGenresFromMovies() {
+        var genresFromMovies = this.movieRepository.findAll().stream().flatMap(
+                e -> {
+                    return e.getGenres().stream();
+                }
+        ).collect(Collectors.toSet());
+        List<Genre> temp = new ArrayList<>();
+        genresFromMovies.stream()
+                .forEach(gm -> {
+                    genreService.findAllGenres()
+                            .stream()
+                            .anyMatch(g -> {
+                                if (g.equals(gm)) {
+                                    log.info("Its a match");
+                                    temp.add(g);
+                                    return true;
+                                }else {
+                                    return false;
+                                }
+                            });
+                });
 
+        return temp;
+    }
+*/
 
 }
