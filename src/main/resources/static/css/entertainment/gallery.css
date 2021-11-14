@@ -2,7 +2,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #191919;
+    background-color: #191919 !important;
 }
 
 body::after{
@@ -25,7 +25,7 @@ body::after{
     margin: 10% 10%;
 }
 
-img{
+.gallery img{
     margin: 19px;
 }
 

@@ -10,3 +10,13 @@
 .dropdown-custom-class{
      margin: 0 10px;
 }
+
+.user_avatar_balance{
+    display:flex;
+}
+
+.user-balance-info{
+    display:flex;
+    align-self:center;
+    margin:auto;
+}

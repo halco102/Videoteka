@@ -1,3 +1,5 @@
+
+
 #customBody{
     height: 100%;
     margin: 0;
@@ -25,7 +27,7 @@
     margin: 5% 25%;
 }
 
-img{
+.main_div img{
     width: 450px;
     height: 450px;
     margin: 40px 0px;

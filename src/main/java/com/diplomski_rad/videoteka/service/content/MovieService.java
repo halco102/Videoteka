@@ -105,7 +105,10 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("links", getType(Types.movieType));
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
             //get currently logged user profile
-            model.addAttribute("user", this.userService.getUserProfile());
+            var user = userService.getUserProfile();
+            model.addAttribute("user", user);
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
 
         }
 
@@ -119,7 +122,10 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("contents", searchEngine(name));
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
             //get currently logged user profile
-            model.addAttribute("user", this.userService.getUserProfile());
+            var user = userService.getUserProfile();
+            model.addAttribute("user", user);
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
 
         }
         return  "videoteka/entertainment/main/main.html";

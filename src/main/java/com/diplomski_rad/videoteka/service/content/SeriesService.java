@@ -101,9 +101,13 @@ public class SeriesService extends AbstractContentService<Series> {
         model.addAttribute("links", getType(Types.seriesType));
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
             //get currently logged user profile
-            model.addAttribute("user", this.userService.getUserProfile());
+            var user = userService.getUserProfile();
+            model.addAttribute("user", user);
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
 
         }
+
 
         return  "videoteka/entertainment/main/main.html";
     }
@@ -115,9 +119,13 @@ public class SeriesService extends AbstractContentService<Series> {
         model.addAttribute("contents", searchEngine(name));
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
             //get currently logged user profile
-            model.addAttribute("user", this.userService.getUserProfile());
+            var user = userService.getUserProfile();
+            model.addAttribute("user", user);
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
 
         }
+
         return  "videoteka/entertainment/main/main.html";
     }
 

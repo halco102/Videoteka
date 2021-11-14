@@ -10,9 +10,26 @@
 <!-- Navigation bar -->
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark" style="margin-bottom:10px;position: sticky;">
-    <div style="width:118px;max-width:250px;">
+    <div style="max-width:240px;">
+
+        <div th:if="${username != null && username != 'anonymousUser' && username != 'Admin'}"  class="user_avatar_balance">
+            <a class="navbar-brand" th:href="@{/api/v1/videoteka/user/profile}" th:text="${username}"></a>
+            <img th:src="${avatar}" width="45px" height="45px" style="margin:0 5px;">
+            <div class="navbar-brand">
+                <div class="user-balance-info">
+                    <p>Balance:</p>
+                    <p th:text="${money}"></p>
+                    <p>$</p>
+                </div>
+            </div>
+        </div>
+        <div th:if="${username == null || (username == 'anonymousUser' || username == 'Admin')}">
+            <a class="navbar-brand" th:text="${username}"></a>
+        </div>
+        <!--
         <a th:if="${username != null && (username != 'anonymousUser' || username != 'Admin')}" class="navbar-brand" th:href="@{/api/v1/videoteka/user/profile}" th:text="${username}"></a>
         <a th:unless="${username != 'anonymousUser' || username != 'Admin'}" th:text="${username}"></a>
+        -->
     </div>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,24 +46,19 @@
             </li>
         </ul>
     </div>
-    <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-
 
     <div class="dropdown dropdown-custom-class">
 
         <div class="btn-group dropleft">
 
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                D
+            <button class="btn btn-secondary dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img th:src="@{/css/images/drop.png}" width="25px" height="25px" />
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#">Signup</a>
-                <a class="dropdown-item" href="#">Login</a>
+                <a class="dropdown-item" th:if="${#strings.isEmpty(username) || username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
+                <a class="dropdown-item" th:if="${username != 'anonymousUser' && username != null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+                <a class="dropdown-item" th:unless="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
+                <a class="dropdown-item" th:if="${username == 'Admin'}" th:href="@{/api/v1/videoteka/admin/movies}">Admin page</a>
             </div>
         </div>
 
@@ -108,11 +120,8 @@
 
     <div class="content_buttons" th:if="${username} != 'anonymousUser'">
         <div class="admin_buttons" th:if="${role} == 'ROLE_ADMIN'">
-            <form th:action="@{/api/v1/videoteka/admin/{type}/update/{content.id}(type=${#strings.toLowerCase(title)})}" method="get">
-                <button type="submit">Edit</button>
-            </form>
-            <a th:href="@{/api/v1/videoteka/admin/{type}/update/{contentId}(type=${#strings.toLowerCase(title)}, contentId=${content.id})}"><button type="submit">Test</button></a>
-            <a th:href="@{/api/v1/videoteka/admin/{type}/delete/{contentId}(type=${#strings.toLowerCase(title)}, contentId=${content.id})}"><button type="submit">Delete</button></a>
+            <a style="margin:5px;" th:href="@{/api/v1/videoteka/admin/{type}/update/{contentId}(type=${#strings.toLowerCase(title)}, contentId=${content.id})}"><button type="submit">Edit</button></a>
+            <a style="margin:5px;" th:href="@{/api/v1/videoteka/admin/{type}/delete/{contentId}(type=${#strings.toLowerCase(title)}, contentId=${content.id})}"><button type="submit">Delete</button></a>
         </div>
 
         <div class="user_buttons" th:if="${role == 'ROLE_USER' && alreadyBought == false && money >= content.price}">

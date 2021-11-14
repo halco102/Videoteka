@@ -15,6 +15,7 @@ import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import com.diplomski_rad.videoteka.service.content.MovieService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -43,6 +44,7 @@ public class UserService extends AbstractPersonService<User> {
     private final SeriesRepository seriesRepository;
 
     public static String jwtLoggedUser;
+
 
     public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder, FusionAuth fusionAuth, MovieRepository movieRepository, SeriesRepository seriesRepository) {
         super(userRepository);
@@ -305,7 +307,11 @@ public class UserService extends AbstractPersonService<User> {
 
         model.addAttribute("username", authentication.getPrincipal().toString());
         if(UserController.displayName != null && !UserController.displayName.matches("anonymousUser")) {
-            model.addAttribute("user", getUserProfile());
+            var user = getUserProfile();
+            model.addAttribute("user", user);
+            model.addAttribute("avatar", user.getAvatar());
+            model.addAttribute("money", user.getMoney());
+
         }
         Map<String, Object> temp = new HashMap<>();
         temp.put(Types.movieType, movieService.getAllContent().stream().filter(rating -> rating.getRating() > 8.5).collect(Collectors.toList()));

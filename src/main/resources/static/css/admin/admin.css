@@ -1,4 +1,9 @@
-
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #191919 !important;
+}
 
 .maindiv{
     display: grid;
@@ -9,6 +14,22 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+}
+
+.inputs form{
+    justify-items: center;
+    display: grid;
+    border-color: #998f8f;
+    border-style: solid;
+    padding: 20px;
+}
+
+.genres{
+    padding:0 20px;
+    display:flex;
+    justify-content:center;
+    padding:0px 20px;
+    margin:20px;
 }
 
 input{
