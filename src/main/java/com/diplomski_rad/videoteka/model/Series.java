@@ -16,9 +16,6 @@ import java.util.Set;
 public class Series extends Content{
 
     @Field
-    private Set<Stars> stars = new HashSet<>();
-
-    @Field
     private int runtime;
 
     @Field
@@ -33,4 +30,5 @@ public class Series extends Content{
         super(name, release, imageUrl, description, trailer, rating, genres, content_rating);
         this.runtime = runtime;
     }
+
 }

@@ -1,3 +1,4 @@
+/*
 package com.diplomski_rad.videoteka.service.persons;
 
 import com.diplomski_rad.videoteka.model.Creator;
@@ -28,3 +29,4 @@ public class CreatorService extends AbstractPersonService<Creator> {
         super.deleteById(id);
     }
 }
+*/

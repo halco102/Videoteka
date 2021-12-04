@@ -31,9 +31,6 @@ public abstract class Content {
     private String release;
 
     @Field
-    private Set<Creator> creators = new HashSet<>();
-
-    @Field
     private Set<Genre> genres = new HashSet<>();
 
     @Field

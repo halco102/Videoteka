@@ -1,4 +1,4 @@
-package com.diplomski_rad.videoteka.restcontroller;
+package com.diplomski_rad.videoteka.restcontroller.content;
 
 import com.diplomski_rad.videoteka.model.Movie;
 import com.diplomski_rad.videoteka.service.content.MovieService;

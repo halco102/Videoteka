@@ -4,7 +4,10 @@ import com.diplomski_rad.videoteka.constants.Types;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.exception.BadRequestException;
 import com.diplomski_rad.videoteka.exception.NotFoundException;
-import com.diplomski_rad.videoteka.model.*;
+import com.diplomski_rad.videoteka.model.CountryEnum;
+import com.diplomski_rad.videoteka.model.Movie;
+import com.diplomski_rad.videoteka.model.Series;
+import com.diplomski_rad.videoteka.model.User;
 import com.diplomski_rad.videoteka.openfeing.FusionAuth;
 import com.diplomski_rad.videoteka.payload.request.SigninRequest;
 import com.diplomski_rad.videoteka.payload.request.SignupRequest;
@@ -15,7 +18,6 @@ import com.diplomski_rad.videoteka.repository.person.UserRepository;
 import com.diplomski_rad.videoteka.service.content.MovieService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -225,11 +227,6 @@ public class UserService extends AbstractPersonService<User> {
             if (list.stream()
                     .filter(in -> in.getT() instanceof Movie)
                     .map(e -> (Movie) e.getT())
-                    .anyMatch(k -> k.getId().matches(id))) {
-                return true;
-            }else  if (list.stream()
-                    .filter(in -> in.getT() instanceof Cartoon)
-                    .map(e -> (Cartoon) e.getT())
                     .anyMatch(k -> k.getId().matches(id))) {
                 return true;
             }else  if (list.stream()
