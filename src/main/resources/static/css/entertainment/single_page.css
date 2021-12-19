@@ -107,3 +107,8 @@ ul{
     text-align: center;
     color: whitesmoke;
 }
+
+.admin_buttons{
+    display:flex;
+    margin:5px;
+}

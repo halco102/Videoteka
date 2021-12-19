@@ -101,7 +101,7 @@ public class UserService extends AbstractPersonService<User> {
         user.setCountry(CountryEnum.valueOf(country));
 
 
-        return userRepository.save(user);
+        return (user);
     }
 
     public boolean checkIfUsernameExists(String username){
@@ -161,22 +161,6 @@ public class UserService extends AbstractPersonService<User> {
         }
 
         return null;
-    }
-
-    public User checkIfUserIsInDatabase(String username, String password){
-        var user = userRepository.checkIfUserIsInDatabase(username, password);
-        if(user.isPresent()) {
-            return user.get();
-        }
-        return null;
-    }
-
-    public boolean exists(String username, String password){
-        var user = userRepository.checkIfUserIsInDatabase(username, password);
-        if(user.isPresent()) {
-            return true;
-        }
-        return false;
     }
 
     public boolean validation(User user){

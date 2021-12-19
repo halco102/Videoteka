@@ -17,13 +17,11 @@ import org.springframework.validation.BindingResult;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class MovieService extends AbstractContentService<Movie>{
-
-    @Autowired
-    MovieRepository movieRepository;
 
     @Autowired
     GenreService genreService;
@@ -31,8 +29,8 @@ public class MovieService extends AbstractContentService<Movie>{
     @Autowired
     UserService userService;
 
-    public MovieService(AbstractContentRepo<Movie> abstractContentRepo) {
-        super(abstractContentRepo);
+    public MovieService(MovieRepository movieRepository) {
+        super(movieRepository);
     }
 
     @Override
@@ -80,7 +78,7 @@ public class MovieService extends AbstractContentService<Movie>{
     private String submitAdminForm(Movie movies, List<Genre> genres) {
 
         if (movies.getId() != null) {
-            var oldMovie = movieRepository.findById(movies.getId()).get();
+            var oldMovie = getContentById(movies.getId()).get();
 
             if (genres != null) {
                 movies.getGenres().clear();
@@ -89,17 +87,18 @@ public class MovieService extends AbstractContentService<Movie>{
                 movies.getGenres().addAll(oldMovie.getGenres());
             }
 
-            movieRepository.save(movies);
+            saveContent(movies);
             return "redirect:/api/v1/videoteka/movies";
         }
-        movieRepository.save(movies);
+        movies.setGenres(genres.stream().collect(Collectors.toSet()));
+        saveContent(movies);
         return "redirect:/api/v1/videoteka/admin/movies";
     }
 
     //movies
     public String getAllMovies(Model model){
 
-        model.addAttribute("contents", movieRepository.findAll());
+        model.addAttribute("contents", getAllContent());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Types.movieType);
         model.addAttribute("links", getType(Types.movieType));
@@ -197,32 +196,5 @@ public class MovieService extends AbstractContentService<Movie>{
         model.addAttribute("title", Types.movieType);
         return "videoteka/admin/admin.html";
     }
-
-/*
-    public List<Genre> getAllGenresFromMovies() {
-        var genresFromMovies = this.movieRepository.findAll().stream().flatMap(
-                e -> {
-                    return e.getGenres().stream();
-                }
-        ).collect(Collectors.toSet());
-        List<Genre> temp = new ArrayList<>();
-        genresFromMovies.stream()
-                .forEach(gm -> {
-                    genreService.findAllGenres()
-                            .stream()
-                            .anyMatch(g -> {
-                                if (g.equals(gm)) {
-                                    log.info("Its a match");
-                                    temp.add(g);
-                                    return true;
-                                }else {
-                                    return false;
-                                }
-                            });
-                });
-
-        return temp;
-    }
-*/
 
 }

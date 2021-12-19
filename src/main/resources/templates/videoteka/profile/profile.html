@@ -39,7 +39,7 @@
             <div class="price">
                 <table>
                     <tr>
-                        <th>Balance</th>
+                        <th style="color:white;">Balance</th>
                         <td th:text="${user.money}"></td>
                     </tr>
                 </table>
@@ -51,6 +51,7 @@
         <p style="text-align: center;color:wheat;">Bought content</p>
 
         <div class="slideshow">
+
             <img th:each="image : ${user.ownedItems}" th:src="${image.t.image_url}">
         </div>
 

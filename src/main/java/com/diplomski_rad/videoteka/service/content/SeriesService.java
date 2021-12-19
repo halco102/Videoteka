@@ -22,9 +22,6 @@ import java.util.Optional;
 public class SeriesService extends AbstractContentService<Series> {
 
     @Autowired
-    SeriesRepository seriesRepository;
-
-    @Autowired
     UserService userService;
 
     @Autowired
@@ -77,7 +74,7 @@ public class SeriesService extends AbstractContentService<Series> {
     private String submitAdminForm(Series series, List<Genre> genres) {
 
         if (series.getId() != null) {
-            var oldSeries = seriesRepository.findById(series.getId()).get();
+            var oldSeries = getContentById(series.getId()).get();
 
             if (genres != null) {
                 series.getGenres().clear();
@@ -86,16 +83,16 @@ public class SeriesService extends AbstractContentService<Series> {
                 series.getGenres().addAll(oldSeries.getGenres());
             }
 
-            seriesRepository.save(series);
+            saveContent(series);
             return "redirect:/api/v1/videoteka/series";
         }
-        seriesRepository.save(series);
+        saveContent(series);
         return "redirect:/api/v1/videoteka/admin/series";
     }
 
 
-    public String getAllSeries(Model model, String keyword) {
-        model.addAttribute("contents", seriesRepository.findAll());
+    public String getAllSeries(Model model) {
+        model.addAttribute("contents", getAllContent());
         model.addAttribute("username", UserController.displayName);
         model.addAttribute("title", Types.seriesType);
         model.addAttribute("links", getType(Types.seriesType));
@@ -155,7 +152,7 @@ public class SeriesService extends AbstractContentService<Series> {
 
 
     public String getAdminPage(Model model){
-        model.addAttribute("content", new Movie());
+        model.addAttribute("content", new Series());
         model.addAttribute("title", Types.seriesType);
         model.addAttribute("genres", genreService.findAllGenres());
         return "videoteka/admin/admin.html";

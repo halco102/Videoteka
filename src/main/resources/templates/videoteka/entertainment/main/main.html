@@ -13,7 +13,6 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <div style="max-width:240px;">
-
             <div th:if="${username != null && username != 'anonymousUser' && username != 'Admin'}"  class="user_avatar_balance">
                 <a class="navbar-brand" th:href="@{/api/v1/videoteka/user/profile}" th:text="${username}"></a>
                 <img th:src="${avatar}" width="45px" height="45px" style="margin:0 5px;">
@@ -25,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div th:if="${username == null || username == 'anonymousUser' || username == 'Admin'}">
+            <div th:if="${username == null || (username == 'anonymousUser' || username == 'Admin')}">
                 <a class="navbar-brand" th:text="${username}"></a>
             </div>
         </div>
@@ -60,8 +59,8 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" th:if="${#strings.isEmpty(username) || username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
-                    <a class="dropdown-item" th:if="${username != 'anonymousUser' && username != null}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
-                    <a class="dropdown-item" th:unless="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
+                    <a class="dropdown-item" th:if="${username != 'anonymousUser' && username != null && username != 'Admin'}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
+                    <a class="dropdown-item" th:if="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
                     <a class="dropdown-item" th:if="${username == 'Admin'}" th:href="@{/api/v1/videoteka/admin/movies}">Admin page</a>
                 </div>
             </div>

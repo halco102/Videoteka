@@ -1,9 +1,6 @@
 package com.diplomski_rad.videoteka.service.content;
 
-import com.diplomski_rad.videoteka.model.Content;
-import com.diplomski_rad.videoteka.model.Genre;
-import com.diplomski_rad.videoteka.model.Movie;
-import com.diplomski_rad.videoteka.model.Series;
+import com.diplomski_rad.videoteka.model.*;
 import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import com.diplomski_rad.videoteka.service.GenreService;
 import lombok.extern.slf4j.Slf4j;
@@ -100,6 +97,7 @@ public abstract class AbstractContentService<T extends Content> implements Conte
             return null;
         }
     }
+
 
 
 }

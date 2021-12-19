@@ -10,5 +10,4 @@ public interface PersonService<T extends Person> {
     Optional<T> getById(String id);
     List<T> getAllPersons();
     void deleteById(String id);
-
 }

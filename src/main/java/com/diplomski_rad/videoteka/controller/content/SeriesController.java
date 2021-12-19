@@ -30,8 +30,8 @@ public class SeriesController {
     UserService userService;
 
     @GetMapping("/series")
-    public String getSeries(Model model,String keyword){
-        return seriesService.getAllSeries(model, keyword);
+    public String getSeries(Model model){
+        return seriesService.getAllSeries(model);
     }
 
     @GetMapping("/series/search")
