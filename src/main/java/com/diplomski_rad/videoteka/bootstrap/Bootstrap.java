@@ -97,7 +97,7 @@ public class Bootstrap implements CommandLineRunner {
         roleRepository.save(role);
         roleRepository.save(role1);
 
-        User user1 = new User("Admin","Admin","Admin","password123","admin@hotmail.com");
+        User user1 = new User("Admin","Admin","Admin","password123","password123","admin@hotmail.com");
 
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setUsername(user1.getUsername());
