@@ -65,6 +65,16 @@ public class User extends Person{
         this.ownedItems = new ArrayList<>();
     }
 
+    public User(String firstName, String lastName, String username, String password, String confirmPassword, String eMail) {
+        super(firstName,lastName);
+        this.username = username;
+        this.password = password;
+        this.eMail = eMail;
+        this.roles = new TreeSet<>();
+        this.ownedItems = new ArrayList<>();
+        this.confirmPassword = confirmPassword;
+    }
+
     public User() {
         this.ownedItems = new ArrayList<>();
     }
