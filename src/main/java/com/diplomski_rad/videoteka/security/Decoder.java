@@ -18,10 +18,6 @@ public class Decoder {
     private String secretKey; // iz fa keyMaster
 
     public List<String> getRoles(String jwt) {
-            log.info("JWT");
-            log.info(jwt);
-            log.info("Secret");
-            log.info(secretKey);
 
             Claims claims = Jwts.parser()
                     .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
@@ -32,10 +28,6 @@ public class Decoder {
         }
 
         public String getUsername(String jwt) {
-            log.info("JWT");
-            log.info(jwt);
-            log.info("Secret");
-            log.info(secretKey);
             Claims claims = Jwts.parser()
                     .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))
                     .parseClaimsJws(jwt)
