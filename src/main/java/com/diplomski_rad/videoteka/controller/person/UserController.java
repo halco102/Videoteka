@@ -75,11 +75,11 @@ public class UserController {
                                 @RequestParam("country") String country){
 
         if (result.hasErrors()) {
+            model.addAttribute("countries", CountryEnum.values());
             return "videoteka/login/signup.html";
         }
-        else if(this.userService.validation(user)==true){
-            this.userService.saveUser(user, model, country);
-            //return "redirect:/api/v1/videoteka/login";
+        else if(this.userService.validation(user)){
+            this.userService.saveUser(user, country);
             return "videoteka/login/signin.html";
         }
 
