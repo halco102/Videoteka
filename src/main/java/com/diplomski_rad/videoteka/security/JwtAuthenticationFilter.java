@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        // treba nekako do filter preskociti na login da ima vise smisla
+
         if (UserService.jwtLoggedUser != null) {
             String jwt = UserService.jwtLoggedUser;
 
