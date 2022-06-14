@@ -81,7 +81,7 @@ public class UserService extends AbstractPersonService<User> {
         return String.valueOf(UUID.randomUUID());
     }
 
-    public User saveUser(User user, Model model, String country) {
+    public User saveUser(User user, String country) {
 
         SignupRequest signupRequest = new SignupRequest();
 
@@ -101,7 +101,7 @@ public class UserService extends AbstractPersonService<User> {
         user.setCountry(CountryEnum.valueOf(country));
 
 
-        return (user);
+        return this.userRepository.save(user);
     }
 
     public boolean checkIfUsernameExists(String username){
