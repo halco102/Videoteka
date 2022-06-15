@@ -4,7 +4,6 @@ import com.diplomski_rad.videoteka.constants.Types;
 import com.diplomski_rad.videoteka.controller.person.UserController;
 import com.diplomski_rad.videoteka.model.Genre;
 import com.diplomski_rad.videoteka.model.Movie;
-import com.diplomski_rad.videoteka.repository.content.AbstractContentRepo;
 import com.diplomski_rad.videoteka.repository.content.MovieRepository;
 import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Optional;
@@ -75,7 +75,7 @@ public class MovieService extends AbstractContentService<Movie>{
     }
 
 
-    private String submitAdminForm(Movie movies, List<Genre> genres) {
+    private String submitAdminForm(Movie movies, List<Genre> genres, BindingResult bindingResult) {
 
         if (movies.getId() != null) {
             var oldMovie = getContentById(movies.getId()).get();
@@ -90,7 +90,16 @@ public class MovieService extends AbstractContentService<Movie>{
             saveContent(movies);
             return "redirect:/api/v1/videoteka/movies";
         }
-        movies.setGenres(genres.stream().collect(Collectors.toSet()));
+
+        if (genres == null || genres.isEmpty()) {
+            ObjectError objectError = new ObjectError("genres", "npe");
+            bindingResult.addError(objectError);
+            return "redirect:/api/v1/videoteka/admin/movies";
+        }else {
+            movies.setGenres(genres.stream().collect(Collectors.toSet()));
+
+        }
+
         saveContent(movies);
         return "redirect:/api/v1/videoteka/admin/movies";
     }
@@ -186,7 +195,7 @@ public class MovieService extends AbstractContentService<Movie>{
             model.addAttribute("genres", genreService.findAllGenres());
             return "videoteka/admin/admin.html";
         }
-        return submitAdminForm(movies, genres);
+        return submitAdminForm(movies, genres, bindingResult);
     }
 
     public String getMovieForm(Model model, String id) {
