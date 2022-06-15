@@ -72,7 +72,8 @@ public class SeriesController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/series/update/{id}")
     public String getFormToUpdateSeries(Model model, @PathVariable String id) {
-        model.addAttribute("content", seriesService.getContentById(id));
+        var getSeriesById = this.seriesService.getContentById(id);
+        model.addAttribute("content", getSeriesById.get());
         model.addAttribute("genres", genreService.findAllGenres());
         model.addAttribute("title", Types.seriesType);
         return "videoteka/admin/admin.html";

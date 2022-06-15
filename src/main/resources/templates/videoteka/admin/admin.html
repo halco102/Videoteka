@@ -69,6 +69,8 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" th:if="${username != 'anonymousUser'}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
                 <a class="dropdown-item" th:if="${username == 'Admin'}" th:href="@{/api/v1/videoteka/admin/movies}">Admin page</a>
+                <a class="dropdown-item" th:if="${title} == 'Movies'" th:href="@{/api/v1/videoteka/admin/movies}">Movies</a>
+                <a class="dropdown-item" th:else th:href="@{/api/v1/videoteka/admin/series}">Series</a>
             </div>
         </div>
 
