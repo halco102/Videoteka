@@ -6,6 +6,7 @@ import com.diplomski_rad.videoteka.service.content.MovieService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,11 +47,14 @@ public class MovieController {
         return "redirect:/api/v1/videoteka/movies";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/movies")
     public String getAdminPage(Model model){
         return this.movieService.getAdminPage(model);
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/admin/movies")
     public String submitAdminForm(@ModelAttribute("content") @Valid Movie movies,
                                   BindingResult bindingResult,
@@ -60,11 +64,15 @@ public class MovieController {
         return this.movieService.postAdminForm(movies, bindingResult, genres, model);
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/movies/update/{id}")
     public String getFormToUpdateMovie(Model model, @PathVariable String id) {
         return this.movieService.getMovieForm(model, id);
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/admin/movies/delete/{id}")
     public String deleteMovieById(@PathVariable String id) {
         this.movieService.deleteById(id);

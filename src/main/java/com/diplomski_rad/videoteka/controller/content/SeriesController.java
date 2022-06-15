@@ -8,6 +8,7 @@ import com.diplomski_rad.videoteka.service.GenreService;
 import com.diplomski_rad.videoteka.service.content.SeriesService;
 import com.diplomski_rad.videoteka.service.persons.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,11 +51,15 @@ public class SeriesController {
         return "redirect:/api/v1/videoteka/series";
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/series")
     public String getAdminPage(Model model){
         return this.seriesService.getAdminPage(model);
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/admin/series")
     public String submitAdminForm(@ModelAttribute("content") @Valid Series series,
                                   BindingResult bindingResult,
@@ -63,6 +68,8 @@ public class SeriesController {
         return this.seriesService.postAdminForm(series, bindingResult, genres, model);
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/admin/series/update/{id}")
     public String getFormToUpdateSeries(Model model, @PathVariable String id) {
         model.addAttribute("content", seriesService.getContentById(id));
@@ -71,6 +78,8 @@ public class SeriesController {
         return "videoteka/admin/admin.html";
     }
 
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/admin/series/delete/{id}")
     public String deleteSeriesById(@PathVariable String id) {
         this.seriesService.deleteById(id);
