@@ -20,7 +20,7 @@
 
 <!-- Navigation bar -->
 
-<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div style="max-width:240px;">
         <div th:if="${username != null && username != 'anonymousUser' && username != 'Admin'}"  class="user_avatar_balance">
             <a class="navbar-brand" th:href="@{/api/v1/videoteka/user/profile}" th:text="${username}"></a>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div th:if="${username == null || (username == 'anonymousUser' || username == 'Admin')}">
-            <a class="navbar-brand" th:text="${username}"></a>
+            <a class="navbar-brand" th:text="${username}" style="color:white;"></a>
         </div>
     </div>
 
@@ -67,9 +67,7 @@
                 <img th:src="@{/css/images/drop.png}" width="25px" height="25px" />
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" th:if="${#strings.isEmpty(username) || username == 'anonymousUser'}" th:href="@{/api/v1/videoteka/login}">Login</a>
-                <a class="dropdown-item" th:if="${username != 'anonymousUser' && username != null && username != 'Admin'}" th:href="@{/api/v1/videoteka/user/profile}">Profile</a>
-                <a class="dropdown-item" th:if="${username != 'anonymousUser' || username != null}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
+                <a class="dropdown-item" th:if="${username != 'anonymousUser'}" th:href="@{/api/v1/videoteka/logout}">Logout</a>
                 <a class="dropdown-item" th:if="${username == 'Admin'}" th:href="@{/api/v1/videoteka/admin/movies}">Admin page</a>
             </div>
         </div>
@@ -106,10 +104,14 @@
             <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error"></div>
             <div class="genres">
                 <select multiple="multiple" th:name="ids">
-                    <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">
+                    <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"
+                            th:selected="${#lists.contains(content.genres, genre)}">
                     </option>
                 </select>
             </div>
+
+            <p th:if="${#lists.contains(content.genres, genres)}" th:text="${content.genres}"></p>
+
             <div>
                 <label style="color:white">Description</label><br>
                 <textarea rows="4" cols="50" th:field="*{description}"></textarea>
