@@ -10,29 +10,29 @@
 <div class="form">
     <form action="#" th:action="@{/api/v1/videoteka/register}" th:object="${users}" method="post">
         <div class="name">
-            <input type="text" th:field="*{firstName}" placeholder="First name">
+            <input type="text" th:field="*{firstName}" placeholder="First name" style="margin-bottom:5px;">
             <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></div>
 
-            <input type="text" th:field="*{lastName}" placeholder="Last name">
+            <input type="text" th:field="*{lastName}" placeholder="Last name" style="margin-bottom:5px;">
             <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></div>
         </div>
         <div class="info">
 
-            <input type="text" th:field="*{username}" placeholder="Username">
+            <input type="text" th:field="*{username}" placeholder="Username" style="margin-bottom:5px;">
             <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
 
-            <input type="password" th:field="*{password}" placeholder="Password">
+            <input type="password" th:field="*{password}" placeholder="Password" style="margin-bottom:5px;">
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
 
-            <input type="password" th:field="*{confirmPassword}" placeholder="Confirm password">
+            <input type="password" th:field="*{confirmPassword}" placeholder="Confirm password" style="margin-bottom:5px;">
             <div th:if = "${users.password != users.confirmPassword}" class="error">Passwords does not match</div>
 
-            <select th:name="country">
+            <select th:name="country" style="margin-bottom:5px;">
                 <option th:each="country : ${countries}" th:value="${country}" th:text="${country}">
                 </option>
             </select>
 
-            <input type="text" th:field="*{eMail}" placeholder="Email">
+            <input type="text" th:field="*{eMail}" placeholder="Email" style="margin-bottom:5px;">
             <div th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}" class="error"></div>
         </div>
 
